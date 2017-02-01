@@ -1,22 +1,27 @@
 ConvoSchema = new SimpleSchema({
 	idNumber: {
 		type: Number,
-		label: "idNumber"
+		label: "idNumber",
+		defaultValue: 0
 	},
 	user1: {
 		type: String, 
-		label: "user1"
+		label: "user1",
+		defaultValue: ""
 	},
 	user2: {
 		type: String,
-		label: "user2"
+		label: "user2",
+		defaultValue: ""
 	},
 	length: {
 		type: Number, 
-		label: "length"
-	}
+		label: "length",
+		defaultValue: 0
+	},
 	messages: {
 		type: Array,
-		label: "messages"
+		label: "messages",
+		defaultValue: []
 	}
-})
+});
