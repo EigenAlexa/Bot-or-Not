@@ -1,3 +1,4 @@
+
 UserSchema = new SimpleSchema({
 	username: {
 		type: String,
@@ -25,5 +26,12 @@ UserSchema = new SimpleSchema({
 		type: Boolean,
 		label: "connected", 
 		defaultValue: false 
+	},
+	inconversation: {
+		type: Boolean,
+		label: "inConversation",
+		defaultValue: false
 	}
 });
+
+export const users = new Mongo.Collection("users").attachSchema(UserSchema);

@@ -15,9 +15,15 @@ Meteor.startup(function() {
   		document.getElementById('screencomponent'));
 });
 
+
+
 FlowRouter.route('/', {
   name: 'test',
   action() {
-    
+    	console.log("tested");
   }
 }); 
+
+function makeNewUser() {
+	
+}
