@@ -45,15 +45,17 @@ ConvoSchema = new SimpleSchema({
 	messages: {
 		type: [MessageSchema],
 		label: "messages",
-		defaultValue: [""]
 	}
 });
 
-export const messages = new Mongo.Collection("messages").attachSchema(ConvoSchema);
 
+messages = new Mongo.Collection("messages");
+messages.attachSchema(ConvoSchema);
+export default messages;
+/*
 export class Messages extends Component {
 	render() {
 		return {
 		}
 	}
-}
+} */

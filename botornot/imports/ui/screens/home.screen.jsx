@@ -4,12 +4,7 @@ import ReactAutoForm from 'meteor-react-autoform';
 import Screen from '/imports/ui/layouts/screen.jsx';
 import MessageSchema from '/imports/collections/messages/messages.collection.js';
 import messages from '/imports/collections/messages/messages.collection.js';
-
-const mes = () => {
-  <template name="message">
-    <p> testing material </p>
-  </template>
-} 
+//import {Layout} from '/imports/ui/layouts/layout.jsx';
 
 class HomeScreen extends React.Component {
   render () {
@@ -36,7 +31,7 @@ class HomeScreen extends React.Component {
   }
   componentDidMount() {
     require('/imports/ui/layouts/screen.jsx');
-    // Layout.currentScreenDidMount();
+  //  Layout.currentScreenDidMount();
   }
   exciting () {
     const num = Math.floor((Math.random() * 10) + 1);
@@ -47,3 +42,4 @@ class HomeScreen extends React.Component {
 }
 
 export default HomeScreen;
+

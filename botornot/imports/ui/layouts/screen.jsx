@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-// import {Layout} from '/imports/ui/layouts/layout.jsx';
 
 class Screen extends React.Component {
   render() {
@@ -11,7 +10,8 @@ class Screen extends React.Component {
   }
 
   componentDidMount() {
-   // Layout.currentScreenDidMount();
+  //  require('/imports/ui/layouts/layout.jsx');
+  //  Layout.currentScreenDidMount();
   }
 }
 

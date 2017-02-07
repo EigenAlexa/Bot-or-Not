@@ -34,4 +34,6 @@ UserSchema = new SimpleSchema({
 	}
 });
 
-export const users = new Mongo.Collection("users").attachSchema(UserSchema);
+users = new Mongo.Collection("users")
+users.attachSchema(UserSchema);
+export default users;
