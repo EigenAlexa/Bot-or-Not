@@ -1,10 +1,10 @@
+import Blaze from 'meteor/gadicc:blaze-react-component';
+import React from 'react';
+
 var ChatPage = React.createClass({
   render: function() {
     return (
       <div>
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Bot or Not</title>
 
         <nav className="navbar navbar-default navbar-fixed-top">
@@ -51,3 +51,5 @@ var ChatPage = React.createClass({
     );
   }
 });
+
+export default ChatPage;

@@ -5,12 +5,7 @@ var HomePage = React.createClass({
   render: function() {
     return (
       <div>
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Bot or Not</title>
-
-        
         /* Home */
         <div id="header">
           <div className="flexslider">
