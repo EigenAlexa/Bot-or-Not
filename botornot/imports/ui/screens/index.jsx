@@ -2,7 +2,7 @@ import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 
 var HomePage = React.createClass({
-  render: function() {
+  render() {
     return (
       <div>
         <title>Bot or Not</title>

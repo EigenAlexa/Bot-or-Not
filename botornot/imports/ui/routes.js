@@ -1,48 +1,44 @@
 import React from 'react';
 import {FlowRouter} from 'meteor/kadira:flow-router';
+import {ReactLayout} from 'meteor/kadira:react-layout';
 //import {Layout} from '/imports/ui/layout/layout'
 import {mount} from 'react-mounter';
-
-import HomeScreen from '/imports/ui/screens/home.screen'
+import Screen from '/imports/ui/layouts/screen.jsx'
+import HomePage from '/imports/ui/screens/index.jsx';
+import ContactPage from '/imports/ui/screens/contact.jsx';
+import LeaderboardPage from '/imports/ui/screens/leaderboard.jsx';
+import PrivacyPage from '/imports/ui/screens/privacy.jsx';
+import ChatPage from '/imports/ui/screens/chat.jsx';
 
 FlowRouter.wait();
-/*
-FlowRouter.route('/', {
-  name: 'home',
-  action(params, queryParams) {
-    //referance a component instance, and call methods from this callback????
-    Layout.transitionTo(<HomeScreen />);
-  },
-}); */
 
 FlowRouter.route('/', {
   name: 'home',
   action() {
-  		console.log(window.location.pathname);
-    	//makeNewUser();
+  		ReactLayout.render(Screen, {children: <HomePage />});
   }
 }); 
-FlowRouter.route('/contact', {
+FlowRouter.route('/contact.html', {
 	name: 'contact',
 	action() {
-
+		ReactLayout.render(Screen, {children: <ContactPage />});
 	}
 });
-FlowRouter.route('/privacy-policy', {
+FlowRouter.route('/privacy-policy.html', {
 	name: 'privacy-policy',
 	action() {
-
+		ReactLayout.render(Screen, {children: <PrivacyPage />});
 	}
 });
-FlowRouter.route('/chat/:id', {
+FlowRouter.route('/chat.html', {
 	name: 'chatroom',
 	action() {
-
+		ReactLayout.render(Screen, {children: <ChatPage />});
 	}
 });
-FlowRouter.route('/leaderboard', {
+FlowRouter.route('/leaderboards.html', {
 	name: 'leaderboard',
 	action() {
-		
+		ReactLayout.render(Screen, {children: <LeaderboardPage />});
 	}
 })

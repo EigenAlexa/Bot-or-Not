@@ -3,6 +3,7 @@ import '/imports/collections/messages/messages.collection.js';
 import HomeScreen from '/imports/ui/screens/home.screen.jsx';
 import messages from '/imports/collections/messages/messages.collection.js';
 import users from '/imports/collections/users/users.collection.js';
+import UserSchema from '/imports/collections/users/users.collection.js';
 
 Meteor.publish("messages", function (convoId) {
   return messages.find({idNumber : convoId});
@@ -17,4 +18,20 @@ Meteor.publish("leaderboard", function () {
 Meteor.publish("rank", function (name) {
 	return users.find({username : name});
 	// need to find quick way to determine rank.
+});
+
+// if we don't want to send a cursor, write this.ready() instead.
+
+Meteor.methods({
+    'users.makeNew'({name, pass}) {
+    console.log(users.find().fetch());	
+    const sameuser = users.find({username: name}).fetch();
+
+    if (sameuser.length > 0) {
+      console.log("username already taken");
+      return;
+    }
+
+    users.insert({username: name, password: pass});
+  }
 });
