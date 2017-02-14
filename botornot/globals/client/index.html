@@ -44,10 +44,12 @@
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a href="index.html">Home</a></li>
+                    <!-- TODO make the navbar into it's own tempalte -->
 					<li><a href="index.html">Chat</a></li>
 					<li><a href="index.html">Leaderboards</a></li>
 					<li><a href="index.html">Privacy</a></li>
 					<li><a href="index.html">Contact</a></li>
+                    <li>{{> loginButtons}}</li>
 				</ul> <!-- /.nav -->
 		    </div><!-- /.navbar-collapse -->
 	  	</div><!-- /.container -->
@@ -58,12 +60,12 @@
 		<div id="header">
 		    <div class="flexslider">
 		    	<div id='screencomponent'></div>
-		            </div>
-		        </div>
+            </div>
+        </div>
 
 
 	<script src="/botornot/globals/client/assets/js/a_jquery-1.11.2.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script> 
+    <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/owl.carousel.min.js"></script>
     <script src="assets/js/contact.js"></script>
     <script src="assets/js/jquery.flexslider.js"></script>

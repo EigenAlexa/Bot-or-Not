@@ -1,19 +1,6 @@
-
 UserSchema = new SimpleSchema({
-	username: {
-		type: String,
-		label: "Username",
-		max: 30,
-		defaultValue: "Username"
-	},
-	password: {
-		type: String,
-		label: "Password",
-		max: 30,
-		defaultValue: "Password"
-	},
 	sessions: {
-		type: Number, 
+		type: Number,
 		label: "Sessions",
 		defaultValue: 0
 	},
@@ -22,18 +9,23 @@ UserSchema = new SimpleSchema({
 		label: "NotRatings",
 		defaultValue: 0
 	},
-	connected: {
+    convos: {
+        type: ConvoSchema,
+        label: "conversations",
+        defaultValue :[]
+    },
+	online: {
 		type: Boolean,
-		label: "connected", 
-		defaultValue: false 
+		label: "online",
+		defaultValue: false
 	},
-	inconversation: {
+	in_convo: {
 		type: Boolean,
-		label: "inConversation",
+		label: "in_convo",
 		defaultValue: false
 	}
 });
-
-users = new Mongo.Collection("users")
-users.attachSchema(UserSchema);
-export default users;
+Meteor.users.attachSchema(UserSchema);
+// users = new Mongo.Collection("users")
+// users.attachSchema(UserSchema);
+// export default users;

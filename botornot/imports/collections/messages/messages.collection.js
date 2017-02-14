@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import mongo from 'meteor/mongo';
 import 'react-bootstrap';
-import UserSchema from '/imports/collections/users/users.collection.js'
 
 MessageSchema = new SimpleSchema({
 	user: {
@@ -22,23 +21,18 @@ MessageSchema = new SimpleSchema({
 </template>
 */
 ConvoSchema = new SimpleSchema({
-	idNumber: {
-		type: Number,
-		label: "idNumber",
-		defaultValue: 0
-	},
 	user1: {
-		type: String, // username 
+		type: String, // user id
 		label: "user1",
 		defaultValue: ""
 	},
 	user2: {
-		type: String, // username
+		type: String, // user id
 		label: "user2",
 		defaultValue: ""
 	},
 	length: {
-		type: Number, 
+		type: Number,
 		label: "length",
 		defaultValue: 0
 	},
@@ -48,14 +42,8 @@ ConvoSchema = new SimpleSchema({
 	}
 });
 
-
-messages = new Mongo.Collection("messages");
-messages.attachSchema(ConvoSchema);
-export default messages;
-/*
-export class Messages extends Component {
-	render() {
-		return {
-		}
-	}
-} */
+const Messages  = new Mongo.Collection("messages");
+Messages.attachSchema(MessageSchema);
+const Convos = new Mongo.Collection("conversations");
+Convos.attachSchema(ConvoSchema);
+export default Convos;
