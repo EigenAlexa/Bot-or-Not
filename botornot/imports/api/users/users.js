@@ -12,11 +12,6 @@ Schema.UserProfile = new SimpleSchema({
 		label: "NotRatings",
 		defaultValue: 0
 	},
-    // convos: {
-    //     type: ConvoSchema,
-    //     label: "conversations",
-    //     defaultValue :[]
-    // },
 	online: {
 		type: Boolean,
 		label: "online",
@@ -32,9 +27,6 @@ Schema.UserProfile = new SimpleSchema({
         label: "",
         defaultValue: 0
     },
-    // partners: {
-    //     type: Co
-    // }
 });
 
 Schema.User = new SimpleSchema({
