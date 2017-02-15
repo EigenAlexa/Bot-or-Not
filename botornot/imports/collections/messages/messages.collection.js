@@ -15,11 +15,7 @@ MessageSchema = new SimpleSchema({
 		type: Date
 	}
 });
-/*
-<template name="insertBookForm">
-  {{> quickForm collection="Books" id="insertBookForm" type="insert"}}
-</template>
-*/
+
 ConvoSchema = new SimpleSchema({
 	user1: {
 		type: String, // user id

@@ -1,7 +1,9 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
+import Navigation from 'react-router';
 
 var HomePage = React.createClass({
+
   render() {
     return (
       <div>
@@ -20,7 +22,7 @@ var HomePage = React.createClass({
                 <p className="header-sub-title">
                   lick.
                 </p>
-                <button className="btn custom-btn" onclick="location.href='chat.html'" type="button">
+                <button className="btn custom-btn" onClick={() => window.location = '/chat'} type="button">
                   Start Chatting</button>
               </div>
             </div>

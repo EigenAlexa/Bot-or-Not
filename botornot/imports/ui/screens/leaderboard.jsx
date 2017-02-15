@@ -14,12 +14,6 @@ var LeaderboardPage = React.createClass({
             </h2>
           </div> {/* /.container */}
         </section> {/* /.section-background */}
-        <ul className="social-icon">
-          <li><a href="#"><i className="ion-social-twitter" /></a></li>
-          <li><a href="#"><i className="ion-social-facebook" /></a></li>
-          <li><a href="#"><i className="ion-social-linkedin-outline" /></a></li>
-          <li><a href="#"><i className="ion-social-googleplus" /></a></li>
-        </ul> {/* /.subscribe */}
         {/* deleted end div */}
       </div>
     );

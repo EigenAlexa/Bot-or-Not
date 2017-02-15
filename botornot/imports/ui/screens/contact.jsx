@@ -54,12 +54,7 @@ var ContactPage = React.createClass({
             </div>
           </div>
         </section>
-        <ul className="social-icon">
-          <li><a href="#"><i className="ion-social-twitter" /></a></li>
-          <li><a href="#"><i className="ion-social-facebook" /></a></li>
-          <li><a href="#"><i className="ion-social-linkedin-outline" /></a></li>
-          <li><a href="#"><i className="ion-social-googleplus" /></a></li>
-        </ul> {/* /.subscribe */}
+        {/* /.subscribe */}
         {/* deleted end div */}
         <footer>
           <div className="container">
