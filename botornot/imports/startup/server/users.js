@@ -1,17 +1,40 @@
 const Schema = {};
 Schema.UserProfile = new SimpleSchema({
-    firstName: {
-        type: String,
-        optional: true
+
+ 	sessions: {
+		type: Number,
+		label: "Sessions",
+		defaultValue: 0,
+        optional: false
+	},
+	notratings: {
+		type: Number,
+		label: "NotRatings",
+		defaultValue: 0
+	},
+    // convos: {
+    //     type: ConvoSchema,
+    //     label: "conversations",
+    //     defaultValue :[]
+    // },
+	online: {
+		type: Boolean,
+		label: "online",
+		defaultValue: false
+	},
+	in_convo: {
+		type: Boolean,
+		label: "in_convo",
+		defaultValue: false
+	},
+    violations: {
+        type: Number,
+        label: "",
+        defaultValue: 0
     },
-    lastName: {
-        type: String,
-        optional: true
-    },
-    birthday: {
-        type: Date,
-        optional: true
-    },
+    // partners: {
+    //     type: Co
+    // }
 });
 
 Schema.User = new SimpleSchema({
@@ -53,7 +76,7 @@ Schema.User = new SimpleSchema({
     },
     profile: {
         type: Schema.UserProfile,
-        optional: true
+        optional: false
     },
     // Make sure this services field is in your schema if you're using any of the accounts packages
     services: {
@@ -92,6 +115,7 @@ Schema.User = new SimpleSchema({
 });
 
 Meteor.users.attachSchema(Schema.User);
+console.log(Meteor.users.simpleSchema());
 // UserSchema = new SimpleSchema({
 // 	sessions: {
 // 		type: Number,
