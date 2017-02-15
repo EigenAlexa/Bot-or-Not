@@ -6,6 +6,16 @@ ConvoSchema = new SimpleSchema({
 		label: "length",
 		defaultValue: 0
 	},
+    botnot1: {
+        type: Boolean,
+        label: 'botnot1',
+        optional: true,
+    },
+    botnot2: {
+        type: Boolean,
+        label: 'botnot2',
+        optional: true,
+    }
 });
 
 const Convos = new Mongo.Collection("conversations");
