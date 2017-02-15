@@ -25,6 +25,8 @@ callback-hook@1.0.10
 check@1.2.4
 coffeescript@1.0.17
 cosmos:browserify@0.8.4
+cultofcoders:grapher@1.0.10
+dburles:mongo-collection-instances@0.3.5
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.8
@@ -50,11 +52,13 @@ insecure@1.0.7
 jquery@1.11.10
 kadira:flow-router@2.12.1
 kadira:react-layout@1.5.3
+lai:collection-extensions@0.2.1_1
 launch-screen@1.0.12
 less@2.6.5
 livedata@1.0.18
 localstorage@1.0.12
 logging@1.1.16
+matb33:collection-hooks@0.8.4
 mdg:validation-error@0.2.0
 meteor@1.6.0
 meteor-base@1.0.4
@@ -84,6 +88,7 @@ reactive-dict@1.1.8
 reactive-var@1.0.11
 reload@1.1.11
 retry@1.0.9
+reywood:publish-composite@1.4.2
 routepolicy@1.0.12
 service-configuration@1.0.11
 session@1.1.7

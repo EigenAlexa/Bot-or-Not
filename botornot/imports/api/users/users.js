@@ -12,11 +12,6 @@ Schema.UserProfile = new SimpleSchema({
 		label: "NotRatings",
 		defaultValue: 0
 	},
-    // convos: {
-    //     type: ConvoSchema,
-    //     label: "conversations",
-    //     defaultValue :[]
-    // },
 	online: {
 		type: Boolean,
 		label: "online",
@@ -32,9 +27,6 @@ Schema.UserProfile = new SimpleSchema({
         label: "",
         defaultValue: 0
     },
-    // partners: {
-    //     type: Co
-    // }
 });
 
 Schema.User = new SimpleSchema({
@@ -115,33 +107,3 @@ Schema.User = new SimpleSchema({
 });
 
 Meteor.users.attachSchema(Schema.User);
-console.log(Meteor.users.simpleSchema());
-// UserSchema = new SimpleSchema({
-// 	sessions: {
-// 		type: Number,
-// 		label: "Sessions",
-// 		defaultValue: 0
-// 	},
-// 	notratings: {
-// 		type: Number,
-// 		label: "NotRatings",
-// 		defaultValue: 0
-// 	},
-//     convos: {
-//         type: ConvoSchema,
-//         label: "conversations",
-//         defaultValue :[]
-//     },
-// 	online: {
-// 		type: Boolean,
-// 		label: "online",
-// 		defaultValue: false
-// 	},
-// 	in_convo: {
-// 		type: Boolean,
-// 		label: "in_convo",
-// 		defaultValue: false
-// 	}
-// });
-// Meteor.users.attachSchema(UserSchema);
-// export default users;
