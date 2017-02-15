@@ -15,7 +15,7 @@ var ChatPage = React.createClass({
           </div> {/* /.container */}
         </section> {/* /.section-background */}
         {/* deleted end div */}
-    {/* <ChatRender /> */}
+     <ChatRender />
       </div>
     );
   }

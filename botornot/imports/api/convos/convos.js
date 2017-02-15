@@ -1,6 +1,6 @@
 import mongo from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-
+import { Messages } from '../messages/messages.js'
 ConvoSchema = new SimpleSchema({
 	length: {
 		type: Number,
