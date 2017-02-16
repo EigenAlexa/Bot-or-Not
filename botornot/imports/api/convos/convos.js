@@ -31,4 +31,11 @@ ConvoSchema = new SimpleSchema({
 const Convos = new Mongo.Collection("conversations");
 Convos.attachSchema(ConvoSchema);
 
+Convos.helpers({
+    messages() {
+        const messagesLink = Convos.getLink(this._id, 'messages');
+        return messagesLink.find({sort: {time : -1}});
+    }
+});
+
 export { Convos };
