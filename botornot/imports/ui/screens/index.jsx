@@ -22,7 +22,7 @@ var HomePage = React.createClass({
                 <p className="header-sub-title">
                   lick.
                 </p>
-                <button className="btn custom-btn" onClick={() => window.location = '/chat'} type="button">
+                <button className="btn custom-btn" onClick={() => window.location = '/wait'} type="button">
                   Start Chatting</button>
               </div>
             </div>

@@ -28,3 +28,5 @@ accounts-ui
 accounts-facebook
 accounts-password
 cultofcoders:grapher
+session
+templating

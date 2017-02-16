@@ -45,14 +45,20 @@ Schema.User = new SimpleSchema({
         optional: true
     },
     "emails.$": {
-        type: Object
+        type: Object,
+        optional: true
+        // temp
     },
     "emails.$.address": {
         type: String,
-        regEx: SimpleSchema.RegEx.Email
+        regEx: SimpleSchema.RegEx.Email,
+        optional: true
+        // temp
     },
     "emails.$.verified": {
-        type: Boolean
+        type: Boolean,
+        optional: true
+        // temp
     },
     // Use this registered_emails field if you are using splendido:meteor-accounts-emails-field / splendido:meteor-accounts-meld
     registered_emails: {
@@ -64,7 +70,9 @@ Schema.User = new SimpleSchema({
         blackbox: true
     },
     createdAt: {
-        type: Date
+        type: Date,
+        optional: true
+        // temp
     },
     profile: {
         type: Schema.UserProfile,
@@ -97,7 +105,9 @@ Schema.User = new SimpleSchema({
         optional: true
     },
     'roles.$': {
-        type: String
+        type: String,
+        optional: true
+        // temp
     },
     // In order to avoid an 'Exception in setInterval callback' from Meteor
     heartbeat: {
