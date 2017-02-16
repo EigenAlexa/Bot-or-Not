@@ -26,6 +26,7 @@ check@1.2.4
 coffeescript@1.0.17
 cosmos:browserify@0.8.4
 cultofcoders:grapher@1.0.10
+dburles:collection-helpers@1.1.0
 dburles:mongo-collection-instances@0.3.5
 ddp@1.2.5
 ddp-client@1.2.9
