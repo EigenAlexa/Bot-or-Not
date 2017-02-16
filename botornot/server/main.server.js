@@ -38,9 +38,7 @@ Meteor.publish("availableUsers", function () {
 const sessions = {};
 Meteor.methods({
     "updateSessionDict" (session) {
-    	idString = session.keys.num.toString();
     	sessions.idString = session;
-    	console.log(session["keys"]["num"]);
     	console.log(session["keys"]["location"])
   }
 });

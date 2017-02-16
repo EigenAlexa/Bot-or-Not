@@ -15,6 +15,16 @@ ConvoSchema = new SimpleSchema({
         type: Boolean,
         label: 'botnot2',
         optional: true,
+    },
+    closed: {
+        type: Boolean,
+        label: 'closed',
+        defaultValue: false,
+    },
+    curSessions: {
+        type: Number,
+        label: 'curSessions',
+        defaultValue: 0,
     }
 });
 

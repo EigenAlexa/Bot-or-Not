@@ -10,3 +10,5 @@ import '/imports/api/messages/linker.js'
 import '/imports/api/users/linker.js'
 import '/imports/api/ratings/linker.js'
 
+// finally publications
+import '/imports/api/convos/server/publications.js'

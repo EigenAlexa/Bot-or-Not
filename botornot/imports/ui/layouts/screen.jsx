@@ -1,18 +1,13 @@
 import React, { PropTypes } from 'react';
-
-class Screen extends React.Component {
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-
-  componentDidMount() {
-  //  require('/imports/ui/layouts/layout.jsx');
-  //  Layout.currentScreenDidMount();
-  }
+import NavBar from '/imports/ui/screens/navbar.jsx';
+export default class Screen extends React.Component {
+    render() {
+        return (
+            <div>
+                <NavBar /> 
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
-export default Screen;

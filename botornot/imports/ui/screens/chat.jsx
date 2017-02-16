@@ -1,8 +1,8 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 import ChatRender from './chatRender.jsx';
-var ChatPage = React.createClass({
-  render: function() {
+export default class ChatPage extends React.Component {
+  render() {
     return (
       <div>
         <section className="section-background">
@@ -16,6 +16,5 @@ var ChatPage = React.createClass({
       </div>
     );
   }
-});
+}
 
-export default ChatPage;
