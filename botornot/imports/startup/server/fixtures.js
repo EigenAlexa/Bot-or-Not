@@ -9,4 +9,4 @@ seedCollections(collectionsToSeed, {
 });
 
 console.log(Convos.find().fetch());
-console.log(Messages.find().fetch());
+// console.log(Messages.find().fetch());

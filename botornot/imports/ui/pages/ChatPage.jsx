@@ -2,14 +2,15 @@ import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 
 export default class ChatPage extends React.Component {
-    getMeteorData() {
-        var data = {};
-        var roomId = this.props.roomId;
-        var handle = Meteor.subscribe('room', roomId);
-        if (handle.ready()){
-            data.room = Room.findOne({_id: roomId});
-        }
-        return data;
+    getContent() {
+        // Vvar data = {};
+        // var roomId = this.props.roomId;
+        // var handle = Meteor.subscribe('room', roomId);
+        // if (handle.ready()){
+        //     data.room = Room.findOne({_id: roomId});
+        // }
+        // return data;
+        return ( <div> <p>Lol</p></div> );
     }
     render() {
         return (
@@ -21,9 +22,15 @@ export default class ChatPage extends React.Component {
                     </h3>
                   </div> 
                 </section> 
-                { this.data.room? this.getContent() : <p> Please wait while we connect you to an available bot or human. </p> }
+                { !this.props.waiting? this.getContent() : <p> Please wait while we connect you to an available bot or human. </p> }
             </div>
         );
     }
 }
-
+ChatPage.propTypes = {
+    convo: React.PropTypes.object,
+    messages: React.PropTypes.array,
+    waiting: React.PropTypes.bool,
+    loading: React.PropTypes.bool,
+    convoExists: React.PropTypes.bool,
+}
