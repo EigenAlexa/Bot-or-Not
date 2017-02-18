@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Convos } from '/imports/api/convos/convos.js';
 import WaitPage from '../pages/WaitPage.jsx';
 
-export default ChatContainer = createContainer(() => {
+export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
 
     return {

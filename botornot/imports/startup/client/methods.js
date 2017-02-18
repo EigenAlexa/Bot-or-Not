@@ -1,9 +1,8 @@
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
-
+import { Debug } from '../both/debug.js';
 // import methods from convos
 import {
-    getOpenRooms,
     makeNewRoom, 
     addToRoom
 } from '/imports/api/convos/methods.js';
@@ -13,7 +12,8 @@ export const getSessionId = () => {
 }
 
 export const getARoom = () => {
-    const openRooms = getOpenRooms();
+    const openRooms = Meteor.call('convos.getOpenRooms');
+    console.log('Looking for a room');
     var roomId;
     if (openRooms.length > 1) {
         console.log('open a room');

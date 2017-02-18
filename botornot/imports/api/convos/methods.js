@@ -1,9 +1,25 @@
 import { Convos } from './convos.js';
-
-export const getOpenRooms = () => {
+Meteor.methods({
+    'convos.openrooms'() {
+        return getOpenRooms();
+    }, 
+    'convos.newRoom'() {
+        Convos.insert({
+            closed: false,
+            curSessions: 0,
+        });
+    }
+});
+function getOpenRooms() {
     // get all convos that have less than two people and aren't closed yet
     // filter all room.curssions < 2 and closed = false
-    return [];
+    convos = Convos.find({
+
+        closed: false,
+        curSessions : {$lt: 12}
+    }).fetch();
+    console.log(convos);
+    return convos;
 }
 export const makeNewRoom = () => {
     // makes a new convo and returns the roomId
