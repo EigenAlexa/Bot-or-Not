@@ -19,7 +19,7 @@ var NavBar = React.createClass({
           {/* Collect the nav links, forms, and other content for toggling */}
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav navbar-right">
-              <li className="active"><a href="index">Home</a></li>
+              <li className="active"><a href="/">Home</a></li>
               {/* TODO make the navbar into it's own tempalte */}
               <li><a href="chat">Chat</a></li>
               <li><a href="leaderboards">Leaderboards</a></li>
