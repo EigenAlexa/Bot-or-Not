@@ -18,42 +18,42 @@ FlowRouter.wait();
 FlowRouter.route('/', {
   name: 'home',
   action() {
-  		sessionUpdate("/");
+  		//sessionUpdate("/");
   		ReactLayout.render(Screen, {children: <HomePage /> });
   }
 });
 FlowRouter.route('/contact', {
 	name: 'contact',
 	action() {
-		sessionUpdate("/contact");
+		//sessionUpdate("/contact");
 		ReactLayout.render(Screen, {children: <ContactPage /> });
 	}
 });
 FlowRouter.route('/privacy', {
 	name: 'privacy',
 	action() {
-		sessionUpdate("/privacy");
+		//sessionUpdate("/privacy");
 		ReactLayout.render(Screen, {children: <PrivacyPage /> });
 	}
 });
 FlowRouter.route('/chat', {
 	name: 'chatroom',
 	action() {
-		sessionUpdate("/chat");
+		//sessionUpdate("/chat");
 		ReactLayout.render(Screen, {children: <ChatPage /> });
 	}
 });
 FlowRouter.route('/leaderboards', {
 	name: 'leaderboard',
 	action() {
-		sessionUpdate("/leaderboards");
+		//sessionUpdate("/leaderboards");
 		ReactLayout.render(Screen, {children: <LeaderboardContainer /> });
 	}
 });
 FlowRouter.route('/wait', {
 	name: 'wait',
 	action() {
-		sessionUpdate("/wait");
+		//sessionUpdate("/wait");
 		// whosHere();
         // let roomId = getARoom();
 		ReactLayout.render(Screen, {children:<WaitPageContainer />});
