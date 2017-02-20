@@ -1,33 +1,4 @@
 const Schema = {};
-Schema.UserProfile = new SimpleSchema({
-
- 	sessions: {
-		type: Number,
-		label: "Sessions",
-		defaultValue: 0,
-        optional: false
-	},
-	notratings: {
-		type: Number,
-		label: "NotRatings",
-		defaultValue: 0
-	},
-	online: {
-		type: Boolean,
-		label: "online",
-		defaultValue: false
-	},
-	in_convo: {
-		type: Boolean,
-		label: "in_convo",
-		defaultValue: false
-	},
-    violations: {
-        type: Number,
-        label: "",
-        defaultValue: 0
-    },
-});
 
 Schema.User = new SimpleSchema({
     username: {
@@ -74,10 +45,6 @@ Schema.User = new SimpleSchema({
         optional: true
         // temp
     },
-    profile: {
-        type: Schema.UserProfile,
-        optional: false
-    },
     // Make sure this services field is in your schema if you're using any of the accounts packages
     services: {
         type: Object,
@@ -113,7 +80,51 @@ Schema.User = new SimpleSchema({
     heartbeat: {
         type: Date,
         optional: true
+    },
+   	sessions: {
+  		type: Number,
+  		label: "Sessions",
+  		defaultValue: 0,
+          optional: false
+  	},
+  	notratings: {
+  		type: Number,
+  		label: "NotRatings",
+  		defaultValue: 0
+  	},
+  	online: {
+  		type: Boolean,
+  		label: "online",
+  		defaultValue: false
+  	},
+  	in_convo: {
+  		type: Boolean,
+  		label: "in_convo",
+  		defaultValue: false
+  	},
+      violations: {
+          type: Number,
+          label: "",
+          defaultValue: 0
+      },
+    rating: {
+      type: Number,
+      label: "rating",
+      defaultValue: 0
     }
+
 });
 
 Meteor.users.attachSchema(Schema.User);
+
+Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
+  if ('sessions' in fieldNames || 'notratings' in fieldNames){
+    if (doc.sessions !== this.previous.sessions || doc.notratings !== this.previous.notratings){
+      if (doc.sessions == 0){
+        doc.rating = 0;
+     } else {
+        doc.rating = Math.pow(doc.notratings, 2) / doc.sessions;
+      }
+    }
+  }
+}, {fetchPrevious: true});
