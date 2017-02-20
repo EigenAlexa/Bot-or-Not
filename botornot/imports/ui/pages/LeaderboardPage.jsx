@@ -21,8 +21,10 @@ export default class LeaderboardPage extends React.Component {
             </h2>
           </div> {/* /.container */}
         </section> {/* /.section-background */}
-      <table>    
+      <table>
+        <tbody>    
         {LeaderboardEntries}
+        </tbody>
       </table>
       </div>
     );
