@@ -27,6 +27,7 @@ export const makeNewRoom = () => {
     return 0;
 }
 
+
 export const addToRoom = (sessionId, roomId) => {
     // adds a session to the room with the id
     // if room.cursessions >= 2 after add, then set closed = true 

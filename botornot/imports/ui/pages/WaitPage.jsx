@@ -1,16 +1,14 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
-
+import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
 export default class WaitPage extends React.Component {
     getContent() {
-        // Vvar data = {};
-        // var roomId = this.props.roomId;
-        // var handle = Meteor.subscribe('room', roomId);
-        // if (handle.ready()){
-        //     data.room = Room.findOne({_id: roomId});
-        // }
-        // return data;
-        return ( <div> <p>Lol</p></div> );
+        const roomId = this.room._id;
+        console.log(roomId);
+        // render all messages
+        // render the input box
+        
+        return ( <ChatContainer params={{ id: {roomId} }}/> );
     }
     makeRoom() {
         // checks whether there is an open room and returns that. Otherwise
@@ -18,13 +16,16 @@ export default class WaitPage extends React.Component {
         console.log('making a room');
         Meteor.call('convos.newRoom');
     }
+    joinRoom() {
+        this.room = this.props.openRooms[0];
+    }
     render() {
         const { openRooms, connected, loading } = this.props;
         const noRooms = openRooms.length === 0;
         if (!loading && noRooms) {
             this.makeRoom();
         } else if (!loading && !noRooms) {
-
+            this.joinRoom();
         }
 
         return (

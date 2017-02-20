@@ -1,5 +1,6 @@
+import {Meteor} from 'meteor/meteor';
 import mongo from 'meteor/mongo';
-
+import { Messages } from '../messages/messages.js'
 ConvoSchema = new SimpleSchema({
 	length: {
 		type: Number,
@@ -28,14 +29,17 @@ ConvoSchema = new SimpleSchema({
     }
 });
 
-const Convos = new Mongo.Collection("conversations");
+const Convos = new Mongo.Collection("convos");
 Convos.attachSchema(ConvoSchema);
 
 Convos.helpers({
     messages() {
-        const messagesLink = Convos.getLink(this._id, 'messages');
-        return messagesLink.find({sort: {time : -1}});
+		const messages = Messages.find({id : this._id}, { sort : { createdAt: -1 } });
+		console.log(messages.fetch());
+		return messages;
+        // TODO fix the grapher bullshit
+		// const messagesLink = Convos.getLink(this._id, 'messages');
+        // return messagesLink.find({sort: {time : -1}});
     }
 });
-
 export { Convos };

@@ -5,7 +5,7 @@ import WaitPage from '../pages/WaitPage.jsx';
 
 export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
-
+   
     return {
         openRooms: Convos.find({}).fetch(),
         loading: !roomsHandle.ready(),

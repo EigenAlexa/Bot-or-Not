@@ -2,6 +2,7 @@ import { Convos } from './convos.js';
 import { Meteor } from 'meteor/meteor';
 import { Messages } from '../messages/messages.js';
 import { Ratings } from '../ratings/ratings.js';
+
 Convos.addLinks({
     messages: {
         type: 'many',
@@ -24,3 +25,7 @@ Convos.addLinks({
         autoremove: false,
     }
 });
+
+Convos.expose({
+});
+Messages.expose();
