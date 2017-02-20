@@ -25,6 +25,7 @@ var NavBar = React.createClass({
               <li><a href="leaderboards">Leaderboards</a></li>
               <li><a href="privacy">Privacy</a></li>
               <li><a href="contact">Contact</a></li>
+              <li><a href="signin">Sign In</a></li>
               <li><Blaze template="loginButtons" /></li>
             </ul> {/* /.nav */}
           </div>{/* /.navbar-collapse */}

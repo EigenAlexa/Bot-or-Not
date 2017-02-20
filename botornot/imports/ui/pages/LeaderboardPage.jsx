@@ -1,8 +1,15 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
+import LeaderboardEntry from '/imports/ui/components/LeaderboardEntry.jsx';
 
-var LeaderboardPage = React.createClass({
-  render: function() {
+export default class LeaderboardPage extends React.Component {
+    
+  render() {
+    LeaderboardEntries = this.props.users.map(user => ( 
+      <LeaderboardEntry 
+      key={user._id} 
+      user={user} />  
+    ));
     return (
       <div>
         <title>Bot or Not</title>
@@ -14,10 +21,14 @@ var LeaderboardPage = React.createClass({
             </h2>
           </div> {/* /.container */}
         </section> {/* /.section-background */}
-        {/* deleted end div */}
+      <table>    
+        {LeaderboardEntries}
+      </table>
       </div>
     );
   }
-});
+}
 
-export default LeaderboardPage;
+LeaderboardPage.propTypes = {
+  users: React.PropTypes.array
+}
