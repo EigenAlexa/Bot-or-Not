@@ -1,6 +1,5 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
-import ChatRender from './chatRender.jsx';
 export default class ChatPage extends React.Component {
     render() {
         return (
@@ -12,7 +11,6 @@ export default class ChatPage extends React.Component {
                     </h2>
                     </div> 
                 </section> 
-                <ChatRender />
             </div>
         );
     }

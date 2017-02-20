@@ -1,7 +1,6 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 
-import ChatRender from './chatRender.jsx';
 
 
 export default class WaitPage extends React.Component {
