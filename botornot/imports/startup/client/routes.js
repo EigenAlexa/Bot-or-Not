@@ -3,13 +3,14 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {ReactLayout} from 'meteor/kadira:react-layout';
 import {mount} from 'react-mounter';
 import Screen from '/imports/ui/layouts/screen.jsx'
-import HomePage from '/imports/ui/screens/index.jsx';
-import ContactPage from '/imports/ui/screens/contact.jsx';
-import LeaderboardPage from '/imports/ui/screens/leaderboard.jsx';
-import PrivacyPage from '/imports/ui/screens/privacy.jsx';
-import ChatPage from '/imports/ui/screens/chat.jsx';
-import WaitPage from '/imports/ui/screens/wait.jsx';
+import HomePage from '/imports/ui/pages/HomePage.jsx';
+import ContactPage from '/imports/ui/pages/ContactPage.jsx';
+import LeaderboardContainer from '/imports/ui/containers/LeaderboardPageContainer.jsx';
+import PrivacyPage from '/imports/ui/pages/PrivacyPage.jsx';
+import ChatPage from '/imports/ui/pages/ChatPage.jsx';
+import WaitPage from '/imports/ui/pages/WaitPage.jsx';
 import WaitPageContainer from '/imports/ui/containers/WaitPageContainer.jsx';
+//import SignInPage from '/imports/ui/pages/SignInPage.jsx';
 import { Session } from 'meteor/session';
 import { getARoom } from '/imports/startup/client/methods.js';
 FlowRouter.wait();
@@ -46,7 +47,7 @@ FlowRouter.route('/leaderboards', {
 	name: 'leaderboard',
 	action() {
 		sessionUpdate("/leaderboards");
-		ReactLayout.render(Screen, {children: <LeaderboardPage /> });
+		ReactLayout.render(Screen, {children: <LeaderboardContainer /> });
 	}
 });
 FlowRouter.route('/wait', {
@@ -58,7 +59,14 @@ FlowRouter.route('/wait', {
 		ReactLayout.render(Screen, {children:<WaitPageContainer />});
 	}
 });
-
+/*FlowRouter.route('/signin', {
+  name: 'signin',
+  action() {
+    sessionUpdate('/signin');
+    ReactLayout.render(Screen, {children: <SignInPage />});
+  }
+}); 
+*/
 function whosHere(){
 
 }
