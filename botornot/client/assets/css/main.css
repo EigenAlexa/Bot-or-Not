@@ -477,3 +477,14 @@ footer a:hover, footer a:focus{
 		padding-left: 15px;
 	}
 }
+
+
+/* ==============================
+ * LEADERBOARD 
+ * */
+
+.leaderboard-entries {
+  color: #969595;
+  text-align: center;
+  vertical-align: middle;
+} 
