@@ -26,7 +26,19 @@ ConvoSchema = new SimpleSchema({
         type: Number,
         label: 'curSessions',
         defaultValue: 0,
-    }
+    },
+  msgs: {
+    type: [String],
+    label: 'msgs',
+    defaultValue: [],
+    minCount: 0
+  },
+  users: {
+    type: [String],
+    label: 'users',
+    defaultValue: [],
+    minCount: 0
+  },
 });
 
 const Convos = new Mongo.Collection("convos");
@@ -34,9 +46,12 @@ Convos.attachSchema(ConvoSchema);
 
 Convos.helpers({
     messages() {
-		const messages = Messages.find({id : this._id}, { sort : { createdAt: -1 } });
-		console.log(messages.fetch());
-		return messages;
+    if (!!this.msgs){
+		  const messages = Messages.find({convoId: this._id}).fetch();
+		  return messages;
+    }else{
+      return [];
+    }
         // TODO fix the grapher bullshit
 		// const messagesLink = Convos.getLink(this._id, 'messages');
         // return messagesLink.find({sort: {time : -1}});

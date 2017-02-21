@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import Message from '/imports/ui/components/Message.jsx';
 
 export default class Chat extends React.Component {
     getContent() {
@@ -6,22 +8,40 @@ export default class Chat extends React.Component {
             return (<div> <p>404'd</p> </div>);
         }
         messages = this.props.messages;
-        Messages = messages.map(msg => (
+        Messages = messages.map(msg => { 
+          user = Meteor.users.findOne({_id: msg.user}).username;
+          return(
             <Message 
-                msg={msg} 
-                author={msg.author}
-                text={msg.text}
+                key={msg._id}
+                msg={msg.message} 
+                author={user}
             />
-        ));
-        return (<div> {Messages} </div>);
+        )});
+
+        return (<div> <p>Messages:</p>{Messages}
+                  {this.renderChatInput()} 
+                  </div>);
     }
     getLoadingPage() {
-        return (<div> <h1>sd</h1></div>);
+        return (<div> <h1>Loading, hang tight.</h1></div>);
     }
-    
-    render() {
-        const { messages, loading, roomExists, connected }  = this.props;
+    handleSubmit(event) {
+      event.preventDefault();
 
+      const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+
+      Meteor.call('convos.updateChat', text, this.props.room._id);
+      ReactDOM.findDOMNode(this.refs.textInput).value = '';
+    }
+
+    renderChatInput(){
+      return (
+          <form className="textForm" onSubmit={this.handleSubmit.bind(this)}>
+          <input type="text" ref="textInput" placeholder="Type to send message"/>
+          </form>);
+    } 
+    render() {
+        const { room, messages, loading, roomExists, connected }  = this.props;
         return loading ? this.getLoadingPage() : this.getContent();
     }
 }

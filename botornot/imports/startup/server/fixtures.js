@@ -9,12 +9,12 @@ Meteor.startup(() => {
         Messages.remove({});
         Convos.remove({});
     }
-    seedCollections(collectionsToSeed, {
+    Meteor.users.update({}, {$set:{in_convo: false}, multi: true});
+  /**  seedCollections(collectionsToSeed, {
       numItemsPerCollection : 15,
-    });
+    }); **/
 
     if (Convos.find().count() === 0) {
-        const messages = Messages.find({}).fetch();
         const data = [
             {
                 length : 0,
@@ -22,18 +22,16 @@ Meteor.startup(() => {
                 botnot2: false,
                 closed: false,
                 curSessions: 1,
-                msg: messages.slice(0, 5)
             },
             {
-                length: 10,
+                length: 2,
                 botnot1: false,
                 botnot2: false,
                 closed: true, 
                 curSessions: 2,
-                msg: messages.slice(5, 10)
             },
         ];
-        
+        var convoIds = []; 
         data.forEach((conv) => {
             const convoId = Convos.insert({
                 length : conv.length,
@@ -41,11 +39,36 @@ Meteor.startup(() => {
                 botnot2: conv.botnot2,
                 closed: conv.closed,
                 curSessions: conv.curSessions,
+                msgs: []
             });
-            const msgLinks = Convos.getLink(convoId, 'messages');
-            msgLinks.add(conv.msg);
-
+            convoIds.push(convoId);
+            //const msgLinks = Convos.getLink(convoId, 'messages');
+            //msgLinks.add(conv.msg);
         });
+
+      const msgs = [
+        {
+          user: "james",
+          message: "hello",
+          convoId: convoIds[1], 
+        },
+        {
+          user: "will",
+          message: "dick balls",
+          convoId: convoIds[1],
+        }
+      ];
+      msgs.forEach((msg) => {
+        const msgId = Messages.insert({
+          user: msg.user,
+          message: msg.message,
+          time: Date.now(),
+          convoId: msg.convoId
+        });
+        console.log(Convos.update({_id: msg.convoId}, {
+          $push: {msgs: msgId}
+        }));
+      });
     } else {
         console.log('Convos already populated, skipping');
     }

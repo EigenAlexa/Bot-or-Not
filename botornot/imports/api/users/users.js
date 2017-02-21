@@ -111,7 +111,12 @@ Schema.User = new SimpleSchema({
       type: Number,
       label: "rating",
       defaultValue: 0
-    }
+    },
+  curConvo: {
+    type: String,
+    label: 'curConvo',
+    defaultValue: ""
+  }
 
 });
 

@@ -487,4 +487,13 @@ footer a:hover, footer a:focus{
   color: #969595;
   text-align: center;
   vertical-align: middle;
-} 
+}
+
+/* ==============================
+ * CHAT
+ * */
+
+.wrapper-message {
+  color: #969595;
+  text-align: center;
+}

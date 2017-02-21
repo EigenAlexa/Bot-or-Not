@@ -1,15 +1,15 @@
 import React from 'react';
 
-const Message = ({ title, subtitle }) => (
+const Message = ({ msg, author }) => (
   <div className="wrapper-message">
-    {title ? <div className="title-message">{title}</div> : null}
-    {subtitle ? <div className="subtitle-message">{subtitle}</div> : null}
+    {author ? <div className="message-author">{author}: </div> : null}
+    {msg ? <div className="message-message">{msg}</div> : null}
   </div>
 );
 
 Message.propTypes = {
-  title: React.PropTypes.string,
-  subtitle: React.PropTypes.string,
+  msg: React.PropTypes.string,
+  author: React.PropTypes.string,
 };
 
 export default Message;

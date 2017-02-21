@@ -21,7 +21,7 @@ var NavBar = React.createClass({
             <ul className="nav navbar-nav navbar-right">
               <li className="active"><a href="/">Home</a></li>
               {/* TODO make the navbar into it's own tempalte */}
-              <li><a href="chat">Chat</a></li>
+              <li><a href="wait">Chat</a></li>
               <li><a href="leaderboards">Leaderboards</a></li>
               <li><a href="privacy">Privacy</a></li>
               <li><a href="contact">Contact</a></li>

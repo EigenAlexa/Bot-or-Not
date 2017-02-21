@@ -1,4 +1,5 @@
 import { Convos } from './convos.js';
+import { Messages } from '../messages/messages.js';
 Meteor.methods({
     'convos.openrooms'() {
         return getOpenRooms();
@@ -8,6 +9,28 @@ Meteor.methods({
             closed: false,
             curSessions: 0,
         });
+    },
+    'convos.updateChat'(text, convoId) {
+      const msgId = Messages.insert({
+        user: Meteor.userId(),
+        message: text,
+        time: Date.now(),
+        convoId: convoId
+      });
+      Convos.update({_id: convoId}, {
+        $push: {msgs: msgId},
+        $inc: {length: 1}
+      });
+      console.log(Messages.find({convoId: convoId}).fetch());
+    },
+    'convos.addUserToRoom'(userId, convoId) {
+      Convos.update({_id: convoId}, {
+        $push: {users: userId},
+        $inc: {curSessions: 1}
+      });
+      Meteor.users.update({_id: userId}, {
+        $set: {in_convo: true, curConvo: convoId}
+      });
     }
 });
 function getOpenRooms() {

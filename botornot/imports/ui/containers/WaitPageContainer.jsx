@@ -5,10 +5,12 @@ import WaitPage from '../pages/WaitPage.jsx';
 
 export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
-   
+    const userHandle = Meteor.subscribe('currentUser', Meteor.userId());
+    const user = Meteor.users.findOne({_id: Meteor.userId()});
     return {
-        openRooms: Convos.find({}).fetch(),
-        loading: !roomsHandle.ready(),
+      openRooms: Convos.find({curSessions: {$lt: 2}, closed: false}).fetch(),
+        loading: !roomsHandle.ready() || !userHandle.ready(),
         connected : Meteor.status().connected,
+        user: user 
 	};
 }, WaitPage);

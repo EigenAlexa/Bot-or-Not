@@ -13,6 +13,5 @@ Meteor.publish('openrooms', () => {
     }, { fields :{
         curSessions: 1,
         closed : 1,
-		messageId: 1,
     }});
 });

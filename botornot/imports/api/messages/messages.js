@@ -11,7 +11,10 @@ MessageSchema = new SimpleSchema({
 	},
 	time: {
 		type: Date
-	}
+	},
+  convoId: {
+    type: String
+  }
 });
 
 const Messages  = new Mongo.Collection("messages");
