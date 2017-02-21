@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-import '/imports/startup/client/routes.js';
+import '/imports/startup/both';
+import '/imports/startup/client';
 
 
 Meteor.startup(function() {

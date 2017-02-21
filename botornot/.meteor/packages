@@ -24,7 +24,6 @@ twbs:bootstrap@3.3.6
 kadira:flow-router
 kadira:react-layout
 gadicc:blaze-react-component
-accounts-ui
 accounts-facebook
 accounts-password
 session
@@ -32,3 +31,8 @@ templating
 maxjohansen:collection-faker
 dburles:collection-helpers
 cultofcoders:grapher
+useraccounts:bootstrap
+gwendall:blaze-to-react
+kadira:blaze-layout
+modules
+check
