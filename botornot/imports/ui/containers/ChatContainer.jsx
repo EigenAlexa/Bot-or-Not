@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+
 import { Convos } from '/imports/api/convos/convos.js';
+
 import Chat from '/imports/ui/components/Chat.jsx';
 import { Messages } from '/imports/api/messages/messages.js';
 
