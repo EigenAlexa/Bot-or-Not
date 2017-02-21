@@ -6,4 +6,7 @@ export class Debug {
             console.log(string);
         }
     }
+    static resetDb() {
+        return !!Meteor.settings.ResetDb;
+    }
 }

@@ -12,9 +12,9 @@ export default class LeaderboardEntry extends React.Component {
     content = this.getContent();
     console.log(content);
     return (
-        <tr>
-          <td>{content.username}</td>
-          <td>{content.rating}</td>
+        <tr className="row">
+          <td className="col-md-1">{content.username}</td>
+          <td className="col-md-1">{content.rating}</td>
         </tr>
     );
 

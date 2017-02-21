@@ -3,14 +3,19 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Convos } from '/imports/api/convos/convos.js';
 
-import WaitPage from '../pages/WaitPage.jsx';
+import Chat from '/imports/ui/components/Chat.jsx';
 
-export default ChatContainer = createContainer(() => {
-    const roomsHandle = Meteor.subscribe('openrooms');
-
+export default ChatContainer = createContainer(({ params: { id } }) => {
+    const roomHandle = Meteor.subscribe('chat', { roomId : id });
+    const loading = !roomHandle.ready();
+    const room = Convos.findOne();
+    const roomExists = !loading && !!room;
+    const connected = Meteor.status().connected;
     return {
-        openRooms: Convos.find({}).fetch(),
-        loading: !roomsHandle.ready(),
-        connected : Meteor.status().connected,
+        room,
+        loading,
+        roomExists,
+        connected,
+        messages : roomExists ? room.messages().fetch() : [],
 	};
-}, WaitPage);
+}, Chat);

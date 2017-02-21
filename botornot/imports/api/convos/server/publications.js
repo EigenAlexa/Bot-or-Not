@@ -1,12 +1,9 @@
 import { Convos } from '../convos.js'
 
-Meteor.publish('room', (roomId) => {
+Meteor.publish('chat', (roomId) => {
     return Convos.find({
         _id: roomId,
-    }, { fields: {
-        curSessions : 1,
-        closed : 1
-    }});
+    });
 });
 
 Meteor.publish('openrooms', () => {
@@ -15,6 +12,7 @@ Meteor.publish('openrooms', () => {
         closed : false
     }, { fields :{
         curSessions: 1,
-        closed : 1
+        closed : 1,
+		messageId: 1,
     }});
 });

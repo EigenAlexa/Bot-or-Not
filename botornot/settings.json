@@ -1,5 +1,5 @@
-{
-        "SeedDatabase" : true,
-            "Debug" : true
+{ 
+    "SeedDatabase" : true,
+    "ResetDb" : true,
+    "Debug" : true
 }
-
