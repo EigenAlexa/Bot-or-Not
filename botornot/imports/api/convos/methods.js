@@ -24,8 +24,8 @@ Meteor.methods({
       console.log(Messages.find({convoId: convoId}).fetch());
     },
     'convos.addUserToRoom'(userId, convoId) {
-      Convos.update({_id: convoId, users: {$nin: [userId]}}, {
-        $push: {users: userId},
+      Convos.update({_id: convoId, users: {$nin: [{id: userId, ratedBot: false}]}}, {
+        $push: {users: {id: userId, ratedBot: false}},
         $inc: {curSessions: 1}
       });
       Meteor.users.update({_id: userId}, {
@@ -34,8 +34,8 @@ Meteor.methods({
     },
     'convos.finishConvoUsers'(convoId) {
       convo = Convos.findOne({_id: convoId});
-      convo.users.forEach( (userId) => {
-        Meteor.users.update({_id: userId}, {
+      convo.users.forEach( (user) => {
+        Meteor.users.update({_id: user.id}, {
           $set: {left: false, in_convo: false}
         });
       });
@@ -47,12 +47,38 @@ Meteor.methods({
     },
     'convos.finishConvoUserLeft'(convoId){
       convo = Convos.findOne({_id: convoId});
-      convo.users.forEach( (userId) => {
-        Meteor.users.update({_id: userId}, {
+      convo.users.forEach( (user) => {
+        Meteor.users.update({_id: user.id}, {
           $set: {in_convo: false, left: true}
         });
       });
-    }
+    },
+    'convos.updateRatings'(convoId, userId, rating){
+      convo = Convos.findOne({_id: convoId});
+      users = convo.users.filter((user) => {
+        return user.id !== userId;
+      }).map((user) => {
+        return user.id
+      });
+      if(!!users){
+        if(rating == 'not'){
+          Meteor.users.update({_id: users[0]}, {
+            $inc: {sessions: 1, notratings: 1}
+          });
+          Convos.update({_id: convoId, "users.id": users[0]}, {
+            $set: {"users.$.ratedBot": false}
+          });
+        } else if (rating == 'bot'){
+          Meteor.users.update({_id: users[0]}, {
+            $inc: {sessions: 1}
+          });
+          Convos.update({_id: convoId, "users.id": users[0]}, {
+            $set: {"users.$.ratedBot": true}
+          }); 
+        }
+      }
+
+    },
 });
 function getOpenRooms() {
     // get all convos that have less than two people and aren't closed yet

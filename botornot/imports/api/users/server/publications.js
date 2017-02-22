@@ -16,7 +16,8 @@ Meteor.publishComposite('currentUsers', (convoId) => {
     },
     children: [{ 
       find(convo) {
-        return Meteor.users.find({_id: {$in: convo.users}}, {
+        users = convo.users.map((user) => (user.id));
+        return Meteor.users.find({_id: {$in: users}}, {
           fields: {username: 1, in_convo: 1, curConvo:1}                
         });
       }
@@ -32,7 +33,7 @@ Meteor.publish('currentUser', (userId) => {
   })];
   session.socket.on('close', Meteor.bindEnvironment(() => {
     console.log(userId, " left");
-    query = {closed: false, users: {$in: [userId]}};
+    query = {closed: false, users: {$in: [{id: userId, ratedBot: false}]}};
     convo = Convos.findOne(query);
     Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);

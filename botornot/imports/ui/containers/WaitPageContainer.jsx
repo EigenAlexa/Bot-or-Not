@@ -9,6 +9,9 @@ export default WaitContainer = createContainer(() => {
     const userCursor = Meteor.users.find({_id: Meteor.userId()});
     userCursor.observe({
       changed: (newUser, oldUser) => {
+        if (!newUser){
+          return;
+        }
         if (!newUser.in_convo && oldUser.in_convo){
           console.log("callback for user leaving: " + newUser._id);
           FlowRouter.go('closed', {}, {convoId: oldUser.curConvo, userLeft: newUser.left});

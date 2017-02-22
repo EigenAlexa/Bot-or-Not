@@ -1,6 +1,20 @@
 import {Meteor} from 'meteor/meteor';
 import mongo from 'meteor/mongo';
 import { Messages } from '../messages/messages.js'
+
+UserSchema = new SimpleSchema({
+  id: {
+    type: String,
+    label: "id",
+    defaultValue: "",
+  },
+  ratedBot: {
+    type: Boolean,
+    label: "ratedBot",
+    defaultValue: false,
+  }
+});
+
 ConvoSchema = new SimpleSchema({
 	length: {
 		type: Number,
@@ -34,7 +48,7 @@ ConvoSchema = new SimpleSchema({
     minCount: 0
   },
   users: {
-    type: [String],
+    type: [UserSchema],
     label: 'users',
     defaultValue: [],
     minCount: 0

@@ -110,6 +110,7 @@ Schema.User = new SimpleSchema({
     rating: {
       type: Number,
       label: "rating",
+      decimal: true,
       defaultValue: 0
     },
   curConvo: {
@@ -127,13 +128,14 @@ Schema.User = new SimpleSchema({
 Meteor.users.attachSchema(Schema.User);
 
 Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
-  if ('sessions' in fieldNames || 'notratings' in fieldNames){
-    if (doc.sessions !== this.previous.sessions || doc.notratings !== this.previous.notratings){
-      if (doc.sessions == 0){
-        doc.rating = 0;
-     } else {
-        doc.rating = Math.pow(doc.notratings, 2) / doc.sessions;
-      }
+  console.log(fieldNames);
+  if (fieldNames.indexOf('sessions') > -1 || fieldNames.indexOf('notratings') > -1){
+    if (doc.sessions == 0){
+      doc.rating = 0;
+    } else {
+      doc.rating = Math.pow(doc.notratings, 2) / doc.sessions;
     }
+    console.log("doc.rating", doc.rating);
+    Meteor.users.update({_id: doc._id}, { $set: {rating: doc.rating}});
   }
-}, {fetchPrevious: true});
+}, {fetchPrevious: false});
