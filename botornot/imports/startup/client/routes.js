@@ -14,7 +14,7 @@ import LeaderboardContainer from '/imports/ui/containers/LeaderboardPageContaine
 import PrivacyPage from '/imports/ui/pages/PrivacyPage.jsx';
 import AccountsPage from '/imports/ui/pages/AccountsPage.jsx';
 import WaitPageContainer from '/imports/ui/containers/WaitPageContainer.jsx';
-
+import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 
 //import SignInPage from '/imports/ui/pages/SignInPage.jsx';
 import { getARoom } from '/imports/startup/client/methods.js';
@@ -65,9 +65,10 @@ FlowRouter.route("/logout", {
 
 FlowRouter.route("/closed", {
   name: "closed",
-  action(){
-    console.log("Chat closed redirecting to home");
-    FlowRouter.redirect("/");
+  action(params, queryParams){
+    console.log("Chat closed");
+    console.log(params, queryParams);
+    ReactLayout.render(Screen, {children: <ClosedPageContainer params={{roomId: queryParams.convoId, userLeft: queryParams.userLeft}}/> }); 
   }
 
 });

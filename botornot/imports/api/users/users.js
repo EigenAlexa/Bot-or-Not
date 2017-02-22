@@ -116,8 +116,12 @@ Schema.User = new SimpleSchema({
     type: String,
     label: 'curConvo',
     defaultValue: ""
-  }
-
+  },
+  left: {
+    type: Boolean,
+    label: 'left',
+    defaultValue: true
+  },
 });
 
 Meteor.users.attachSchema(Schema.User);

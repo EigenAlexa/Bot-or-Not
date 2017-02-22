@@ -31,6 +31,27 @@ Meteor.methods({
       Meteor.users.update({_id: userId}, {
         $set: {in_convo: true, curConvo: convoId}
       });
+    },
+    'convos.finishConvoUsers'(convoId) {
+      convo = Convos.findOne({_id: convoId});
+      convo.users.forEach( (userId) => {
+        Meteor.users.update({_id: userId}, {
+          $set: {left: false, in_convo: false}
+        });
+      });
+    },
+    'convos.finishConvo'(convoId){
+      Convos.update({_id: convoId}, {
+        $set: {closed: true, curSession: 0}
+      });
+    },
+    'convos.finishConvoUserLeft'(convoId){
+      convo = Convos.findOne({_id: convoId});
+      convo.users.forEach( (userId) => {
+        Meteor.users.update({_id: userId}, {
+          $set: {in_convo: false, left: true}
+        });
+      });
     }
 });
 function getOpenRooms() {

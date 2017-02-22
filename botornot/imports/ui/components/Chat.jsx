@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Message from '/imports/ui/components/Message.jsx';
+import { Convos } from '/imports/api/convos/convos.js';
 
 export default class Chat extends React.Component {
     getContent() {
@@ -42,7 +43,7 @@ export default class Chat extends React.Component {
           <form className="textForm" onSubmit={this.handleSubmit.bind(this)}>
           <input type="text" ref="textInput" placeholder="Type to send message"/>
           </form>);
-    } 
+    }
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;
         return loading ? this.getLoadingPage() : this.getContent();
