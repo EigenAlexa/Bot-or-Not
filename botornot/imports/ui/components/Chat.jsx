@@ -7,8 +7,11 @@ export default class Chat extends React.Component {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
         }
+        console.log(this.props.room);
         messages = this.props.messages;
-        Messages = messages.map(msg => { 
+        Messages = messages.map(msg => {
+          console.log("Loading: " + this.props.loading)
+          console.log(Meteor.users.find().fetch());
           user = Meteor.users.findOne({_id: msg.user}).username;
           return(
             <Message 

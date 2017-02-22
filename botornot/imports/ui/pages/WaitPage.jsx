@@ -4,9 +4,10 @@ import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
 export default class WaitPage extends React.Component {
     getContent() {
         const roomId = this.room._id;
+        const userId = Meteor.userId();
         // render all messages
         // render the input box
-        return ( <ChatContainer params={{ id: {roomId} }}/> );
+        return ( <ChatContainer params={{ id: {room: roomId, user: userId} }}/> );
     }
     makeRoom() {
         // checks whether there is an open room and returns that. Otherwise
@@ -16,6 +17,7 @@ export default class WaitPage extends React.Component {
     }
     joinRoom() {
         console.log('joining a room');
+        console.log(this.props.openRooms);
         this.room = this.props.openRooms[0];
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
@@ -23,18 +25,16 @@ export default class WaitPage extends React.Component {
         const { openRooms, connected, loading, user } = this.props;
         if(!loading && !!user){
           console.log(user);
-         const noRooms = openRooms.length === 0 && !user.in_convo;
-         console.log(noRooms);
-         if (!loading && noRooms && !user.in_convo) {
-              this.makeRoom();
-          } else if (!loading && !noRooms && !user.in_convo) {
-              this.joinRoom();
+          noRooms = openRooms.length === 0 && !user.in_convo;
+          if (noRooms) {
+            this.makeRoom();
+          } else if (!user.in_convo) {
+            this.joinRoom();
           }
-         if (user.in_convo){
+          if (user.in_convo){
             this.room = {_id: user.curConvo}; 
-         }
-         inconvo = user.in_convo;
-        
+          } 
+          inconvo = user.in_convo;
         }else{
           noRooms = true;
           inconvo = false;

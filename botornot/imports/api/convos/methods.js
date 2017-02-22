@@ -24,7 +24,7 @@ Meteor.methods({
       console.log(Messages.find({convoId: convoId}).fetch());
     },
     'convos.addUserToRoom'(userId, convoId) {
-      Convos.update({_id: convoId}, {
+      Convos.update({_id: convoId, users: {$nin: [userId]}}, {
         $push: {users: userId},
         $inc: {curSessions: 1}
       });

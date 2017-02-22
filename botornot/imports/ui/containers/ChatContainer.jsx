@@ -7,11 +7,11 @@ import Chat from '/imports/ui/components/Chat.jsx';
 import { Messages } from '/imports/api/messages/messages.js';
 
 export default ChatContainer = createContainer(({ params: { id } }) => {
-    const roomHandle = Meteor.subscribe('chat', id.roomId);
-    const msgHandle = Meteor.subscribe('msgs', id.roomId);
-    const userHandle = Meteor.subscribe('currentUsers', id.roomId);
+    const roomHandle = Meteor.subscribe('chat', id.room);
+    const msgHandle = Meteor.subscribe('msgs', id.room);
+    const room = Convos.findOne({_id: id.room});
+    const userHandle = Meteor.subscribe('currentUsers', id.room);
     const loading = !roomHandle.ready() || !msgHandle.ready() || !userHandle.ready();
-    const room = Convos.findOne({_id: id.roomId});
     const roomExists = !loading && !!room;
     const connected = Meteor.status().connected;
     return {

@@ -35,3 +35,5 @@ gwendall:blaze-to-react
 kadira:blaze-layout
 modules
 check
+socialize:user-presence
+reywood:publish-composite

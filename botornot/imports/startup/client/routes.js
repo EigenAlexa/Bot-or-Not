@@ -63,6 +63,15 @@ FlowRouter.route("/logout", {
   }
 });
 
+FlowRouter.route("/closed", {
+  name: "closed",
+  action(){
+    console.log("Chat closed redirecting to home");
+    FlowRouter.redirect("/");
+  }
+
+});
+
 
 // UserAccounts Routes
 AccountsTemplates.configureRoute("changePwd");

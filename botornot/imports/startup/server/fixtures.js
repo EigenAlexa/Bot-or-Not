@@ -6,10 +6,13 @@ import { Debug } from '/imports/startup/both/debug.js';
 const collectionsToSeed = [Messages];
 Meteor.startup(() => {
     if (Debug.resetDb()) {
-        Messages.remove({});
-        Convos.remove({});
+      Messages.remove({});
+      Convos.remove({});
+      Meteor.users.find().forEach( (user) => {
+        console.log(Meteor.users.update({_id: user._id}, {$set:{in_convo: false}}));
+      });    
     }
-    Meteor.users.update({}, {$set:{in_convo: false}, multi: true});
+
   /**  seedCollections(collectionsToSeed, {
       numItemsPerCollection : 15,
     }); **/
@@ -21,7 +24,7 @@ Meteor.startup(() => {
                 botnot1: false,
                 botnot2: false,
                 closed: false,
-                curSessions: 1,
+                curSessions: 0,
             },
             {
                 length: 2,

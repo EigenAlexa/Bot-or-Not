@@ -7,9 +7,7 @@ export default class Screen extends React.Component {
                 <header>
                     <NavBarContainer /> 
                 </header>
-                <body>
                     {this.props.children}
-                </body>
             </div>
         );
     }

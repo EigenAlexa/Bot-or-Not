@@ -1,4 +1,4 @@
-
+import { Meteor } from 'meteor/meteor';
 /**Meteor.methods({
   'users.getTopN'(N) {
     cursor = Meteor.users.find({}, {
@@ -9,3 +9,9 @@
   }
 });
 */
+/***
+UserPresence.onSessionDisconnected((connection) => {
+  console.log(connection);
+  console.log(Meteor.server.sessions);
+});
+**/
