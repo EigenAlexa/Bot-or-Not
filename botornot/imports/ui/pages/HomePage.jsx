@@ -20,9 +20,6 @@ var HomePage = React.createClass({
                 <h1 className="header-title">
                   <span>Bot</span> or Not
                 </h1>
-                <p className="header-sub-title">
-                  lick.
-                </p>
                 <a className="btn custom-btn" href='/wait'>
                   Start Chatting</a>
               </div>
