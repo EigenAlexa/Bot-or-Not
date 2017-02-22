@@ -1,5 +1,6 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
+import Blaze from 'meteor/gadicc:blaze-react-component';
 
 export default class ClosedPage extends React.Component {
   renderUserLeft() {
@@ -15,12 +16,18 @@ export default class ClosedPage extends React.Component {
   }
 
   renderNotUserLeft() {
+    let links = {
+      url: "http://botornot.ml/",
+      title: "BotOrNot",
+    }
     console.log(this);
+      // <Blaze template="shareit" />
     return (
       <div>
       <p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
       <button name="bot" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Bot</button>
       <button name="not" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Not</button>
+		  {blazeToReact('shareit')(links)}
       </div>
     );
   }
