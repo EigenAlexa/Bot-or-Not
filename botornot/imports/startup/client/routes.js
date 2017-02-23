@@ -12,8 +12,9 @@ import HomePage from '/imports/ui/pages/HomePage.jsx';
 import ContactPage from '/imports/ui/pages/ContactPage.jsx';
 import LeaderboardContainer from '/imports/ui/containers/LeaderboardPageContainer.jsx';
 import PrivacyPage from '/imports/ui/pages/PrivacyPage.jsx';
-import AccountsPage from '/imports/ui/pages/AccountsPage.jsx';
+// import AccountsPage from '/imports/ui/pages/AccountsPage.jsx';
 import WaitPageContainer from '/imports/ui/containers/WaitPageContainer.jsx';
+import AccountPageContainer from '/imports/ui/containers/AccountPageContainer.jsx';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 
 //import SignInPage from '/imports/ui/pages/SignInPage.jsx';
@@ -53,6 +54,12 @@ FlowRouter.route('/wait', {
 	}
 });
 
+FlowRouter.route('/profile/:username', {
+	name: 'profile',
+	action(params, queryParams) {
+		ReactLayout.render(Screen, {children:<AccountPageContainer params={{ params: params}} />});
+	}
+});
 
 FlowRouter.route("/logout", {
   name: "logout",
