@@ -9,6 +9,7 @@ var NavBar = React.createClass({
   navLinks() {
     if (!Meteor.loggingIn() && Meteor.user()) {
       console.log(this.user());
+      const username = this.user().username;
       return (
         <ul className="nav navbar-nav navbar-right">
           <li><a href="/">Home</a></li>
@@ -16,7 +17,7 @@ var NavBar = React.createClass({
           <li><a href="/leaderboards">Leaderboards</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/profile">{this.user().username}</a></li>
+          <li><a href={"/profile/" + username}>{username}</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul> 
       );
