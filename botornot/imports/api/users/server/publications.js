@@ -8,6 +8,10 @@ Meteor.publish('topNUsers', (N) => {
   });
 });
 
+Meteor.publish('users.ratings', () => {
+    return Meteor.users.find({}, { fields :{ rating : 1} });
+});
+
 Meteor.publishComposite('currentUsers', (convoId) => {
   //convo = Convos.findOne({users: {$in: [userId]}});
   return {
@@ -48,3 +52,12 @@ Meteor.publish('currentUser', (userId) => {
   return user;
 });
 
+Meteor.publish('userProfile', (username) => {
+  return Meteor.users.find({username: username,}, {
+    fields: { 
+      username: 1,
+      notratings: 1,
+      sessions: 1,
+      rating: 1,
+  }});
+});

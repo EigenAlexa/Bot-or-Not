@@ -16,7 +16,7 @@ var NavBar = React.createClass({
           <li><a href="leaderboards">Leaderboards</a></li>
           <li><a href="privacy">Privacy</a></li>
           <li><a href="contact">Contact</a></li>
-          <li><a href="#profile">{this.user().username}</a></li>
+          <li><a href="/profile">{this.user().username}</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul> 
       );
