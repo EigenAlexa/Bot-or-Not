@@ -52,5 +52,6 @@ Meteor.publish('userProfile', (username) => {
       notratings: 1,
       sessions: 1,
       rating: 1,
+      profPic: 1,
   }});
 });

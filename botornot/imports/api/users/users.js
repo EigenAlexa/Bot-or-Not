@@ -81,6 +81,7 @@ Schema.User = new SimpleSchema({
         type: Date,
         optional: true
     },
+    // CUSTOM SCHEMA
    	sessions: {
   		type: Number,
   		label: "Sessions",
@@ -122,6 +123,11 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'left',
     defaultValue: true
+  },
+  profPic: {
+    type: String,
+    label: 'profPic',
+    defaultValue: 'http://www.aspirehire.co.uk/aspirehire-co-uk/_img/profile.svg'
   },
 });
 
