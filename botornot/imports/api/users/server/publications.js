@@ -60,5 +60,6 @@ Meteor.publish('userProfile', (username) => {
       sessions: 1,
       rating: 1,
       profPic: 1,
+      badges: 1,
   }});
 });
