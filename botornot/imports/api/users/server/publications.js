@@ -26,6 +26,10 @@ Meteor.publishComposite('currentUsers', (convoId) => {
 });
 
 Meteor.publish('currentUser', (userId) => {
+  if(!userId){
+    console.log("no user");
+    return [];
+  }
   user = Meteor.users.find({_id: userId}, 
       {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1}});
   session = Meteor.server.sessions[Object.keys(Meteor.server.sessions).filter((key) => {
