@@ -1,6 +1,7 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
+
 export default class WaitPage extends React.Component {
     getContent() {
         const roomId = this.room._id;

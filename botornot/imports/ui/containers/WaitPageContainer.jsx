@@ -6,6 +6,7 @@ import WaitPage from '../pages/WaitPage.jsx';
 export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
     const userHandle = Meteor.subscribe('currentUser', Meteor.userId());
+    console.log('curuserid', Meteor.userId());
     const userCursor = Meteor.users.find({_id: Meteor.userId()});
     userCursor.observe({
       changed: (newUser, oldUser) => {
