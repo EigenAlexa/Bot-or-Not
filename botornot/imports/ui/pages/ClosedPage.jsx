@@ -11,7 +11,6 @@ export default class ClosedPage extends React.Component {
     console.log(target.name);
     Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
     FlowRouter.go('/');
-
   }
 
   renderNotUserLeft() {
@@ -41,11 +40,11 @@ export default class ClosedPage extends React.Component {
   render() {
     const { room, connected, loading, userLeft } = this.props;
     if(!loading && userLeft){
-      return this.renderBoilerPlate(loading, this.renderUserLeft);     
+      return this.renderUserLeft();     
     } else if(!loading && !userLeft){
-      return this.renderBoilerPlate(loading, this.renderNotUserLeft);        
+      return this.renderNotUserLeft();        
     } else {
-      return this.renderBoilerPlate(true, null);
+      return (<p> Hang on a tick, this page is loading </p>);
     }
   }
 }

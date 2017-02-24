@@ -123,6 +123,11 @@ Schema.User = new SimpleSchema({
     label: 'left',
     defaultValue: true
   },
+  convoClosed: {
+    type: Boolean,
+    label: 'convoClosed',
+    defaultValue: false
+  },
 });
 
 Meteor.users.attachSchema(Schema.User);

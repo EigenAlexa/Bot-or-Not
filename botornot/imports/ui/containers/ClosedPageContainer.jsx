@@ -7,11 +7,11 @@ export default ClosedContainer = createContainer(({ params }) => {
   const { roomId, userLeft } = params;  
   const roomHandle = Meteor.subscribe('chat', roomId);
   const usersHandle = Meteor.subscribe('currentUsers', roomId);
-  console.log(roomId, !!userLeft);
+  console.log(roomId, userLeft);
   return {
     room: Convos.findOne({_id: roomId}),
     loading: !roomHandle.ready() || !usersHandle.ready(),
     connected: Meteor.status().connected,
-    userLeft: userLeft == "true"
+    userLeft: userLeft
   };
 }, ClosedPage);

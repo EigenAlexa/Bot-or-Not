@@ -36,7 +36,7 @@ Meteor.methods({
       convo = Convos.findOne({_id: convoId});
       convo.users.forEach( (user) => {
         Meteor.users.update({_id: user.id}, {
-          $set: {left: false, in_convo: false}
+          $set: {left: false, convoClosed: true}
         });
       });
     },
@@ -49,12 +49,17 @@ Meteor.methods({
       convo = Convos.findOne({_id: convoId});
       convo.users.forEach( (user) => {
         Meteor.users.update({_id: user.id}, {
-          $set: {in_convo: false, left: true}
+          $set: {convoClosed: true, left: true}
         });
       });
     },
     'convos.updateRatings'(convoId, userId, rating){
       convo = Convos.findOne({_id: convoId});
+      Meteor.users.update({_id: userId}, {
+        $set: {in_convo: false} 
+      });
+
+
       users = convo.users.filter((user) => {
         return user.id !== userId;
       }).map((user) => {

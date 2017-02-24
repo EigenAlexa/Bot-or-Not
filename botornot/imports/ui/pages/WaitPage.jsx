@@ -23,6 +23,12 @@ export default class WaitPage extends React.Component {
     }
     render() {
         const { openRooms, connected, loading, user } = this.props;
+        if(!loading && !user){
+          AccountsAnonymous.login((e) => {
+            console.log("anonymous user logged in");
+            Meteor.call('users.updateAnonymousUsername', Meteor.userId());
+          });  
+        }
         if(!loading && !!user){
           console.log(user);
           noRooms = openRooms.length === 0 && !user.in_convo;
@@ -35,7 +41,7 @@ export default class WaitPage extends React.Component {
             this.room = {_id: user.curConvo}; 
           } 
           inconvo = user.in_convo;
-        }else{
+        } else{
           noRooms = true;
           inconvo = false;
         }
@@ -50,6 +56,7 @@ export default class WaitPage extends React.Component {
                   </div>
                 </section>
                 { !noRooms || inconvo ? this.getContent() : <p> Please wait while we connect you to an available bot or human. </p> }
+              <div id="botornot"></div>
             </div>
         );
     }

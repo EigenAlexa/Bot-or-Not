@@ -2,8 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
+import { _ } from 'meteor/underscore';
+import { FormControl, ProgressBar } from 'react-bootstrap';
 
 export default class Chat extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleEnter = _.debounce(this.handleEnter, 100, false);
+    }
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
@@ -23,26 +29,37 @@ export default class Chat extends React.Component {
         )});
 
         return (<div> <p>Messages:</p>{Messages}
-                  {this.renderChatInput()} 
+                  {this.props.room.closed ? "": this.renderChatInput()}
+                  {this.props.room.closed ? "": this.renderProgressBar()} 
                   </div>);
     }
     getLoadingPage() {
         return (<div> <h1>Loading, hang tight.</h1></div>);
     }
-    handleSubmit(event) {
+    handleEnter(event) {
       event.preventDefault();
-
-      const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-
-      Meteor.call('convos.updateChat', text, this.props.room._id);
-      ReactDOM.findDOMNode(this.refs.textInput).value = '';
+        const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+        if (text.length > -1) {
+          Meteor.call('convos.updateChat', text, this.props.room._id);
+        }
+        ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
-
+    handleKeystroke(event) {
+      if (event.charCode == 13){
+        event.persist();
+        this.handleEnter.bind(this)(event);
+      }
+    }
     renderChatInput(){
       return (
-          <form className="textForm" onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" ref="textInput" placeholder="Type to send message"/>
-          </form>);
+          <FormControl type="text" ref="textInput" placeholder="Type to send message" onKeyPress={this.handleKeystroke.bind(this)}/>
+      );
+    }
+    renderProgressBar(){
+      progress = this.props.room.length / 3 * 100;
+      return (
+        <ProgressBar now={progress} label={`${progress}%`}/>
+      );
     }
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;

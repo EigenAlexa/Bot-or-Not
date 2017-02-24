@@ -18,7 +18,7 @@ export default ChatContainer = createContainer(({ params: { id } }) => {
     roomCursor.observe({
       changed: (newConvo, oldConvo) => {
         console.log('convo changed', newConvo.length);
-        if(newConvo.length > 30){
+        if(newConvo.length > 2){
           Meteor.call('convos.finishConvo', newConvo._id);
           Meteor.call('convos.finishConvoUsers', newConvo._id);
         }
