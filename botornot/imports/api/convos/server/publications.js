@@ -15,3 +15,13 @@ Meteor.publish('openrooms', () => {
         closed : 1,
     }});
 });
+Convos.find({closed: false}).observe({
+      changed: (newConvo, oldConvo) => {
+        console.log('convo changed', newConvo.length);
+        if(newConvo.length > 2){
+          console.log("finishing convos");
+          Meteor.call('convos.finishConvo', newConvo._id);
+          Meteor.call('convos.finishConvoUsers', newConvo._id);
+        }
+      } 
+    });

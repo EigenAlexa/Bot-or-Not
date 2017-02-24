@@ -4,6 +4,7 @@ import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
 import { _ } from 'meteor/underscore';
 import { FormControl, ProgressBar } from 'react-bootstrap';
+import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -27,10 +28,12 @@ export default class Chat extends React.Component {
                 author={user}
             />
         )});
+        user = Meteor.user();
 
         return (<div> <p>Messages:</p>{Messages}
                   {this.props.room.closed ? "": this.renderChatInput()}
                   {this.props.room.closed ? "": this.renderProgressBar()} 
+                  {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                   </div>);
     }
     getLoadingPage() {
@@ -39,7 +42,7 @@ export default class Chat extends React.Component {
     handleEnter(event) {
       event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        if (text.length > -1) {
+        if (text.length > 0) {
           Meteor.call('convos.updateChat', text, this.props.room._id);
         }
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -60,6 +63,10 @@ export default class Chat extends React.Component {
       return (
         <ProgressBar now={progress} label={`${progress}%`}/>
       );
+    }
+    renderClosed(){
+      user = Meteor.users.findOne({_id:Meteor.userId()});
+      return( <ClosedPageContainer params={{roomId: user.curConvo, userLeft: user.left}} /> );
     }
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;

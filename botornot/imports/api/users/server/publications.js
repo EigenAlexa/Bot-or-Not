@@ -18,7 +18,7 @@ Meteor.publishComposite('currentUsers', (convoId) => {
       find(convo) {
         users = convo.users.map((user) => (user.id));
         return Meteor.users.find({_id: {$in: users}}, {
-          fields: {username: 1, in_convo: 1, curConvo:1}                
+          fields: {username: 1, in_convo: 1, curConvo:1, convoClosed: 1}                
         });
       }
     }]
@@ -31,7 +31,7 @@ Meteor.publish('currentUser', (userId) => {
     return [];
   }
   user = Meteor.users.find({_id: userId}, 
-      {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1}});
+      {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1, convoClosed: 1}});
   session = Meteor.server.sessions[Object.keys(Meteor.server.sessions).filter((key) => {
     return Meteor.server.sessions[key].userId == userId;  
   })];
@@ -47,3 +47,4 @@ Meteor.publish('currentUser', (userId) => {
   }));
   return user;
 });
+

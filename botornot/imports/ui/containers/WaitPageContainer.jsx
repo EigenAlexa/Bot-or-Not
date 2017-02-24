@@ -16,6 +16,7 @@ export default WaitContainer = createContainer(() => {
     userCursor.observe({
       changed: (newUser, oldUser) => {
         if (!newUser){
+          console.log("dick balls");
           return;
         }
         if (newUser.convoClosed && !oldUser.convoClosed){
