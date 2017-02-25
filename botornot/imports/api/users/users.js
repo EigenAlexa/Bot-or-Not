@@ -138,6 +138,16 @@ Schema.User = new SimpleSchema({
     label: 'badges',
     defaultValue: []
   },
+  profPic: {
+    type: String,
+    label: 'profPic',
+    defaultValue: 'http://www.aspirehire.co.uk/aspirehire-co-uk/_img/profile.svg'
+  },
+  badges: { 
+    type: [String],
+    label: 'badges',
+    defaultValue: []
+  },
 });
 
 Meteor.users.attachSchema(Schema.User);
