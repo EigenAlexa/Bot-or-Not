@@ -50,11 +50,17 @@ export default class AccountPage extends React.Component {
     return (
         <div>
             <div>
+<<<<<<< HEAD
                 <h3>Human</h3>
                 {HumanConvos}
             </div>
             <div>
                 <h3>Bot</h3>
+=======
+                {HumanConvos}
+            </div>
+            <div>
+>>>>>>> Added room loading. Need to do extra filtering but
                 { BotConvos }
             </div>
         </div>);
