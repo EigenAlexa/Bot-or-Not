@@ -1,5 +1,7 @@
 import { Convos } from './convos.js';
 import { Messages } from '../messages/messages.js';
+import { Random } from 'meteor/random';
+
 Meteor.methods({
     'convos.openrooms'() {
         return getOpenRooms();
@@ -74,23 +76,40 @@ Meteor.methods({
     },
     'convos.updateRatings'(convoId, userId, rating){
       convo = Convos.findOne({_id: convoId});
-      Meteor.call('users.exitConvo', userId);
       users = convo.users.filter((user) => {
         return user.id !== userId;
       }).map((user) => {
         return user.id
       });
       if(!!users){
+        prob = Meteor.users.findOne({_id: users[0]}).prob;
+        correct = Random.fraction() < prob;
+        if(prob >= 0.7){
+          probInc = 0;
+        }else{
+          probInc = 0.01;
+        }
         if(rating == 'not'){
+          if(correct){
+            lastOtherUser = rating;
+          }else{
+            lastOtherUser = 'bot';
+          }
           Meteor.users.update({_id: users[0]}, {
-            $inc: {sessions: 1, notratings: 1}
+            $inc: {sessions: 1, notratings: 1, prob: probInc},
+            $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
             $set: {"users.$.ratedBot": false}
           });
         } else if (rating == 'bot'){
-          Meteor.users.update({_id: users[0]}, {
-            $inc: {sessions: 1}
+          if(correct){
+            lastOtherUser = rating;
+          }else{
+            lastOtherUser = 'not';
+          }Meteor.users.update({_id: users[0]}, {
+            $inc: {sessions: 1, prob: probInc},
+            $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
             $set: {"users.$.ratedBot": true}
