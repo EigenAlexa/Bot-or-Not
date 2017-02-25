@@ -3,6 +3,10 @@ import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 
 export default class ClosedPage extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {submitted: false, rating: 'bot'};
+  }
   renderUserLeft() {
     return ( <p>Sorry the other user left, please feel free to join another chat.</p> );
   }
@@ -11,7 +15,8 @@ export default class ClosedPage extends React.Component {
     const target = event.target;
     console.log(target.name);
     Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
-    FlowRouter.go('/');
+    this.setState({submitted: true, rating: target.name});
+    //FlowRouter.go('/');
   }
 
   renderNotUserLeft() {
@@ -20,14 +25,23 @@ export default class ClosedPage extends React.Component {
       title: "BotOrNot",
     }
     console.log(this);
-      // <Blaze template="shareit" />
-    return (
-      <div>
-      <p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
-      <button name="bot" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Bot</button>
-      <button name="not" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Not</button>
-		  {blazeToReact('shareit')(links)}
-      </div>
+    return (<div>
+        {Meteor.user().rated && this.state.submitted ? 
+        <div><p> You were rated {Meteor.user().lastRating} </p> 
+          <p> You rated the other user {this.state.rating}. The other user was {Meteor.user().lastOtherUser} </p>
+          </div>
+        : ""}
+        {!this.state.submitted ?
+        <div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
+        <button name="bot" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Bot</button>
+        <button name="not" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Not</button>
+		    {blazeToReact('shareit')(links)}
+        </div>
+        : ""}
+        {!Meteor.user().rated && this.state.submitted ?
+          <p> Please wait for the other bot/human to rate you </p>
+            : ""}
+        </div>
     );
   }
   renderBoilerPlate(loading, content) {

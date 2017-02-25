@@ -26,7 +26,7 @@ Meteor.methods({
   'users.exitConvo'(userId) {
     console.log(userId, " left");
     Meteor.users.update({_id: userId}, {
-      $set: {in_convo: false}
+      $set: {in_convo: false, rated: false}
     });
     query = {closed: false, users: {$in: [{id: userId, ratedBot: false}]}};
     convo = Convos.findOne(query);

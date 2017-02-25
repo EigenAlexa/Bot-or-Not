@@ -148,6 +148,27 @@ Schema.User = new SimpleSchema({
     label: 'badges',
     defaultValue: []
   },
+  lastRating: {
+    type: String,
+    label: 'lastRating',
+    defaultValue: ""
+  },
+  lastOtherUser: {
+    type: String,
+    label: 'lastUserRating',
+    defaultValue: ""
+  },
+  prob: {
+    type: Number,
+    label: 'prob',
+    defaultValue: 0.5,
+    decimal: true
+  },
+  rated: {
+    type: Boolean,
+    label: 'rated',
+    defaultValue: false
+  }
 });
 
 Meteor.users.attachSchema(Schema.User);
