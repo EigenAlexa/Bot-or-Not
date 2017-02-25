@@ -12,6 +12,11 @@ UserSchema = new SimpleSchema({
     type: Boolean,
     label: "ratedBot",
     defaultValue: false,
+  },
+  isReady: {
+    type: Boolean,
+    label: "isReady",
+    defaultValue: false
   }
 });
 

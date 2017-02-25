@@ -30,8 +30,7 @@ export default class WaitPage extends React.Component {
             console.log("anonymous user logged in");
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());
           });  
-        }
-        if(!loading && !!user){
+        } else if(!loading && !!user){
           console.log(user);
           noRooms = openRooms.length === 0 && !user.in_convo;
           if (noRooms) {
