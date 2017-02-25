@@ -16,9 +16,14 @@ UserSchema = new SimpleSchema({
 });
 
 ConvoSchema = new SimpleSchema({
-  length: {
+	length: {
+		type: Number,
+		label: "length",
+		defaultValue: 0
+	},
+  turns: {
     type: Number,
-    label: "length",
+    label: "turns",
     defaultValue: 0
   },
   closed: {
