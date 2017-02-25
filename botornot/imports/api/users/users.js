@@ -169,6 +169,11 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'rated',
     defaultValue: false
+  },
+  isReady: {
+    type: Boolean,
+    label: 'isReady',
+    defaultValue: false
   }
 });
 

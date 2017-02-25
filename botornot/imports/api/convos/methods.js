@@ -46,7 +46,7 @@ Meteor.methods({
     },
     'convos.addUserToRoom'(userId, convoId) {
       Convos.update({_id: convoId, users: {$nin: [{id: userId, ratedBot: false}]}}, {
-        $push: {users: {id: userId, ratedBot: false}},
+        $push: {users: {id: userId, ratedBot: false, isReady: false}},
         $inc: {curSessions: 1}
       });
       Meteor.users.update({_id: userId}, {
@@ -118,6 +118,11 @@ Meteor.methods({
       }
 
     },
+  'convos.makeReady'(convoId, userId){
+    Convos.update({_id: convoId, "users.id": userId}, {
+      $set: {"users.$.isReady": true}
+    });
+  },
 });
 function getOpenRooms() {
     // get all convos that have less than two people and aren't closed yet

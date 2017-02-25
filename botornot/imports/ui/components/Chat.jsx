@@ -3,19 +3,28 @@ import ReactDOM from 'react-dom';
 import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
 import { _ } from 'meteor/underscore';
-import { FormControl, ProgressBar } from 'react-bootstrap';
+import { FormControl, ProgressBar, Button } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 
 export default class Chat extends React.Component {
     constructor(props) {
       super(props);
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
+      this.state = {isLoading: false};
     }
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
         }
         console.log(this.props.room);
+        isReady = true;
+        this.props.room.users.forEach((user) => {
+          isReady = isReady && user.isReady;
+          console.log(isReady);
+        });
+        if (this.props.room.curSessions < 2 || !isReady){
+          return this.renderPrepScreen();
+        }
         messages = this.props.messages;
         Messages = messages.map(msg => {
           console.log("Loading: " + this.props.loading)
@@ -35,6 +44,7 @@ export default class Chat extends React.Component {
                   {this.props.room.closed ? "": this.renderProgressBar()} 
                   {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                   </div>);
+
     }
     getLoadingPage() {
         return (<div> <h1>Loading, hang tight.</h1></div>);
@@ -58,6 +68,9 @@ export default class Chat extends React.Component {
           <FormControl type="text" ref="textInput" placeholder="Type to send message" onKeyPress={this.handleKeystroke.bind(this)}/>
       );
     }
+    handleClick(event) { 
+      Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
+    }
     renderProgressBar(){
       progress = this.props.room.turns / 3 * 100;
       return (
@@ -67,6 +80,17 @@ export default class Chat extends React.Component {
     renderClosed(){
       user = Meteor.users.findOne({_id:Meteor.userId()});
       return( <ClosedPageContainer params={{roomId: user.curConvo, userLeft: user.left}} /> );
+    }
+    renderPrepScreen(){
+      isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
+      return (
+        <div>
+        <p> Please wait while we match you with a bot or human. In the mean time please read about the game. </p>
+        <p>Lorem Ipsum </p>
+        <Button bsStyle="primary" disabled={isLoading} onClick={isLoading ? null: this.handleClick.bind(this)}> 
+        {isLoading ? "Loading ..." : "Continue" }
+        </Button>
+        </div>);
     }
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;

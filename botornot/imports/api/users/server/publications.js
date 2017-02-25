@@ -22,7 +22,7 @@ Meteor.publishComposite('currentUsers', (convoId) => {
       find(convo) {
         users = convo.users.map((user) => (user.id));
         return Meteor.users.find({_id: {$in: users}}, {
-          fields: {username: 1, in_convo: 1, curConvo:1, convoClosed: 1}                
+          fields: {username: 1, in_convo: 1, curConvo:1, convoClosed: 1, isReady: 1}                
         });
       }
     }]
