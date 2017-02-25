@@ -174,6 +174,11 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'isReady',
     defaultValue: false
+  },
+  firstTime: {
+    type: Boolean,
+    label: 'firstTime',
+    defaultValue: true
   }
 });
 

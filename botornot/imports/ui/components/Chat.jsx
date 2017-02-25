@@ -5,13 +5,22 @@ import { Convos } from '/imports/api/convos/convos.js';
 import { _ } from 'meteor/underscore';
 import { FormControl, ProgressBar, Button } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
+import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 
 export default class Chat extends React.Component {
     constructor(props) {
       super(props);
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
       this.state = {isLoading: false};
-    }
+      this.snippets = Snippets;
+      this.state = {isLoading: false, index: 0};
+      loadingInterval = Meteor.setInterval(() => {
+        if(this.state.index < this.snippets.length - 1){
+          console.log(this.state.index);
+          this.setState({index: this.state.index + 1});
+        }
+      }, 5000);
+}
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
@@ -82,14 +91,20 @@ export default class Chat extends React.Component {
       return( <ClosedPageContainer params={{roomId: user.curConvo, userLeft: user.left}} /> );
     }
     renderPrepScreen(){
+      firstTime = Meteor.user().firstTime;
+      showButton = this.props.room.curSessions == 2 && (!firstTime || this.state.index == this.snippets.length - 1);
+      if(showButton){
+        Meteor.clearInterval(loadingInterval);  
+      }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
+      progress = this.state.index / this.snippets.length * 100;
       return (
         <div>
-        <p> Please wait while we match you with a bot or human. In the mean time please read about the game. </p>
-        <p>Lorem Ipsum </p>
+        <p>{this.snippets[this.state.index] }</p>
+        {showButton ?
         <Button bsStyle="primary" disabled={isLoading} onClick={isLoading ? null: this.handleClick.bind(this)}> 
         {isLoading ? "Loading ..." : "Continue" }
-        </Button>
+        </Button> : <ProgressBar now={progress} active striped bsStyle="info"/> }
         </div>);
     }
     render() {

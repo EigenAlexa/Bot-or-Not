@@ -20,8 +20,8 @@ Meteor.methods({
   'users.updateAnonymousUsername'(userId) {
     user_no = 
     Meteor.users.update({_id: userId}, {
-      $set: {username: faker.hacker.ingverb() + faker.hacker.noun()}
-    })
+      $set: {username: faker.hacker.ingverb() + faker.hacker.noun(), firstTime: true}
+    });
   },
   'users.exitConvo'(userId) {
     console.log(userId, " left");
