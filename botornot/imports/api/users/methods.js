@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+
 /**Meteor.methods({
   'users.getTopN'(N) {
     cursor = Meteor.users.find({}, {

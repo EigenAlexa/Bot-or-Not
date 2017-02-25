@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import NavBarContainer from '/imports/ui/containers/NavBarContainer.jsx';
+import NavBar from '/imports/ui/components/NavBar.jsx';
 export default class Screen extends React.Component {
     render() {
         return (
             <div>
                 <header>
-                    <NavBarContainer /> 
+                    <NavBar /> 
                 </header>
                     {this.props.children}
             </div>
