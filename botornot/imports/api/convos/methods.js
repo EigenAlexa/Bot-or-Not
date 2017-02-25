@@ -74,11 +74,7 @@ Meteor.methods({
     },
     'convos.updateRatings'(convoId, userId, rating){
       convo = Convos.findOne({_id: convoId});
-      Meteor.users.update({_id: userId}, {
-        $set: {in_convo: false} 
-      });
-
-
+      Meteor.call('users.exitConvo', userId);
       users = convo.users.filter((user) => {
         return user.id !== userId;
       }).map((user) => {

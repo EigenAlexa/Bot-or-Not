@@ -47,11 +47,15 @@ FlowRouter.route('/leaderboards', {
 		ReactLayout.render(Screen, {children: <LeaderboardContainer /> });
 	}
 });
-FlowRouter.route('/wait', {
-	name: 'wait',
+FlowRouter.route('/chat', {
+	name: 'chat',
 	action() {
 		ReactLayout.render(Screen, {children:<WaitPageContainer />});
-	}
+	},
+  triggersExit: (context) => {
+    console.log('exited chat');
+    Meteor.call('users.exitConvo', Meteor.userId());
+  }
 });
 
 FlowRouter.route('/profile/:username', {
