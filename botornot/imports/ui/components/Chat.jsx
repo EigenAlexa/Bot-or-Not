@@ -43,7 +43,7 @@ export default class Chat extends React.Component {
       event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
         if (text.length > 0) {
-          Meteor.call('convos.updateChat', text, this.props.room._id);
+          Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
         }
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
@@ -59,7 +59,7 @@ export default class Chat extends React.Component {
       );
     }
     renderProgressBar(){
-      progress = this.props.room.length / 3 * 100;
+      progress = this.props.room.turns / 3 * 100;
       return (
         <ProgressBar now={progress} label={`${progress}%`}/>
       );

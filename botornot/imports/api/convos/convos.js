@@ -21,26 +21,21 @@ ConvoSchema = new SimpleSchema({
 		label: "length",
 		defaultValue: 0
 	},
-    botnot1: {
-        type: Boolean,
-        label: 'botnot1',
-        optional: true,
-    },
-    botnot2: {
-        type: Boolean,
-        label: 'botnot2',
-        optional: true,
-    },
-    closed: {
-        type: Boolean,
-        label: 'closed',
-        defaultValue: false,
-    },
-    curSessions: {
-        type: Number,
-        label: 'curSessions',
-        defaultValue: 0,
-    },
+  turns: {
+    type: Number,
+    label: "turns",
+    defaultValue: 0
+  },
+  closed: {
+    type: Boolean,
+    label: 'closed',
+    defaultValue: false,
+  },
+  curSessions: {
+    type: Number,
+    label: 'curSessions',
+    defaultValue: 0,
+  },
   msgs: {
     type: [String],
     label: 'msgs',

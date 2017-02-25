@@ -11,8 +11,6 @@ import Screen from '/imports/ui/layouts/screen.jsx';
 export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
     const userHandle = Meteor.subscribe('currentUser', Meteor.userId());
-    console.log(userHandle.ready());
-    const userCursor = Meteor.users.find({_id: Meteor.userId()});
     const user = Meteor.users.findOne({_id: Meteor.userId()});
     return {
       openRooms: Convos.find({curSessions: {$lt: 2}, closed: false}).fetch(),
