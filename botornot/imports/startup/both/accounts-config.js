@@ -1,4 +1,4 @@
-import NavBarContainer from '/imports/ui/containers/NavBarContainer.jsx';
+import NavBar from '/imports/ui/components/NavBar.jsx'
 import Screen from '/imports/ui/layouts/screen.jsx';
 import React from 'react';
 
@@ -55,7 +55,7 @@ AccountsTemplates.configure({
   defaultTemplate: 'fullPageAtForm',  // default
   defaultLayout: Screen,
   defaultLayoutRegions: {
-    nav: <NavBarContainer />,
+    nav: <NavBar/>,
   },
   defaultContentRegion: 'children'
 });

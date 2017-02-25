@@ -81,6 +81,7 @@ Schema.User = new SimpleSchema({
         type: Date,
         optional: true
     },
+    // CUSTOM SCHEMA
    	sessions: {
   		type: Number,
   		label: "Sessions",
@@ -127,6 +128,25 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'convoClosed',
     defaultValue: false
+  profPic: {
+    type: String,
+    label: 'profPic',
+    defaultValue: 'http://www.aspirehire.co.uk/aspirehire-co-uk/_img/profile.svg'
+  },
+  badges: { 
+    type: [String],
+    label: 'badges',
+    defaultValue: []
+  },
+  profPic: {
+    type: String,
+    label: 'profPic',
+    defaultValue: 'http://www.aspirehire.co.uk/aspirehire-co-uk/_img/profile.svg'
+  },
+  badges: { 
+    type: [String],
+    label: 'badges',
+    defaultValue: []
   },
 });
 
@@ -134,13 +154,54 @@ Meteor.users.attachSchema(Schema.User);
 
 Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
   console.log(fieldNames);
-  if (fieldNames.indexOf('sessions') > -1 || fieldNames.indexOf('notratings') > -1){
+  // update the rating
+  // if ('sessions' in doc || 'notratings' in doc) {
+    //
+  let update = false;
+  let sessionsUpdate = fieldNames.indexOf('sessions') > 1;
+  let notratingsUpdate = fieldNames.indexOf('notratings') > -1;
+  if (sessionsUpdate || notratingsUpdate){
+    update = true;
     if (doc.sessions == 0){
       doc.rating = 0;
     } else {
       doc.rating = Math.pow(doc.notratings, 2) / doc.sessions;
     }
     console.log("doc.rating", doc.rating);
-    Meteor.users.update({_id: doc._id}, { $set: {rating: doc.rating}});
+  }
+  // HERE IS WHERE YOU ADD BADGES
+  if (sessionsUpdate) {
+    // TODO move to own file
+    const sessionBadges = {
+      'newbie' : 1,
+      'intermediate': 50,
+      'expert': 100,
+    }
+    for (badge in sessionBadges) {
+      if (doc.sessions >= sessionBadges[badge] & doc.badges.indexOf(badge) == -1) {
+        update = true
+        doc.badges.push(badge);
+      }
+    }
+  }
+
+  if (notratingsUpdate) {
+    // TODO move to own file
+    const humanBadges = {
+      'somewhat_human' : 1,
+      'convincing': 50,
+      'not_a_bot': 100,
+    }
+    for (badge in humanBadges) {
+      if (doc.sessions >= humanBadges[badge] & doc.badges.indexOf(badge) == -1) {
+        update = true
+        doc.badges.push(badge);
+      }
+    }
+  }
+
+  // update the schema 
+  if (update) {
+    Meteor.users.update({_id: doc._id}, { $set: {rating: doc.rating, badges: doc.badges}});
   }
 }, {fetchPrevious: false});

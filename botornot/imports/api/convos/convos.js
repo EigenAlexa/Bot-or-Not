@@ -48,6 +48,10 @@ ConvoSchema = new SimpleSchema({
     defaultValue: [],
     minCount: 0
   },
+  time: { 
+    type: Date, 
+    label: 'time',
+  }
 });
 
 const Convos = new Mongo.Collection("convos");
@@ -56,13 +60,13 @@ Convos.attachSchema(ConvoSchema);
 Convos.helpers({
     messages() {
     if (!!this.msgs){
-		  const messages = Messages.find({convoId: this._id}).fetch();
-		  return messages;
+      const messages = Messages.find({convoId: this._id}).fetch();
+      return messages;
     }else{
       return [];
     }
         // TODO fix the grapher bullshit
-		// const messagesLink = Convos.getLink(this._id, 'messages');
+    // const messagesLink = Convos.getLink(this._id, 'messages');
         // return messagesLink.find({sort: {time : -1}});
     }
 });

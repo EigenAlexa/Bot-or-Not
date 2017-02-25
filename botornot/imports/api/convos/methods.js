@@ -8,6 +8,7 @@ Meteor.methods({
         Convos.insert({
             closed: false,
             curSessions: 0,
+            time: Date.now(),
         });
     },
     'convos.updateChat'(text, convoId, userId) {
