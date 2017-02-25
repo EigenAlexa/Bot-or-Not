@@ -128,6 +128,7 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'convoClosed',
     defaultValue: false
+  },
   profPic: {
     type: String,
     label: 'profPic',
