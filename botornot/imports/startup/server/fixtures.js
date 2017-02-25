@@ -42,7 +42,8 @@ Meteor.startup(() => {
                 botnot2: conv.botnot2,
                 closed: conv.closed,
                 curSessions: conv.curSessions,
-                msgs: []
+                msgs: [],
+                time: Date.now(),
             });
             convoIds.push(convoId);
             //const msgLinks = Convos.getLink(convoId, 'messages');

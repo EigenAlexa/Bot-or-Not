@@ -11,7 +11,8 @@ import Screen from '/imports/ui/layouts/screen.jsx';
 export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
     const userHandle = Meteor.subscribe('currentUser', Meteor.userId());
-    console.log(userHandle.ready());
+    console.log('userhandle', userHandle.ready());
+    console.log('curuserid', Meteor.userId());
     const userCursor = Meteor.users.find({_id: Meteor.userId()});
     const user = Meteor.users.findOne({_id: Meteor.userId()});
     return {
