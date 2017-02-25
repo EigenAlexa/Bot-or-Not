@@ -40,7 +40,11 @@ export default class AccountPage extends React.Component {
             time={convo.time}
           />
       ));
+<<<<<<< HEAD
       BotConvos = this.props.botConvos.map(convo => (
+=======
+      BotConvos = this.props.notConvos.map(convo => (
+>>>>>>> Added room loading. Need to do extra filtering but
           <ConvoItem 
             convo={convo}
             key={convo._id}
@@ -50,11 +54,17 @@ export default class AccountPage extends React.Component {
     return (
         <div>
             <div>
+<<<<<<< HEAD
                 <h3>Human</h3>
                 {HumanConvos}
             </div>
             <div>
                 <h3>Bot</h3>
+=======
+                {HumanConvos}
+            </div>
+            <div>
+>>>>>>> Added room loading. Need to do extra filtering but
                 { BotConvos }
             </div>
         </div>);

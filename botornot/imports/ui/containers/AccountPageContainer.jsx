@@ -25,6 +25,7 @@ export default AccountContainer = createContainer(({ params: { params } }) => {
     const user = Meteor.users.findOne({username: username});
     const ranking = !!user && ratingsHandle.ready() ? Meteor.users.find({rating: {$gt: user.rating}}).count() + 1: -1;
     const convosLoading = !botConvoHandle.ready() || !notConvoHandle.ready();
+    
     const notConvos = convosLoading ? [] : Convos.find({'users.ratedBot': false}).fetch();
     console.log(Convos.find().fetch(), 'finding convos');
     const botConvos = convosLoading ? [] : Convos.find({'users.ratedBot': true}).fetch();
