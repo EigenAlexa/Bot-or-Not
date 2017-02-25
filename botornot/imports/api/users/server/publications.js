@@ -40,15 +40,8 @@ Meteor.publish('currentUser', (userId) => {
     return Meteor.server.sessions[key].userId == userId;  
   })];
   session.socket.on('close', Meteor.bindEnvironment(() => {
-    console.log(userId, " left");
-    Meteor.users.update({_id: userId}, {
-      $set: {in_convo: false}
-    });
-    query = {closed: false, users: {$in: [{id: userId, ratedBot: false}]}};
-    convo = Convos.findOne(query);
-    Meteor.call('convos.finishConvo', convo._id);
-    Meteor.call('convos.finishConvoUserLeft', convo._id);
-  }));
+    Meteor.call('users.exitConvo', userId);
+  })); 
   return user;
 });
 
