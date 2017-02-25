@@ -62,7 +62,7 @@ FlowRouter.route("/logout", {
     });
   }
 });
-
+/*
 FlowRouter.route("/closed", {
   name: "closed",
   action(params, queryParams){
@@ -72,7 +72,7 @@ FlowRouter.route("/closed", {
   }
 
 });
-
+*/
 
 // UserAccounts Routes
 AccountsTemplates.configureRoute("changePwd");

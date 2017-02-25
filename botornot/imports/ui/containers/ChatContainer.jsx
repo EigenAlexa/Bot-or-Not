@@ -15,15 +15,7 @@ export default ChatContainer = createContainer(({ params: { id } }) => {
     const loading = !roomHandle.ready() || !msgHandle.ready() || !userHandle.ready();
     const roomExists = !loading && !!room;
     const connected = Meteor.status().connected;
-    roomCursor.observe({
-      changed: (newConvo, oldConvo) => {
-        console.log('convo changed', newConvo.length);
-        if(newConvo.length > 30){
-          Meteor.call('convos.finishConvo', newConvo._id);
-          Meteor.call('convos.finishConvoUsers', newConvo._id);
-        }
-      } 
-    });
+   
 return {
         room,
         loading,

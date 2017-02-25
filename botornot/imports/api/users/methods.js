@@ -15,3 +15,11 @@ UserPresence.onSessionDisconnected((connection) => {
   console.log(Meteor.server.sessions);
 });
 **/
+Meteor.methods({
+  'users.updateAnonymousUsername'(userId) {
+    user_no = 
+    Meteor.users.update({_id: userId}, {
+      $set: {username: faker.hacker.ingverb() + faker.hacker.noun()}
+    })
+  },
+});
