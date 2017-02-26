@@ -18,7 +18,8 @@ export default class AccountPage extends React.Component {
       const profPic = user.profPic;
       const badges = user.badges;
       console.log('profPic', profPic);
-      return (     <div> 
+      return (
+          <div> 
             <img src={profPic} className='profile-image'/>
             <p> PlayerType: {playerType} </p>
             <p>Not Ratings: {notratings} </p>
@@ -39,7 +40,7 @@ export default class AccountPage extends React.Component {
             time={convo.time}
           />
       ));
-      BotConvos = this.props.notConvos.map(convo => (
+      BotConvos = this.props.botConvos.map(convo => (
           <ConvoItem 
             convo={convo}
             key={convo._id}
@@ -49,9 +50,11 @@ export default class AccountPage extends React.Component {
     return (
         <div>
             <div>
+                <h3>Human</h3>
                 {HumanConvos}
             </div>
             <div>
+                <h3>Bot</h3>
                 { BotConvos }
             </div>
         </div>);
