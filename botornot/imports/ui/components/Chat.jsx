@@ -32,7 +32,7 @@ export default class Chat extends React.Component {
           isReady = isReady && user.isReady;
           console.log(isReady);
         });
-        if (this.props.room.curSessions < 2 || !isReady){
+        if (this.props.room.curSessions < 2 || !isReady && !this.props.room.closed){
           return this.renderPrepScreen();
         }
         messages = this.props.messages;
