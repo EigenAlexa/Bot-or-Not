@@ -9,12 +9,14 @@ Meteor.methods({
         return getOpenRooms();
     }, 
     'convos.newRoom'() {
+      if(!this.isSimulation){
         Convos.insert({
-            closed: false,
-            curSessions: 0,
-            time: Date.now(),
-            promptText: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
+          closed: false,
+          curSessions: 0,
+          time: Date.now(),
+          promptText: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
         });
+      }
     },
     'convos.updateChat'(text, convoId, userId) {
         
