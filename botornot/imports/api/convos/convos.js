@@ -56,7 +56,11 @@ ConvoSchema = new SimpleSchema({
   time: { 
     type: Date, 
     label: 'time',
-  }
+  },
+  promptText: {
+    type: String,
+    label: 'promptId',
+  },
 });
 
 const Convos = new Mongo.Collection("convos");
