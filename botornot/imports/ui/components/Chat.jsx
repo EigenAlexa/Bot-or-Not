@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
+import { Prompts } from '/imports/api/prompts/prompts.js';
 import { _ } from 'meteor/underscore';
 import { FormControl, ProgressBar, Button } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
@@ -48,7 +49,9 @@ export default class Chat extends React.Component {
         )});
         user = Meteor.user();
 
-        return (<div> <p>Messages:</p>{Messages}
+        return (<div>
+                  {this.renderPrompt()} 
+                  <p>Discussion:</p>{Messages}
                   {this.props.room.closed ? "": this.renderChatInput()}
                   {this.props.room.closed ? "": this.renderProgressBar()} 
                   {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
@@ -106,6 +109,9 @@ export default class Chat extends React.Component {
         {isLoading ? "Loading ..." : "Continue" }
         </Button> : <ProgressBar now={progress} active striped bsStyle="info"/> }
         </div>);
+    }
+    renderPrompt(){
+      return (<p>{this.props.room.promptText}</p>);
     }
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;

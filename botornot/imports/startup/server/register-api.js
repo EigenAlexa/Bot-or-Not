@@ -3,6 +3,7 @@ import '/imports/api/convos/convos.js';
 import '/imports/api/messages/messages.js';
 import '/imports/api/users/users.js';
 import '/imports/api/ratings/ratings.js';
+import '/imports/api/prompts/prompts.js';
 
 // then import links next
 import '/imports/api/convos/linker.js';
@@ -16,3 +17,4 @@ import '/imports/api/users/methods.js';
 import '/imports/api/convos/server/publications.js';
 import '/imports/api/users/server/publications.js';
 import '/imports/api/messages/server/publications.js';
+//import '/imports/api/prompts/server/publications.js';

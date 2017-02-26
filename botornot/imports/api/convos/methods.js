@@ -1,6 +1,7 @@
 import { Convos } from './convos.js';
 import { Messages } from '../messages/messages.js';
 import { Random } from 'meteor/random';
+import { Prompts } from '/imports/api/prompts/prompts.js';
 
 Meteor.methods({
     'convos.openrooms'() {
@@ -11,6 +12,7 @@ Meteor.methods({
             closed: false,
             curSessions: 0,
             time: Date.now(),
+            promptText: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
         });
     },
     'convos.updateChat'(text, convoId, userId) {

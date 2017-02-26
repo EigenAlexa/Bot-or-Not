@@ -1,5 +1,6 @@
 import { seedCollections } from "meteor/maxjohansen:collection-faker";
 import { Convos } from '/imports/api/convos/convos.js';
+import { Prompts } from '/imports/api/prompts/prompts.js';
 import { Messages } from '/imports/api/messages/messages.js';
 import { Debug } from '/imports/startup/both/debug.js';
 
@@ -36,6 +37,8 @@ Meteor.startup(() => {
         ];
         var convoIds = []; 
         data.forEach((conv) => {
+            promptText = Prompts.aggregate([ { $sample: {size: 1}}])[0].text;
+            console.log(promptText);
             const convoId = Convos.insert({
                 length : conv.length,
                 botnot1: conv.botnot1,
@@ -44,6 +47,7 @@ Meteor.startup(() => {
                 curSessions: conv.curSessions,
                 msgs: [],
                 time: Date.now(),
+                promptText: promptText,
             });
             convoIds.push(convoId);
             //const msgLinks = Convos.getLink(convoId, 'messages');
