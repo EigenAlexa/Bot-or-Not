@@ -74,6 +74,7 @@ Meteor.methods({
     },
     'convos.finishConvoUserLeft'(convoId){
       convo = Convos.findOne({_id: convoId});
+      console.log("finishing convo user left");
       convo.users.forEach( (user) => {
         Meteor.users.update({_id: user.id}, {
           $set: {convoClosed: true, left: true}

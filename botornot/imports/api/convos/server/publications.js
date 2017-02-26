@@ -58,7 +58,7 @@ Meteor.publish('openrooms', () => {
 Convos.find({closed: false}).observe({
       changed: (newConvo, oldConvo) => {
         console.log('convo changed', newConvo.turns);
-        if(newConvo.turns > newConvo.max_turns){
+        if(newConvo.turns >= newConvo.max_turns){
           console.log("finishing convos");
           Meteor.call('convos.finishConvo', newConvo._id);
           Meteor.call('convos.finishConvoUsers', newConvo._id);

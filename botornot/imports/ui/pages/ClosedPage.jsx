@@ -60,6 +60,7 @@ export default class ClosedPage extends React.Component {
   }
   render() {
     const { room, connected, loading, userLeft } = this.props;
+    console.log(userLeft);
     if(!loading && userLeft){
       return this.renderUserLeft();     
     } else if(!loading && !userLeft){
