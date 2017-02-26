@@ -1,5 +1,7 @@
 { 
     "SeedDatabase" : true,
     "ResetDb" : false,
-    "Debug" : true
+    "Debug" : true,
+    "botServerUrl" : "http://localhost:3001",
+    "serverUrl" : "http://localhost:3000"
 }
