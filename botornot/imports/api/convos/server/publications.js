@@ -12,16 +12,18 @@ function getUserId(userName) {
     return !!user ? user._id: user;
 }
 function getConvos(userId, bot) {
-    cursor = Convos.find({'users.id': userId, 'users.ratedBot' : bot}, {
+    console.log('getting convos', Convos.find({'users.id' : userId},
+        {fields: { _id : 1, time: 1}}).fetch());
+    cursor = Convos.find({'users.id' : userId}, {
         sort : {time : -1},
-        limit: 5,
-        fields : {
+        limit : 5,
+        fields: {
             _id : 1,
             time : 1,
-            'users.ratedBot' : 1,
-        },
-        users : {$elemMatch : {'id' : userId}}
+            'users' : {$elemMatch: {'id' : userId}}
+        }
     });
+
     console.log(cursor.fetch());
     return cursor;
 }
@@ -56,7 +58,7 @@ Meteor.publish('openrooms', () => {
 Convos.find({closed: false}).observe({
       changed: (newConvo, oldConvo) => {
         console.log('convo changed', newConvo.turns);
-        if(newConvo.turns > 2){
+        if(newConvo.turns > newConvo.max_turns){
           console.log("finishing convos");
           Meteor.call('convos.finishConvo', newConvo._id);
           Meteor.call('convos.finishConvoUsers', newConvo._id);
