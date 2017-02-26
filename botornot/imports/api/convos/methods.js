@@ -110,7 +110,7 @@ function getOpenRooms() {
     convos = Convos.find({
 
         closed: false,
-        curSessions : {$lt: 12}
+        curSessions : {$lt: 2}
     }).fetch();
     console.log(convos);
     return convos;

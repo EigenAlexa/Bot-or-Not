@@ -26,6 +26,11 @@ ConvoSchema = new SimpleSchema({
     label: "turns",
     defaultValue: 0
   },
+  max_turns: {
+    type: Number, 
+    label: "max_turns",
+    defaultValue: 3 
+  },
   closed: {
     type: Boolean,
     label: 'closed',
