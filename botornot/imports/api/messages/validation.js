@@ -1,11 +1,11 @@
 import { profanity, links, phones, emoticons } from '/imports/ui/static/validationRegex.js'; 
 import emojiRegex from 'emoji-regex';
-import typo from 'typo-js';
+/*import typo from 'typo-js';
 import aff from '/imports/ui/static/en_US.aff.js';
 import dic from '/imports/ui/static/en_US.dic.js';
 
 dict = new typo("en_US", aff, dic, {}); 
-
+*/
 validate = (text) => {
     valid = true;
     errorMsgs = [];
@@ -13,7 +13,7 @@ validate = (text) => {
               {func: checkLinks, errorMsg: "Please don't put emails/links in your messages."},
               {func: checkPhone, errorMsg: "Please don't put phone numbers in your messages."},
               {func: checkEmojis, errorMsg: "Please don't put emojis in your messages."},
-              {func: checkEnglish, errorMsg: "Please make sure you are using English words."},
+              //{func: checkEnglish, errorMsg: "Please make sure you are using English words."},
             ] 
     tests.forEach((test) => {
       if(!test.func(text)){
@@ -56,7 +56,7 @@ checkEmojis = (text) => {
   }
   return false;
 } 
-checkEnglish = (text) => {
+/* checkEnglish = (text) => {
   englishCount = 0;
   text.split(" ").forEach((word) => {
     if( dict.check(word) ){
@@ -64,6 +64,6 @@ checkEnglish = (text) => {
     }
   });
   return englishCount > text.split(" ").length / 2;
-}
+} */
 
 export { validate }
