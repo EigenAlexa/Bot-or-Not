@@ -18,6 +18,10 @@ Meteor.startup(() => {
       numItemsPerCollection : 15,
     }); **/
 
+    if (Prompts.find().count() == 0) {
+      Prompts.insert({'text': 'Is trump a gump?'});
+    }
+
     if (Convos.find().count() === 0) {
         const data = [
             {
@@ -80,5 +84,6 @@ Meteor.startup(() => {
     } else {
         console.log('Convos already populated, skipping');
     }
+
 });
 Debug.log(Convos.find().fetch());
