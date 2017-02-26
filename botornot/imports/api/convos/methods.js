@@ -51,7 +51,7 @@ Meteor.methods({
       }
     },
     'convos.addUserToRoom'(userId, convoId) {
-      Convos.update({_id: convoId, users: {$nin: [{id: userId, ratedBot: false}]}}, {
+      Convos.update({_id: convoId, users: {$nin: [{id: userId}]}}, {
         $push: {users: {id: userId, ratedBot: false, isReady: false}},
         $inc: {curSessions: 1}
       });
