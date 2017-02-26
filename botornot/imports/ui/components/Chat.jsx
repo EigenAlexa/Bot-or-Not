@@ -92,7 +92,7 @@ export default class Chat extends React.Component {
       Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
     }
     renderProgressBar(){
-      progress = this.props.room.turns / 3 * 100;
+      progress = this.props.room.turns / this.props.room.max_turns * 100;
       return (
         <ProgressBar now={progress} label={`${progress}%`}/>
       );

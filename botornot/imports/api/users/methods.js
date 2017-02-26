@@ -28,8 +28,8 @@ Meteor.methods({
     Meteor.users.update({_id: userId}, {
       $set: {in_convo: false, rated: false, isReady: false}
     });
-    query = {closed: false, users: {$in: [{id: userId, ratedBot: false}]}};
-    convo = Convos.findOne(query);
+    user = Meteor.users.findOne({_id: userId});
+    convo = Convos.findOne({_id: user.curConvo});
     Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);
   },
