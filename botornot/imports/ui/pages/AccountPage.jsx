@@ -1,7 +1,7 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
-
+import { ConvoItem } from '../components/ConvoItem.jsx';
 export default class AccountPage extends React.Component {
   getContent() {
       const username = this.props.username;
@@ -18,7 +18,8 @@ export default class AccountPage extends React.Component {
       const profPic = user.profPic;
       const badges = user.badges;
       console.log('profPic', profPic);
-      return (     <div> 
+      return (
+          <div> 
             <img src={profPic} className='profile-image'/>
             <p> PlayerType: {playerType} </p>
             <p>Not Ratings: {notratings} </p>
@@ -26,9 +27,40 @@ export default class AccountPage extends React.Component {
             <p>Rating: {rating} </p>
             <p>Ranking: {ranking} </p>
             <p>Badges : {badges} </p>
+          {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
           </div>
       )
   }
+  getConvos() {
+      console.log('not convos',this.props.notConvos);
+      console.log('bot convos',this.props.botConvos);
+      HumanConvos = this.props.notConvos.map(convo => (
+          <ConvoItem 
+            convo={convo}
+            time={convo.time}
+          />
+      ));
+      BotConvos = this.props.botConvos.map(convo => (
+          <ConvoItem 
+            convo={convo}
+            key={convo._id}
+            time={convo.time}
+          />
+      ));
+    return (
+        <div>
+            <div>
+                <h3>Human</h3>
+                {HumanConvos}
+            </div>
+            <div>
+                <h3>Bot</h3>
+                { BotConvos }
+            </div>
+        </div>);
+
+  }
+    
   
   getLoading() {
     return <p> Loading.. please be patient </p>;
@@ -73,4 +105,7 @@ AccountPage.propTypes = {
     loading: React.PropTypes.bool,
     ranking: React.PropTypes.number,
     userExists: React.PropTypes.bool,
+    convosLoading : React.PropTypes.bool,
+    notConvos : React.PropTypes.array,
+    botConvos : React.PropTypes.array,
 }
