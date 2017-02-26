@@ -4,7 +4,7 @@ import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { _ } from 'meteor/underscore';
-import { FormControl, ProgressBar, Button } from 'react-bootstrap';
+import { FormControl, ProgressBar, Button, FormGroup, ControlLabel } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 
@@ -14,14 +14,14 @@ export default class Chat extends React.Component {
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
       this.state = {isLoading: false};
       this.snippets = Snippets;
-      this.state = {isLoading: false, index: 0};
+      this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null};
       loadingInterval = Meteor.setInterval(() => {
         if(this.state.index < this.snippets.length - 1){
           console.log(this.state.index);
           this.setState({index: this.state.index + 1});
         }
       }, 5000);
-}
+    }
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
@@ -64,8 +64,13 @@ export default class Chat extends React.Component {
     handleEnter(event) {
       event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        if (text.length > 0) {
+        result = validate(text);
+        if (result.valid) {
+          this.setState({inputValidState: null, errorMsgs: null});
           Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
+        }else{
+          this.setState({inputValidState: "error", errorMsgs: result.errors});
+          console.log(result.errors);
         }
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
@@ -77,7 +82,10 @@ export default class Chat extends React.Component {
     }
     renderChatInput(){
       return (
-          <FormControl type="text" ref="textInput" placeholder="Type to send message" onKeyPress={this.handleKeystroke.bind(this)}/>
+        <FormGroup validationState={this.state.inputValidState}>
+        <ControlLabel>{this.state.errorMsgs}</ControlLabel> 
+        <FormControl type="text" ref="textInput" placeholder="Type to send message" onKeyPress={this.handleKeystroke.bind(this)}/>
+        </FormGroup>
       );
     }
     handleClick(event) { 
