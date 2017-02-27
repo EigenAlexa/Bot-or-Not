@@ -39,22 +39,26 @@ export default class Chat extends React.Component {
         Messages = messages.map(msg => {
           console.log("Loading: " + this.props.loading)
           console.log(Meteor.users.find().fetch());
-          user = Meteor.users.findOne({_id: msg.user}).username;
+          className = msg.user == Meteor.userId() ? "from-me" : "from-them";
+          //user = Meteor.users.findOne({_id: msg.user}).username;
           return(
             <Message 
                 key={msg._id}
                 msg={msg.message} 
-                author={user}
+                msgClass={className}
             />
         )});
         user = Meteor.user();
 
-        return (<div>
+        return (<div className="container">
                   {this.renderPrompt()} 
-                  <p>Discussion:</p>{Messages}
+                  <p>Discussion:</p>
+                  <div className="message-container row">{Messages}</div>
+                  <div className="row">
                   {this.props.room.closed ? "": this.renderChatInput()}
                   {this.props.room.closed ? "": this.renderProgressBar()} 
                   {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
+                  </div>
                   </div>);
 
     }
