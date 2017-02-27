@@ -19,6 +19,7 @@ function startBot(roomId) {
     } else {
       throw new Error('Bot Server URL not in settings');
     }
+  
     if (!!Meteor.settings.serverUrl) {
       server_url = Meteor.settings.serverUrl;
     } else {
@@ -27,9 +28,12 @@ function startBot(roomId) {
 
     // send post request to bot_url with url
     try {
-      let response = HTTP.post(bot_url, {
-        data : {'server_url' : server_url, 
-        'room_id' : roomId}
+      let response = HTTP.post(bot_url + '/get-bot', {
+        data : {
+          'server_url' : server_url, 
+          'room_id' : roomId, 
+          'magic_phrase' : Meteor.settings.magicPhrase
+        }
       }).data;
     } catch(error) {
       // TODO add handling that would send us an email or something

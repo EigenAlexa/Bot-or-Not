@@ -33,5 +33,17 @@ Meteor.methods({
     Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);
   },
-  
+  'getBotUsername'(magicphrase){
+    if(magicphrase=== Meteor.settings.magicPhrase) {
+      console.log('getting username');
+      let user_dict = {'user' : faker.commerce.productAdjective() + faker.company.bsBuzz(), 'pwd' : Meteor.settings.botPassword};
+      Accounts.createUser({
+        username : user_dict['user'],
+        password : user_dict['pwd']
+      });
+      return user_dict
+    } else {
+      return 'nice try hacker man';
+    }
+  } 
 });
