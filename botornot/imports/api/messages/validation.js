@@ -25,7 +25,7 @@ validate = (text) => {
   }
 
 checkSwear = (text) => {
-    matches = text.match(profanity);
+    matches = text.toLowerCase().match(profanity);
     if (!matches || matches.length == 0){
       return true;
     }
