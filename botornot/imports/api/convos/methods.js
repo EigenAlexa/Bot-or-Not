@@ -20,7 +20,7 @@ Meteor.methods({
         console.log(convoId, '- new convo');
         timeout = !!Meteor.settings.timeout ? Meteor.settings.timeout : 5;
         Meteor.setTimeout(() => {
-          Meteor.call('startBot', convod);
+          Meteor.call('startBot', convoId);
         }, timeout * 1000);
       }
     },
