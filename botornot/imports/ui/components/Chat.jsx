@@ -62,6 +62,7 @@ export default class Chat extends React.Component {
 			ReactDOM.render(modalInstance, document.getElementById("modal-div"));
       */
       event.returnValue="Are you sure you want to leave";
+
     }
 /*    unload(event){ 
       Meteor.call('users.exitConvo', Meteor.userId());
