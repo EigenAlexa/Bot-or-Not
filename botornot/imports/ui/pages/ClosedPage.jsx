@@ -35,12 +35,12 @@ export default class ClosedPage extends React.Component {
         <div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
         <button name="bot" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Bot</button>
         <button name="not" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Not</button>
-		    {blazeToReact('shareit')(links)}
         </div>
         : ""}
         {!Meteor.user().rated && this.state.submitted ?
           <p> Please wait for the other bot/human to rate you </p>
             : ""}
+		    {blazeToReact('shareit')(links)}
         </div>
     );
   }
