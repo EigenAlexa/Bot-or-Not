@@ -28,7 +28,7 @@ export default class Chat extends React.Component {
          var n = this.state.time_pass;
          var new_time = (n+0.05);
          this.setState({'time_pass': new_time});
-         this.setState({'progress': 90.0 - 90/(new_time)});
+         this.setState({'progress': 97.0 - 97/(new_time)});
       }, 50);
     }
     componentDidMount(){
@@ -152,10 +152,11 @@ export default class Chat extends React.Component {
     }
     renderPrepScreen(){
       firstTime = Meteor.user().firstTime;
-      showButton = this.props.room.curSessions == 2 && (!firstTime || this.state.index == this.snippets.length - 1);
-      if(showButton){
+      readyToChat = this.props.room.curSessions == 2 && (this.state.index == this.snippets.length - 1);
+      if(readyToChat){
         Meteor.clearInterval(loadingInterval);  
         Meteor.clearInterval(progressInterval);  
+        Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
       progress = this.state.progress;
@@ -163,10 +164,11 @@ export default class Chat extends React.Component {
       return (
         <div className="loading-btn word-wrap">
         <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
-        {showButton ?
-        <Button bsStyle="primary" disabled={isLoading} onClick={isLoading ? null: this.handleClick.bind(this)}> 
-        {isLoading ? "Loading ..." : "Continue" }
-        </Button> : <ProgressBar now={progress} active striped bsStyle="info"/> }
+        <div className="progress">
+          <ProgressBar  now={progress} active striped bsStyle={isLoading ? "success" : "info"} 
+          label={isLoading ? "Connnected! Waiting on other user."
+          : ""}/> 
+        </div>
         </div>);
     }
     renderPrompt(){
