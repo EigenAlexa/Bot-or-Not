@@ -8,25 +8,33 @@ import { FormControl, ProgressBar, Button, FormGroup, ControlLabel } from 'react
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 
+
+
+
 export default class Chat extends React.Component {
     constructor(props) {
       super(props);
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
       this.state = {isLoading: false};
       this.snippets = Snippets;
-      this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null};
+      this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null, progress:0.0, time_pass: 0.0};
       loadingInterval = Meteor.setInterval(() => {
         if(this.state.index < this.snippets.length - 1){
           console.log(this.state.index);
           this.setState({index: this.state.index + 1});
         }
-      }, 5000);
+      }, 3000);
+      progressInterval = Meteor.setInterval(() => {
+         var n = this.state.time_pass;
+         var new_time = (n+0.05);
+         this.setState({'time_pass': new_time});
+         this.setState({'progress': 90.0 - 90/(new_time)});
+      }, 50);
     }
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
         }
-        console.log(this.props.room);
         isReady = true;
         this.props.room.users.forEach((user) => {
           isReady = isReady && user.isReady;
@@ -110,12 +118,14 @@ export default class Chat extends React.Component {
       showButton = this.props.room.curSessions == 2 && (!firstTime || this.state.index == this.snippets.length - 1);
       if(showButton){
         Meteor.clearInterval(loadingInterval);  
+        Meteor.clearInterval(progressInterval);  
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
-      progress = this.state.index / this.snippets.length * 100;
+      progress = this.state.progress;
+      console.log(progress);
       return (
         <div>
-        <p>{this.snippets[this.state.index] }</p>
+        <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
         {showButton ?
         <Button bsStyle="primary" disabled={isLoading} onClick={isLoading ? null: this.handleClick.bind(this)}> 
         {isLoading ? "Loading ..." : "Continue" }

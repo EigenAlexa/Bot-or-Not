@@ -192,7 +192,6 @@ ul.nav.navbar-nav.navbar-right{
     background-color: transparent;
     border-color: #FFF;
     border-radius: 0px;
-    text-transform: uppercase;
     font-size: 20px;
     font-weight: 400;
     transition: all .4s ease-in-out;
@@ -200,6 +199,16 @@ ul.nav.navbar-nav.navbar-right{
 .custom-btn:hover{
 	background: #fff;
 	color: #583b54;
+}
+.loading-btn{
+	width: 400px;
+	background: #fff;
+	color: #583b54;
+    border-color: #FFF;
+    border-radius: 0px;
+    font-size: 20px;
+    font-weight: 400;
+    transition: all .4s ease-in-out;
 }
 /*=================================================
 ||				4. Find a Tour
@@ -227,9 +236,20 @@ ul.nav.navbar-nav.navbar-right{
 	border-color: #53B1DE;
 	color: #fff;
 }
+
+.word-wrap{
+	word-wrap: break-word;
+	white-space: normal;
+}
 .tour .input-group{
 	margin-bottom: 22px;
 }
+
+.btn .word-wrap{
+	word-wrap: break-word;
+	white-space: normal;
+}
+
 /*=================================================
 ||				5. Our Blazzing offers
 ==================================================*/
