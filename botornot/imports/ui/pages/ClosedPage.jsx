@@ -13,7 +13,7 @@ export default class ClosedPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const target = event.target;
-    console.log(target.name);
+    console.log('submitting', target.name);
     Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
     this.setState({submitted: true, rating: target.name});
     //FlowRouter.go('/');
