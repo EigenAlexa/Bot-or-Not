@@ -3,13 +3,13 @@ import emojiRegex from 'emoji-regex';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Messages } from '/imports/api/messages/messages.js';
 import { Meteor } from 'meteor/meteor';
-/*import typo from 'typo-js';
+import typo from 'typo-js';
 import aff from '/imports/ui/static/en_US.aff.js';
 import dic from '/imports/ui/static/en_US.dic.js';
 
 dict = new typo("en_US", aff, dic, {}); 
-*/
-validate = (text, convoId) => {
+
+validate = (text, convoId, server) => {
     valid = true;
     errorMsgs = [];
     tests = [ {func: checkSwear, errorMsg: "Please don't use profanity in your messages."},
@@ -17,10 +17,10 @@ validate = (text, convoId) => {
               {func: checkPhone, errorMsg: "Please don't put phone numbers in your messages."},
               {func: checkEmojis, errorMsg: "Please don't put emojis in your messages."},
               {func: checkRepeated, errorMsg: "Please don't spam messages."},
-              //{func: checkEnglish, errorMsg: "Please make sure you are using English words."},
+              {func: checkEnglish, errorMsg: "You have written too much nonsense, please type english."},
             ] 
     tests.forEach((test) => {
-      if(!test.func(text, convoId)){
+      if(!test.func(text, convoId, server)){
         valid = false;
         errorMsgs.push(test.errorMsg);
       }
@@ -28,7 +28,7 @@ validate = (text, convoId) => {
     return {valid: valid, errors: errorMsgs};
   }
 
-checkSwear = (text, convoId) => {
+checkSwear = (text, convoId, server) => {
     matches = text.toLowerCase().match(profanity);
     if (!matches || matches.length == 0){
       return true;
@@ -36,7 +36,7 @@ checkSwear = (text, convoId) => {
     return false;  
   }
 
-checkLinks = (text, convoId) => {
+checkLinks = (text, convoId, server) => {
   matches = text.match(links);
   if (!matches || matches.length == 0){
     return true
@@ -44,7 +44,7 @@ checkLinks = (text, convoId) => {
   return false;
 }
 
-checkPhone = (text, convoId) => {
+checkPhone = (text, convoId, server) => {
   matches = text.match(phones);
   if(!matches || matches.length == 0){
     return true;
@@ -52,7 +52,7 @@ checkPhone = (text, convoId) => {
   return false;
 }
 
-checkEmojis = (text, convoId) => {
+checkEmojis = (text, convoId, server) => {
   matches = text.match(emojiRegex());
   matches2 = text.match(emoticons);
   if((!matches || matches.length == 0) && (!matches2 || matches2.length == 0)){
@@ -60,16 +60,35 @@ checkEmojis = (text, convoId) => {
   }
   return false;
 } 
-/* checkEnglish = (text) => {
+checkEnglish = (text, convoId, server) => {
   englishCount = 0;
   text.split(" ").forEach((word) => {
     if( dict.check(word) ){
       englishCount++;    
     }
   });
-  return englishCount > text.split(" ").length / 2;
-} */
-checkRepeated = (text, convoId) => {
+  english = englishCount > text.split(" ").length / 2;
+  console.log("english? ", english);
+  if(!english){
+    if(!server){
+      Meteor.call('convos.incUserEnglishCount', convoId, Meteor.userId());
+    }
+    convo = Convos.findOne({_id: convoId});
+    ret = true;
+    console.log("users: ", convo.users);
+    convo.users.forEach((user) => {
+      if (user.id == Meteor.userId() && user.englishCount >= 3){
+        console.log(user);
+        ret = false;
+      }
+    });
+    return ret
+  }else{
+    Meteor.call('convos.resetUserEnglishCount', convoId, Meteor.userId());
+    return true;  
+  }
+}
+checkRepeated = (text, convoId, server) => {
   convo = Convos.findOne({_id: convoId});
   msg = Messages.findOne({_id: convo.msgs[convo.msgs.length - 1]});
   console.log(msg);
