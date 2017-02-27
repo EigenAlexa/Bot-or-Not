@@ -58,15 +58,15 @@ export default class Chat extends React.Component {
         )});
         user = Meteor.user();
 
-        return (<div className="container">
+        return (<div>
                   {this.renderPrompt()} 
                   <p>Discussion:</p>
                   <div className="message-container row">{Messages}</div>
-                  <div className="row">
-                  {this.props.room.closed ? "": this.renderChatInput()}
-                  {this.props.room.closed ? "": this.renderProgressBar()} 
-                  {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
-                  </div>
+                    <div className="row">
+                    {this.props.room.closed ? "": this.renderChatInput()}
+                    {this.props.room.closed ? "": this.renderProgressBar()} 
+                    {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
+                    </div>
                   </div>);
 
     }
@@ -124,7 +124,7 @@ export default class Chat extends React.Component {
       progress = this.state.progress;
       console.log(progress);
       return (
-        <div>
+        <div className="loading-btn word-wrap">
         <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
         {showButton ?
         <Button bsStyle="primary" disabled={isLoading} onClick={isLoading ? null: this.handleClick.bind(this)}> 
