@@ -1,25 +1,61 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
+import { ControlledModal } from '/imports/ui/components/Modal.jsx';
 
 export default class ClosedPage extends React.Component {
   constructor(props){
     super(props);
-    this.state = {submitted: false, rating: 'bot'};
+    this.state = {
+			submitted: false, 
+			rating: 'bot', 
+			modalOpen: true, 
+			canClose: false
+		};
+		this.setState = this.setState.bind(this);
+		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
   }
+
   renderUserLeft() {
     return ( <p>Sorry the other user left, please feel free to join another chat.</p> );
   }
+
   handleSubmit(event) {
     event.preventDefault();
     const target = event.target;
     console.log('submitting', target.name);
     Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
     this.setState({submitted: true, rating: target.name});
+		this.setState({canClose : true});
     //FlowRouter.go('/');
   }
+		
+  openModal () {
+    this.setState({
+      modalOpen : true
+    });
+  }
 
-  renderNotUserLeft() {
+  closeModal () {
+    this.setState({
+      modalOpen : false
+    });
+  }
+
+	renderModal(title,modalChild) {
+    return (
+				<ControlledModal
+					isOpen={ this.state.modalOpen }
+					closeModal={ this.closeModal }
+					canClose = { this.state.canClose }
+					title={ title }
+					children= { modalChild }
+			/>
+    );
+	}
+
+	renderNotUserLeft() {
     let links = {
       url: "http://botornot.ml/",
       title: "BotOrNot",
@@ -61,12 +97,17 @@ export default class ClosedPage extends React.Component {
   render() {
     const { room, connected, loading, userLeft } = this.props;
     if(!loading && userLeft){
-      return this.renderUserLeft();     
+      object = this.renderUserLeft();     
+			title = "User Disconnected";
     } else if(!loading && !userLeft){
-      return this.renderNotUserLeft();        
+      object = this.renderNotUserLeft();        
+			title = "Conversation Ended";
     } else {
-      return (<p> Hang on a tick, this page is loading </p>);
+      object = (<p> Hang on a tick, this page is loading </p>);
+			title = "Page loading";
     }
+		return this.renderModal(title, object);
+		// return object;
   }
 }
 ClosedPage.propTypes = {
