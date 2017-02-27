@@ -4,7 +4,7 @@ import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { _ } from 'meteor/underscore';
-import { FormControl, ProgressBar, Button, FormGroup, ControlLabel } from 'react-bootstrap';
+import { FormControl, ProgressBar, Button, FormGroup, ControlLabel, Modal } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 
@@ -31,6 +31,41 @@ export default class Chat extends React.Component {
          this.setState({'progress': 90.0 - 90/(new_time)});
       }, 50);
     }
+    componentDidMount(){
+      window.addEventListener("beforeunload", this.beforeunload);
+      window.addEventListener("unload", this.unload);
+    }
+    componentWillUnmount(){
+      window.removeEventListener("beforeunload", this.beforeunload);
+      window.addEventListener("unload", this.unload);
+    }
+    beforeunload(event){
+ /*   	const modalInstance = (
+				<div className="static-modal">
+					<Modal.Dialog>
+						<Modal.Header>
+							<Modal.Title>Are you sure you want to leave this chat.</Modal.Title>
+						</Modal.Header>
+
+						<Modal.Body>
+							Once you leave you will not be able to come back. You won't pass go AND you won't collect $200.
+						</Modal.Body>
+
+						<Modal.Footer>
+							<Button>Close</Button>
+							<Button bsStyle="primary">Save changes</Button>
+						</Modal.Footer>
+
+					</Modal.Dialog>
+				</div>
+			);
+			ReactDOM.render(modalInstance, document.getElementById("modal-div"));
+      */
+      event.returnValue="Are you sure you want to leave";
+    }
+/*    unload(event){ 
+      Meteor.call('users.exitConvo', Meteor.userId());
+    }*/
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
@@ -58,7 +93,8 @@ export default class Chat extends React.Component {
         )});
         user = Meteor.user();
 
-        return (<div>
+        return (<div className="container">
+                  <div id="modal-div"> </div>
                   {this.renderPrompt()} 
                   <p>Discussion:</p>
                   <div className="message-container row">{Messages}</div>
