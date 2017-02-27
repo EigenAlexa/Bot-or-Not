@@ -26,7 +26,7 @@ Meteor.methods({
     },
     'convos.updateChat'(text, convoId, userId) {
         
-      result = validate(text, convoId);
+      result = validate(text, convoId, true);
       if(result.valid){
         const msgId = Messages.insert({
           user: userId,
@@ -60,7 +60,7 @@ Meteor.methods({
     },
     'convos.addUserToRoom'(userId, convoId) {
       Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
-        $push: {users: {id: userId, ratedBot: false, isReady: false}},
+        $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0}},
         $inc: {curSessions: 1}
       });
       Meteor.users.update({_id: userId}, {
@@ -143,6 +143,16 @@ Meteor.methods({
       });
     }
   },
+  'convos.incUserEnglishCount'(convoId, userId){
+      Convos.update({_id: convoId, "users.id": userId}, {
+        $inc: {"users.$.englishCount": 1}
+      });
+  },
+  'convos.resetUserEnglishCount'(convoId, userId){
+    Convos.update({_id: convoId, "users.id": userId}, {
+      $set: {"users.$.englishCount": 0}
+    });
+  }
 });
 function getOpenRooms() {
     // get all convos that have less than two people and aren't closed yet

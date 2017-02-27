@@ -17,6 +17,11 @@ UserSchema = new SimpleSchema({
     type: Boolean,
     label: "isReady",
     defaultValue: false
+  },
+  englishCount: {
+    type: Number,
+    label: "englishCount",
+    defaultValue: 0
   }
 });
 
