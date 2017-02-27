@@ -200,16 +200,7 @@ ul.nav.navbar-nav.navbar-right{
 	background: #fff;
 	color: #583b54;
 }
-.loading-btn{
-	width: 400px;
-	background: #fff;
-	color: #583b54;
-    border-color: #FFF;
-    border-radius: 0px;
-    font-size: 20px;
-    font-weight: 400;
-    transition: all .4s ease-in-out;
-}
+
 /*=================================================
 ||				4. Find a Tour
 ==================================================*/
