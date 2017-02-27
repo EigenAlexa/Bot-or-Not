@@ -41,7 +41,7 @@ Meteor.publish('currentUser', (userId) => {
   })];
   session.socket.on('close', Meteor.bindEnvironment(() => {
     Meteor.call('users.exitConvo', userId);
-  })); 
+  }));
   return user;
 });
 
