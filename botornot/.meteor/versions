@@ -90,6 +90,7 @@ oauth@1.1.13
 oauth2@1.1.11
 observe-sequence@1.0.15
 ordered-dict@1.0.9
+patrickml:react-modal@2.1.0
 practicalmeteor:faker@3.0.1_1
 promise@0.8.8
 raix:eventemitter@0.1.3
