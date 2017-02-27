@@ -68,7 +68,7 @@ export default class Chat extends React.Component {
     handleEnter(event) {
       event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        result = validate(text);
+        result = validate(text, this.props.room._id);
         if (result.valid) {
           this.setState({inputValidState: null, errorMsgs: null});
           Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());

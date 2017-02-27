@@ -26,7 +26,7 @@ Meteor.methods({
     },
     'convos.updateChat'(text, convoId, userId) {
         
-      result = validate(text);
+      result = validate(text, convoId);
       if(result.valid){
         const msgId = Messages.insert({
           user: userId,
