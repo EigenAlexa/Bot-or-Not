@@ -51,14 +51,20 @@ export default class WaitPage extends React.Component {
         return (
             <div>
                 <section className="section-background">
-                  <div className="container">
-                    <h3 className="page-header">
-                    Chat
-                    </h3>
+                  <div className="intro container">
+                  <div className="inner-intro">
+                    <h1 className="header-title">
+                       CHAT
+                    </h1>
+                    <div className="btn loading-btn word-wrap">
+                        { !noRooms || inconvo ? this.getContent() : <h4> Please wait while we connect you to an available bot or human. </h4> }
+                      </div>
                   </div>
+                </div>
+
                 </section>
-                { !noRooms || inconvo ? this.getContent() : <p> Please wait while we connect you to an available bot or human. </p> }
-            </div>
+          </div>
+              
         );
     }
 }
