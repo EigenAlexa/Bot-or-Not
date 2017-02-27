@@ -39,16 +39,16 @@ var Footer = React.createClass({
     return ( 
 			<footer className="footer-lower" style={{"margin-top": "0"}} id="footer">
 					<div className="row">
-							<div className="medium-7 columns">
+							<div className="columns">
 									<span>© 2017 BotOrNot - All Rights Reserved</span>
 							</div>
 
-							<div className="medium-5 columns text-right">
-									<ul className="social-profiles">
-											<li><a href="http://www.facebook.com/botornot.ml" target="_blank"><i className="icon social_facebook"></i></a></li>
-											<li><a href="http://twitter.com/botornot_ml" target="_blank"><i className="icon social_twitter"></i></a></li>
-											<li><a href="mailto:botornot.ml@gmail.com"><i className="icon icon_mail"></i></a></li>
-									</ul>
+							<div className="columns">
+								<div className="share-buttons">
+									<a className="large btn fb-share" href="http://www.facebook.com/botornot.ml" target="_blank"><i className="fa fa-facebook"></i></a>
+									<a className="large btn tw-share" href="http://twitter.com/botornot_ml" target="_blank"><i className="fa fa-twitter"></i></a>
+									<a className="large btn tw-share" href="mailto:botornot.ml@gmail.com"><i className="fa fa-envelope"></i></a>
+								</div>
 							</div>
 					</div>
 			</footer>
