@@ -2,6 +2,7 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ControlledModal } from '/imports/ui/components/Modal.jsx';
+import { Button } from 'react-bootstrap';
 
 export default class ClosedPage extends React.Component {
   constructor(props){
@@ -18,7 +19,11 @@ export default class ClosedPage extends React.Component {
   }
 
   renderUserLeft() {
-    return ( <p>Sorry the other user left, please feel free to join another chat.</p> );
+    return ( <div>
+            <p>Sorry the other user left, please feel free to join another chat.</p>
+             {this.renderNextChatButton()}
+             </div>
+             );
   }
 
   handleSubmit(event) {
@@ -30,7 +35,6 @@ export default class ClosedPage extends React.Component {
 		this.setState({canClose : true});
     //FlowRouter.go('/');
   }
-		
   openModal () {
     this.setState({
       modalOpen : true
@@ -55,7 +59,10 @@ export default class ClosedPage extends React.Component {
     );
 	}
 
-	renderNotUserLeft() {
+  handleNextSubmit(event) {
+    Meteor.call('users.exitConvo', Meteor.userId());
+  }
+  renderNotUserLeft() {
     let links = {
       url: "http://botornot.ml/",
       title: "BotOrNot",
@@ -65,34 +72,27 @@ export default class ClosedPage extends React.Component {
         {Meteor.user().rated && this.state.submitted ? 
         <div><p> You were rated {Meteor.user().lastRating} </p> 
           <p> You rated the other user {this.state.rating}. The other user was {Meteor.user().lastOtherUser} </p>
+          {this.renderNextChatButton()}
           </div>
         : ""}
         {!this.state.submitted ?
         <div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
-        <button name="bot" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Bot</button>
-        <button name="not" className="button btn-primary" onClick={this.handleSubmit.bind(this)}>Not</button>
+        <Button name="bot" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Bot</Button>
+        <Button name="not" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Not</Button>
         </div>
         : ""}
         {!Meteor.user().rated && this.state.submitted ?
-          <p> Please wait for the other bot/human to rate you </p>
+          <div><p> If you would like to see your rating, please wait for the other bot/human to rate you </p>
+          {this.renderNextChatButton()}</div>
             : ""}
 		    {blazeToReact('shareit')(links)}
         </div>
     );
   }
-  renderBoilerPlate(loading, content) {
+  renderNextChatButton() {
     return (
-      <div>
-        <section className="section-background">
-          <div className="container">
-            <h3 className="page-header">
-              Chat
-            </h3>
-          </div>
-        </section>
-        { !loading ? content.bind(this)() : <p> Hang on a tick, this page is loading. </p> }
-      </div>
-    ); 
+        <Button bsStyle='primary' bsSize='large' onClick={this.handleNextSubmit.bind(this)}>Next Chat</Button>
+        );
   }
   render() {
     const { room, connected, loading, userLeft } = this.props;

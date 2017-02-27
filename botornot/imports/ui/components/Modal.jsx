@@ -10,7 +10,6 @@ export class ControlledModal extends  React.Component {
           close={ this.props.closeModal }
           title={ this.props.title }>
 					{this.props.children}
-          {this.props.canClose ? <button onClick={ this.props.closeModal }>Click Here to Close</button> : ""}
         </Modal>
       </div>
     );
