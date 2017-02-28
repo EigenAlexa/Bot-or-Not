@@ -160,7 +160,6 @@ export default class Chat extends React.Component {
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
       progress = this.state.progress;
-      console.log(progress);
       return (
         <div className="loading-btn word-wrap">
         <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
