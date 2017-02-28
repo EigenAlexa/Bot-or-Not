@@ -19,9 +19,9 @@ export default class Chat extends React.Component {
       this.snippets = Snippets;
       this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null, progress:0.0, time_pass: 0.0};
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
-      loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
+      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
       this.updateProgressBar = this.updateProgressBar.bind(this);
-      progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
+      this.progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
     }
     updateLoadingInterval() {
         if(this.state.index < this.snippets.length - 1){
@@ -41,6 +41,8 @@ export default class Chat extends React.Component {
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
+      Meteor.clearInterval(this.loadingInterval);
+      Meteor.clearInterval(this.progressInterval);
     }
     beforeunload(event){
       event.returnValue="Are you sure you want to leave";
@@ -131,8 +133,8 @@ export default class Chat extends React.Component {
       firstTime = Meteor.user().firstTime;
       readyToChat = this.props.room.curSessions == 2 && (!firstTime || this.state.index == this.snippets.length - 1);
       if(readyToChat){
-        Meteor.clearInterval(loadingInterval);  
-        Meteor.clearInterval(progressInterval);  
+        Meteor.clearInterval(this.loadingInterval);  
+        Meteor.clearInterval(this.progressInterval);  
         Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
