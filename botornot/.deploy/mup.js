@@ -16,20 +16,20 @@ module.exports = {
       pem: "~/.ssh/james_ncal.pem",
         
     },
-    'three':{
+ /*   'three':{
       host: "54.219.161.184",
       username: "ubuntu",
       pem: "~/.ssh/james_ncal.pem",
        
-    }
+    }*/
   },
   meteor: {
     name: "meteor",
     path: "../",
     servers: {
-      'one':{env:{CLUSTER_BALANCER_URL: "http://one.botornot.ml"}},
-      'two': {env:{CLUSTER_BALANCER_URL: "http://two.botornot.ml"}},
-      'three':{env:{ CLUSTER_BALANCER_URL: "http://three.botornot.ml"}},
+      'one':{env:{}},//CLUSTER_BALANCER_URL: "http://one.botornot.ml"}},
+//      'two': {env:{}},//CLUSTER_BALANCER_URL: "http://two.botornot.ml"}},
+      //'three':{env:{ CLUSTER_BALANCER_URL: "http://three.botornot.ml"}},
     },  
     buildOptions: {
       serverOnly: true,
@@ -38,9 +38,9 @@ module.exports = {
     env: {
       ROOT_URL: "http://beta.botornot.ml",
       MONGO_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=majority",
-      CLUSTER_DISCOVERY_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=majority",
-      CLUSTER_WORKERS_COUNT: "auto",
-      CLUSTER_SERVICE: "web",
+//      CLUSTER_DISCOVERY_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=majority",
+//      CLUSTER_WORKERS_COUNT: "auto",
+//      CLUSTER_SERVICE: "web",
 //      DISABLE_WEBSOCKETS: "1",
     },
 
