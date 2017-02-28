@@ -5,5 +5,9 @@
     "botServerUrl" : "http://localhost:5000",
     "serverUrl" : "localhost:3000",
     "magicPhrase" : "hilaryyas",
-    "botPassword" : "supthen"
+    "botPassword" : "supthen",
+    "kadira": { 
+      "appId": "SagxruT5Cu4WrC4fk", 
+      "appSecret": "e13c47ae-3826-403b-8222-2d16521ea70c" 
+    }
 }
