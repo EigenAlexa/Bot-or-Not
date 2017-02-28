@@ -8,7 +8,6 @@ export default ClosedContainer = createContainer(({ params }) => {
   const { roomId, userLeft } = params;  
   const roomHandle = Meteor.subscribe('chat', roomId);
   const usersHandle = Meteor.subscribe('currentUsers', roomId);
-  console.log(roomId, userLeft);
   /*Meteor.users.find({_id: Meteor.userId()}).observe({
     changed: (newUser, oldUser) => {
       if(newUser.rated && !oldUser.rated){

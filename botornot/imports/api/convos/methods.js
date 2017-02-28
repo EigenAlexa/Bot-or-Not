@@ -26,7 +26,6 @@ Meteor.methods({
           hostID: Meteor.settings.hostID, 
         });
         Messages.update({_id: msgId}, {$set: {convoId: convoId}});
-        console.log(convoId, '- new convo');
         timeout = !!Meteor.settings.timeout ? Meteor.settings.timeout : 5;
         Meteor.setTimeout(() => {
           Meteor.call('startBot', convoId);
@@ -49,8 +48,6 @@ Meteor.methods({
           update = true;
         }else{
           msg = Messages.findOne({_id: convo.msgs[convo.msgs.length - 1]})
-          console.log(msg.user);
-          console.log(userId);
           if (msg.user != userId){
             update = true;
           }else{
@@ -92,7 +89,6 @@ Meteor.methods({
     },
     'convos.finishConvoUserLeft'(convoId){
       convo = Convos.findOne({_id: convoId});
-      console.log("finishing convo user left");
       convo.users.forEach( (user) => {
         Meteor.users.update({_id: user.id}, {
           $set: {convoClosed: true, left: true}
@@ -180,7 +176,6 @@ function getOpenRooms() {
         closed: false,
         curSessions : {$lt: 2}
     }).fetch();
-    console.log(convos);
     return convos;
 }
 export const makeNewRoom = () => {

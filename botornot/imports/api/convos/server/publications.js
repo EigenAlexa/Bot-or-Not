@@ -55,5 +55,3 @@ Meteor.publish('openrooms', () => {
         hostID: 1,
     }});
 });
-
-
