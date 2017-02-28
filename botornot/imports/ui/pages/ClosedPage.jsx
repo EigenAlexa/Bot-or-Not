@@ -11,19 +11,33 @@ export default class ClosedPage extends React.Component {
 			submitted: false, 
 			rating: 'bot', 
 			modalOpen: true, 
-			canClose: false
+			canClose: false,
+      onRating: false,
 		};
-		this.setState = this.setState.bind(this);
+	//	this.setState = this.setState.bind(this);
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
   }
-
+  
+  componentWillUpdate(){
+    if(!this.props.userLeft && !this.state.onRating){
+      console.log("setting state");
+      this.setState({onRating: true});
+    }
+  }
   renderUserLeft() {
     return ( <div>
             <p>Sorry the other user left, please feel free to join another chat.</p>
              {this.renderNextChatButton()}
              </div>
              );
+  }
+  renderUserLeftSubmitted() {
+    return ( <div>
+              <p> Thanks for rating. Unfortunately, the other user left with out rating you. Please feel free to join another chat. </p>
+              {this.renderNextChatButton()}
+              </div>
+        );
   }
 
   handleSubmit(event) {
@@ -67,27 +81,29 @@ export default class ClosedPage extends React.Component {
       url: "http://botornot.ml/",
       title: "BotOrNot",
     }
-    console.log(this);
     return (<div>
-        {Meteor.user().rated && this.state.submitted ? 
-        <div><p> You were rated {Meteor.user().lastRating} </p> 
-          <p> You rated the other user {this.state.rating}. The other user was {Meteor.user().lastOtherUser} </p>
-          {this.renderNextChatButton()}
-          </div>
-        : ""}
-        {!this.state.submitted ?
-        <div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
-        <Button name="bot" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Bot</Button>
-        <Button name="not" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Not</Button>
-        </div>
-        : ""}
-        {!Meteor.user().rated && this.state.submitted ?
-          <div><p> If you would like to see your rating, please wait for the other bot/human to rate you </p>
-          {this.renderNextChatButton()}</div>
-            : ""}
+        {Meteor.user().rated && this.state.submitted ? this.renderRatings(): ""}
+        {!this.state.submitted ? this.renderBotOrNotButtons(): ""}
+        {!Meteor.user().rated && this.state.submitted ? this.renderWaitForRating() : ""}
 		    {blazeToReact('shareit')(links)}
         </div>
     );
+  }
+  renderBotOrNotButtons(){
+     return (<div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
+        <Button name="bot" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Bot</Button>
+        <Button name="not" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Not</Button>
+        </div>);
+  }
+  renderWaitForRating(){
+    return (<div><p> If you would like to see your rating, please wait for the other bot/human to rate you </p>
+          {this.renderNextChatButton()}</div>);
+  }
+  renderRatings(){
+    return (<div><p> You were rated {Meteor.user().lastRating} </p> 
+          <p> You rated the other user {this.state.rating}. The other user was {Meteor.user().lastOtherUser} </p>
+          {this.renderNextChatButton()}
+          </div>);
   }
   renderNextChatButton() {
     return (
@@ -96,10 +112,14 @@ export default class ClosedPage extends React.Component {
   }
   render() {
     const { room, connected, loading, userLeft } = this.props;
-    if(!loading && userLeft){
+    if(!loading && userLeft && !this.state.onRating ){
       object = this.renderUserLeft();     
 			title = "User Disconnected";
-    } else if(!loading && !userLeft){
+    } else if(!loading && userLeft && this.state.submitted && !Meteor.user().rated){
+      object = this.renderUserLeftSubmitted();
+      title = "User Disconnected";
+    } 
+    else if(!loading && (!userLeft || this.state.onRating)){
       object = this.renderNotUserLeft();        
 			title = "Conversation Ended";
     } else {
