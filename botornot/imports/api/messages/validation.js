@@ -68,17 +68,14 @@ checkEnglish = (text, convoId, server) => {
     }
   });
   english = englishCount > text.split(" ").length / 2;
-  console.log("english? ", english);
   if(!english){
     if(!server){
       Meteor.call('convos.incUserEnglishCount', convoId, Meteor.userId());
     }
     convo = Convos.findOne({_id: convoId});
     ret = true;
-    console.log("users: ", convo.users);
     convo.users.forEach((user) => {
       if (user.id == Meteor.userId() && user.englishCount >= 3){
-        console.log(user);
         ret = false;
       }
     });
@@ -91,7 +88,6 @@ checkEnglish = (text, convoId, server) => {
 checkRepeated = (text, convoId, server) => {
   convo = Convos.findOne({_id: convoId});
   msg = Messages.findOne({_id: convo.msgs[convo.msgs.length - 1]});
-  console.log(msg);
   if(!!msg){
     if(msg.user == Meteor.userId() && msg.message == text){
       return false;

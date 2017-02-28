@@ -13,7 +13,6 @@ class NavBar extends React.Component {
   }
   navLinks() {
     if (!Meteor.loggingIn() && Meteor.user()) {
-      console.log(this.user());
       const username = this.user().username;
       return (
         <ul className="nav navbar-nav navbar-right">
