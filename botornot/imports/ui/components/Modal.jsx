@@ -2,7 +2,6 @@ import React from 'react';
 
 export class ControlledModal extends  React.Component {
   render () {
-		console.log('can close this modal', this.props.canClose);
     return (
       <div>
         <Modal

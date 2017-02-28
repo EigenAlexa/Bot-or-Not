@@ -40,33 +40,8 @@ export default class Chat extends React.Component {
       window.addEventListener("unload", this.unload);
     }
     beforeunload(event){
- /*   	const modalInstance = (
-				<div className="static-modal">
-					<Modal.Dialog>
-						<Modal.Header>
-							<Modal.Title>Are you sure you want to leave this chat.</Modal.Title>
-						</Modal.Header>
-
-						<Modal.Body>
-							Once you leave you will not be able to come back. You won't pass go AND you won't collect $200.
-						</Modal.Body>
-
-						<Modal.Footer>
-							<Button>Close</Button>
-							<Button bsStyle="primary">Save changes</Button>
-						</Modal.Footer>
-
-					</Modal.Dialog>
-				</div>
-			);
-			ReactDOM.render(modalInstance, document.getElementById("modal-div"));
-      */
       event.returnValue="Are you sure you want to leave";
-
     }
-/*    unload(event){ 
-      Meteor.call('users.exitConvo', Meteor.userId());
-    }*/
     getContent() {
         if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
@@ -143,7 +118,7 @@ export default class Chat extends React.Component {
     renderProgressBar(){
       progress = this.props.room.turns / this.props.room.max_turns * 100;
       return (
-        <ProgressBar now={progress} label={`${progress}%`}/>
+        <ProgressBar active now={progress} label={`${progress}%`}/>
       );
     }
     renderClosed(){
@@ -163,7 +138,7 @@ export default class Chat extends React.Component {
       return (
         <div className="loading-btn word-wrap">
         <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
-        <div className="progress">
+        <div className="progress-for-loader">
           <ProgressBar  now={progress} active striped bsStyle={isLoading ? "success" : "info"} 
           label={isLoading ? "Connnected! Waiting on other user."
           : ""}/> 
