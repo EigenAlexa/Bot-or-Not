@@ -61,8 +61,6 @@ export default class Chat extends React.Component {
         }
         messages = this.props.messages;
         Messages = messages.map(msg => {
-          console.log("Loading: " + this.props.loading)
-          console.log(Meteor.users.find().fetch());
           className = msg.user == Meteor.userId() ? "from-me" : "from-them";
           //user = Meteor.users.findOne({_id: msg.user}).username;
           return(
@@ -106,7 +104,6 @@ export default class Chat extends React.Component {
           Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
         }else{
           this.setState({inputValidState: "error", errorMsgs: result.errors});
-          console.log(result.errors);
         }
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }

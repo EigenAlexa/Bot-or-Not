@@ -13,25 +13,19 @@ export default class WaitPage extends React.Component {
     makeRoom() {
         // checks whether there is an open room and returns that. Otherwise
         // will make a new room.
-        console.log('making a room');
         Meteor.call('convos.newRoom');
     }
     joinRoom() {
-        console.log('joining a room');
-        console.log(this.props.openRooms);
         this.room = this.props.openRooms[0];
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     render() {
         const { openRooms, connected, loading, user } = this.props;
         if(!loading && !user){
-          console.log("anonymous");
           AccountsAnonymous.login((e) => {
-            console.log("anonymous user logged in");
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());
           });  
         } else if(!loading && !!user){
-          console.log(user);
           noRooms = openRooms.length === 0 && !user.in_convo;
           if (noRooms) {
             this.makeRoom();

@@ -175,7 +175,6 @@ Schema.User = new SimpleSchema({
 Meteor.users.attachSchema(Schema.User);
 
 Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
-  console.log(fieldNames);
   // update the rating
   // if ('sessions' in doc || 'notratings' in doc) {
     //
@@ -189,7 +188,6 @@ Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
     } else {
       doc.rating = Math.pow(doc.notratings, 2) / doc.sessions;
     }
-    console.log("doc.rating", doc.rating);
   }
   // HERE IS WHERE YOU ADD BADGES
   if (sessionsUpdate) {

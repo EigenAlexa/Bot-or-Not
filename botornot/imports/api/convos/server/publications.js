@@ -54,5 +54,3 @@ Meteor.publish('openrooms', () => {
         closed : 1,
     }});
 });
-
-

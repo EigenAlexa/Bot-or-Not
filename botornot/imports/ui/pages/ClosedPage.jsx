@@ -21,7 +21,6 @@ export default class ClosedPage extends React.Component {
   
   componentWillUpdate(){
     if(!this.props.userLeft && !this.state.onRating){
-      console.log("setting state");
       this.setState({onRating: true});
     }
   }
@@ -49,7 +48,6 @@ export default class ClosedPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const target = event.target;
-    console.log('submitting', target.name);
     Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
     this.setState({submitted: true, rating: target.name});
 		this.setState({canClose : true});

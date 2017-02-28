@@ -18,13 +18,11 @@ UserPresence.onSessionDisconnected((connection) => {
 **/
 Meteor.methods({
   'users.updateAnonymousUsername'(userId) {
-    user_no = 
     Meteor.users.update({_id: userId}, {
       $set: {username: faker.hacker.ingverb() + faker.hacker.noun(), firstTime: true}
     });
   },
   'users.exitConvo'(userId) {
-    console.log(userId, " left");
     Meteor.users.update({_id: userId}, {
       $set: {in_convo: false, rated: false, isReady: false}
     });
@@ -35,7 +33,6 @@ Meteor.methods({
   },
   'getBotUsername'(magicphrase){
     if(magicphrase=== Meteor.settings.magicPhrase) {
-      console.log('getting username');
       let user_dict = {'user' : faker.commerce.productAdjective() + faker.company.bsBuzz(), 'pwd' : Meteor.settings.botPassword};
       Accounts.createUser({
         username : user_dict['user'],
