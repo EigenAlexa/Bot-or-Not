@@ -18,18 +18,21 @@ export default class Chat extends React.Component {
       this.state = {isLoading: false};
       this.snippets = Snippets;
       this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null, progress:0.0, time_pass: 0.0};
-      loadingInterval = Meteor.setInterval(() => {
+      this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
+      loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
+      this.updateProgressBar = this.updateProgressBar.bind(this);
+      progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
+    }
+    updateLoadingInterval() {
         if(this.state.index < this.snippets.length - 1){
-          console.log(this.state.index);
           this.setState({index: this.state.index + 1});
         }
-      }, 3000);
-      progressInterval = Meteor.setInterval(() => {
+    }
+    updateProgressBar() {
          var n = this.state.time_pass;
          var new_time = (n+0.05);
          this.setState({'time_pass': new_time});
          this.setState({'progress': 97.0 - 97/(new_time)});
-      }, 50);
     }
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
@@ -49,7 +52,6 @@ export default class Chat extends React.Component {
         isReady = true;
         this.props.room.users.forEach((user) => {
           isReady = isReady && user.isReady;
-          console.log(isReady);
         });
         if (this.props.room.curSessions < 2 || !isReady && !this.props.room.closed){
           return this.renderPrepScreen();
@@ -137,6 +139,7 @@ export default class Chat extends React.Component {
       progress = this.state.progress;
       return (
         <div className="loading-btn word-wrap">
+        {isLoading ? "" : <h3>Looking for chat rooms</h3>}
         <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
         <div className="progress-for-loader">
           <ProgressBar  now={progress} active striped bsStyle={isLoading ? "success" : "info"} 
