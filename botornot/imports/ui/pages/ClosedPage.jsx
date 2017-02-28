@@ -27,7 +27,7 @@ export default class ClosedPage extends React.Component {
   }
   renderUserLeft() {
     return ( <div>
-            <p>Sorry the other user left, please feel free to join another chat.</p>
+            <span className="update-span">Sorry the other user left, please feel free to join another chat.</span>
              {this.renderNextChatButton()}
              </div>
              );
