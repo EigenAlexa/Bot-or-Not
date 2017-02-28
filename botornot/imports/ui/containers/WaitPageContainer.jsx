@@ -12,6 +12,8 @@ export default WaitContainer = createContainer(() => {
     const roomsHandle = Meteor.subscribe('openrooms');
     const userHandle = Meteor.subscribe('currentUser', Meteor.userId());
     const user = Meteor.users.findOne({_id: Meteor.userId()});
+    console.log('userhandle', userHandle.ready());
+    console.log('user', user);
     return {
       openRooms: Convos.find({curSessions: {$lt: 2}, closed: false, "users.id": {$ne: Meteor.userId()}}).fetch(),
       loading: !roomsHandle.ready() || !userHandle.ready(),

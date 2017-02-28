@@ -3,11 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactLayout } from 'meteor/kadira:react-layout';
 import { mount } from 'react-mounter';
 import { Session } from 'meteor/session';
-
-
 import Screen from '/imports/ui/layouts/screen.jsx'
-
-
 import HomePage from '/imports/ui/pages/HomePage.jsx';
 import ContactPage from '/imports/ui/pages/ContactPage.jsx';
 import LeaderboardContainer from '/imports/ui/containers/LeaderboardPageContainer.jsx';
@@ -16,7 +12,6 @@ import PrivacyPage from '/imports/ui/pages/PrivacyPage.jsx';
 import WaitPageContainer from '/imports/ui/containers/WaitPageContainer.jsx';
 import AccountPageContainer from '/imports/ui/containers/AccountPageContainer.jsx';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
-
 //import SignInPage from '/imports/ui/pages/SignInPage.jsx';
 import { getARoom } from '/imports/startup/client/methods.js';
 
@@ -50,7 +45,7 @@ FlowRouter.route('/leaderboards', {
 FlowRouter.route('/chat', {
 	name: 'chat',
 	action() {
-		ReactLayout.render(Screen, {children:<WaitPageContainer />});
+    ReactLayout.render(Screen, {children:<WaitPageContainer />});
 	},
   triggersExit: (context) => {
     console.log('exited chat');

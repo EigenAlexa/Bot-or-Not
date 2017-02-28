@@ -8,14 +8,10 @@ import { FormControl, ProgressBar, Button, FormGroup, ControlLabel, Modal } from
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 
-
-
-
 export default class Chat extends React.Component {
     constructor(props) {
       super(props);
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
-      this.state = {isLoading: false};
       this.snippets = Snippets;
       this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null, progress:0.0, time_pass: 0.0};
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
@@ -48,7 +44,7 @@ export default class Chat extends React.Component {
       event.returnValue="Are you sure you want to leave";
     }
     getContent() {
-        if (! this.props.roomExists) {
+	      if (! this.props.roomExists) {
             return (<div> <p>404'd</p> </div>);
         }
         isReady = true;
