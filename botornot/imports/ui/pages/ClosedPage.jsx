@@ -1,8 +1,7 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
-import { ControlledModal } from '/imports/ui/components/Modal.jsx';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 export default class ClosedPage extends React.Component {
   constructor(props){
@@ -10,13 +9,9 @@ export default class ClosedPage extends React.Component {
     this.state = {
 			submitted: false, 
 			rating: 'bot', 
-			modalOpen: true, 
 			canClose: false,
       onRating: false,
 		};
-	//	this.setState = this.setState.bind(this);
-		this.openModal = this.openModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
   }
   
   componentWillUpdate(){
@@ -64,27 +59,16 @@ export default class ClosedPage extends React.Component {
     });
     //FlowRouter.go('/');
   }
-  openModal () {
-    this.setState({
-      modalOpen : true
-    });
-  }
-
-  closeModal () {
-    this.setState({
-      modalOpen : false
-    });
-  }
-
 	renderModal(title,modalChild) {
     return (
-				<ControlledModal
-					isOpen={ this.state.modalOpen }
-					closeModal={ this.closeModal }
-					canClose = { this.state.canClose }
-					title={ title }
-					children= { modalChild }
-			/>
+        <Modal show={true} backdrop='static' >
+          <Modal.Header> 
+            <Modal.Title>{title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {modalChild}
+          </Modal.Body>
+        </Modal>
     );
 	}
 
@@ -142,7 +126,6 @@ export default class ClosedPage extends React.Component {
 			title = "Page loading";
     }
 		return this.renderModal(title, object);
-		// return object;
   }
 }
 ClosedPage.propTypes = {
