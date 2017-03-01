@@ -67,10 +67,10 @@ ConvoSchema = new SimpleSchema({
     type: Date, 
     label: 'time',
   },
-  promptText: {
+/*  promptText: {
     type: String,
     label: 'promptId',
-  },
+  },*/
   canRate: {
     type: Boolean,
     label: 'canRate',

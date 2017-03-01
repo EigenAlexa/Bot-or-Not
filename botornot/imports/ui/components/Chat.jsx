@@ -76,7 +76,6 @@ export default class Chat extends React.Component {
 
         return (<div>
                   <div id="modal-div"> </div>
-                  {this.renderPrompt()} 
                   <Panel className="message-panel">{Messages}</Panel>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
@@ -159,9 +158,9 @@ export default class Chat extends React.Component {
         </div>
         </div>);
     }
-    renderPrompt(){
+   /* renderPrompt(){
       return (<p>{this.props.room.promptText}</p>);
-    }
+    }*/
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;
         return loading ? this.getLoadingPage() : this.getContent();
