@@ -11,12 +11,19 @@ Meteor.methods({
     }, 
     'convos.newRoom'() {
       if(!this.isSimulation){
+        msgId = Messages.insert({
+          user: "null",
+          message: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
+          time: Date.now(),
+          convoId: "null"
+        });
         convoId = Convos.insert({
           closed: false,
           curSessions: 0,
           time: Date.now(),
-          promptText: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
+          msgs: [msgId],
         });
+        Messages.update({_id: msgId}, {$set: {convoId: convoId}});
         console.log(convoId, '- new convo');
         timeout = !!Meteor.settings.timeout ? Meteor.settings.timeout : 5;
         Meteor.setTimeout(() => {
