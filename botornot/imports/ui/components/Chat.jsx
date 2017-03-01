@@ -71,15 +71,14 @@ export default class Chat extends React.Component {
             />
         )});
         user = Meteor.user();
-
         return (<div>
                   <div id="modal-div"> </div>
                   <Panel className="message-panel">{Messages}</Panel>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
-                    {this.props.room.closed ? "": <Button bsStyle='primary' size='medium' onClick={this.handleNextChat.bind(this)}>Next Chat</Button>} 
-                    {this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
+                    {this.props.room.closed || this.props.room.canRate ? "": <Button bsStyle='primary' size='medium' onClick={this.handleNextChat.bind(this)}>Next Chat</Button>} 
+                    {!this.props.room.closed && this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>);

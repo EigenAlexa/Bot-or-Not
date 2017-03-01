@@ -26,13 +26,20 @@ function startBot(roomId) {
       throw new Error('Meteior server URL not in settings');
     }
 
+    let maxTurns;
+    if (!!Meteor.settings.maxTurns) {
+      maxTurns = Meteor.settings.maxTurns;
+    }else {
+      maxTurns = 10;
+    }
     // send post request to bot_url with url
     try {
       let response = HTTP.post(bot_url + '/get-bot', {
         data : {
           'server_url' : server_url, 
           'room_id' : roomId, 
-          'magic_phrase' : Meteor.settings.magicPhrase
+          'magic_phrase' : Meteor.settings.magicPhrase,
+          'max_turns' : maxTurns
         }
       }).data;
     } catch(error) {
