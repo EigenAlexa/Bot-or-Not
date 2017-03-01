@@ -18,8 +18,7 @@ export default class Chat extends React.Component {
                     inputValidState: null, 
                     errorMsgs: null, 
                     progress:0.0, 
-                    time_pass: 0.0,
-                    canRate: false};
+                    time_pass: 0.0,};
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
       this.updateProgressBar = this.updateProgressBar.bind(this);
@@ -38,18 +37,7 @@ export default class Chat extends React.Component {
     }
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
-      window.addEventListener("unload", this.unload);
-      Convos.find({closed: false}).observe({
-        changed: (newConvo, oldConvo) => {
-          console.log('convo changed', newConvo.turns);
-          if(newConvo.turns >= newConvo.max_turns){
-            console.log("opening rating system");
-            this.setState({canRate: true});
-            //Meteor.call('convos.finishConvo', newConvo._id);
-            //Meteor.call('convos.finishConvoUsers', newConvo._id);
-          }
-        } 
-      }); 
+      window.addEventListener("unload", this.unload); 
     }
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
@@ -92,8 +80,8 @@ export default class Chat extends React.Component {
                   <Panel className="message-panel">{Messages}</Panel>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
-                    {this.props.room.closed ? "": this.renderProgressBar()} 
-                    {this.state.canRate ? <Button 
+                    {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()} 
+                    {this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>);
@@ -101,6 +89,10 @@ export default class Chat extends React.Component {
     }
     getLoadingPage() {
         return (<div> <h1>Loading, hang tight.</h1></div>);
+    }
+    handleRateButton(event) {
+      Meteor.call('convos.finishConvo', this.props.room._id);
+      Meteor.call('convos.finishConvoUsers', this.props.room._id);
     }
     handleEnter(event) {
       event.preventDefault();
