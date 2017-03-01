@@ -71,6 +71,11 @@ ConvoSchema = new SimpleSchema({
     type: String,
     label: 'promptId',
   },
+  canRate: {
+    type: Boolean,
+    label: 'canRate',
+    defaultValue: false
+  }
 });
 
 const Convos = new Mongo.Collection("convos");
@@ -89,4 +94,16 @@ Convos.helpers({
         // return messagesLink.find({sort: {time : -1}});
     }
 });
+
+Convos.after.update( (userId, doc, fieldNames, modifier, options) => {
+  turnsUpdate = fieldNames.indexOf('turns') > -1;
+  if (turnsUpdate && doc.turns >= doc.max_turns){
+    Convos.update({_id: doc._id}, {
+      $set: {canRate: true}
+    });
+  }
+
+
+});
+
 export { Convos };
