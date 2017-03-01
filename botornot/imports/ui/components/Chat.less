@@ -1,15 +1,16 @@
-.message-container {
+.message-panel {
   font-family: "Helvetica Neue";
   font-size: 20px;
   font-weight: normal;
-}
-
-div.message-container {
   max-width: 600px;
+  max-height: 800px;
+  height: 50vh;
   word-wrap: break-word;
-  margin-bottom: 20px;
   margin: 50px auto;
+  margin-bottom: 5px;
   line-height: 24px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .wrapper-message {
@@ -23,13 +24,13 @@ div.message-container {
 	color:white; 
 	background:#0B93F6;
 	border-radius:10px;
-  margin:5px;
+  margin:10px;
 	float: right;
 		
 	&:before {
 		content:"";
 		position:absolute;
-		z-index:-1;
+		z-index:0;
 		bottom:-2px;
 		right:-7px;
 		height:20px;
@@ -58,7 +59,7 @@ div.message-container {
 	background:#E5E5EA;
 	border-radius:10px;
 	color: black;
-  margin: 5px;
+  margin: 10px;
   float: left;
 		
 	&:before {
@@ -122,4 +123,10 @@ div.message-container {
     font-size: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.progress-input {
+  margin: 50px auto;
+  margin-top: 5px;
+  max-width: 600px;
 }

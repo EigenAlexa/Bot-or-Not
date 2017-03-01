@@ -4,7 +4,7 @@ import Message from '/imports/ui/components/Message.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { _ } from 'meteor/underscore';
-import { FormControl, ProgressBar, Button, FormGroup, ControlLabel, Modal } from 'react-bootstrap';
+import { Panel, FormControl, ProgressBar, Button, FormGroup, ControlLabel, Modal } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 
@@ -72,9 +72,8 @@ export default class Chat extends React.Component {
         return (<div>
                   <div id="modal-div"> </div>
                   {this.renderPrompt()} 
-                  <p>Discussion:</p>
-                  <div className="message-container row">{Messages}</div>
-                    <div className="row">
+                  <Panel className="message-panel">{Messages}</Panel>
+                    <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed ? "": this.renderProgressBar()} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
