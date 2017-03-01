@@ -80,7 +80,8 @@ export default class Chat extends React.Component {
                   <Panel className="message-panel">{Messages}</Panel>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
-                    {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()} 
+                    {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
+                    {this.props.room.closed ? "": <Button bsStyle='primary' size='medium' onClick={this.handleNextChat.bind(this)}>Next Chat</Button>} 
                     {this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
@@ -89,6 +90,9 @@ export default class Chat extends React.Component {
     }
     getLoadingPage() {
         return (<div> <h1>Loading, hang tight.</h1></div>);
+    }
+    handleNextChat(event){
+      Meteor.call('users.exitConvo', Meteor.userId());
     }
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);
