@@ -13,7 +13,13 @@ export default class Chat extends React.Component {
       super(props);
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
       this.snippets = Snippets;
-      this.state = {isLoading: false, index: 0, inputValidState: null, errorMsgs: null, progress:0.0, time_pass: 0.0};
+      this.state = {isLoading: false, 
+                    index: 0, 
+                    inputValidState: null, 
+                    errorMsgs: null, 
+                    progress:0.0, 
+                    time_pass: 0.0,
+                    canRate: false};
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
       this.updateProgressBar = this.updateProgressBar.bind(this);
@@ -33,6 +39,17 @@ export default class Chat extends React.Component {
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
+      Convos.find({closed: false}).observe({
+        changed: (newConvo, oldConvo) => {
+          console.log('convo changed', newConvo.turns);
+          if(newConvo.turns >= newConvo.max_turns){
+            console.log("opening rating system");
+            this.setState({canRate: true});
+            //Meteor.call('convos.finishConvo', newConvo._id);
+            //Meteor.call('convos.finishConvoUsers', newConvo._id);
+          }
+        } 
+      }); 
     }
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
@@ -76,6 +93,7 @@ export default class Chat extends React.Component {
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed ? "": this.renderProgressBar()} 
+                    {this.state.canRate ? <Button 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>);
