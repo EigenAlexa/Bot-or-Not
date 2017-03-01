@@ -20,8 +20,6 @@ class NavBar extends React.Component {
           <li><a href="/">Home</a></li>
           <li><a href="/chat">Chat</a></li>
           <li><a href="/leaderboards">Leaderboards</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/contact">Contact</a></li>
           <li><a href={"/profile/" + username}>{username}</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul> 
@@ -32,8 +30,6 @@ class NavBar extends React.Component {
           <li><a href="/">Home</a></li>
           <li><a href="/chat">Chat</a></li>
           <li><a href="/leaderboards">Leaderboards</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/contact">Contact</a></li>
           <li><a href="/sign-in">Sign In</a></li>
           <li><a href="/sign-up">Sign Up</a></li>
         </ul> 
