@@ -39,7 +39,7 @@ ConvoSchema = new SimpleSchema({
   max_turns: {
     type: Number, 
     label: "max_turns",
-    defaultValue: 3 
+    defaultValue: !!Meteor.settings.maxTurns ? Meteor.settings.maxTurns : 3 
   },
   closed: {
     type: Boolean,

@@ -73,7 +73,6 @@ export default class Chat extends React.Component {
             />
         )});
         user = Meteor.user();
-
         return (<div>
                   <div id="modal-div"> </div>
                   <Panel className="message-panel">{Messages}</Panel>
