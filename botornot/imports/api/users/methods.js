@@ -45,5 +45,5 @@ Meteor.methods({
     } else {
       return 'nice try hacker man';
     }
-  } 
+  }, 
 });

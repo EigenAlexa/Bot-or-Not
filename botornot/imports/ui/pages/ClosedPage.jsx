@@ -39,7 +39,13 @@ export default class ClosedPage extends React.Component {
               </div>
         );
   }
-
+  renderThanksForRating() {
+    return ( <div>
+              <p> Thanks for rating. Please feel free to join another chat. </p>
+              {this.renderNextChatButton()}
+              </div>
+        );
+  }
   handleSubmit(event) {
     event.preventDefault();
     const target = event.target;
@@ -47,6 +53,15 @@ export default class ClosedPage extends React.Component {
     Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
     this.setState({submitted: true, rating: target.name});
 		this.setState({canClose : true});
+    Tracker.autorun((comp) => {
+      user = Meteor.users.findOne({_id: Meteor.userId()});
+      console.log(user.rated);
+      if(user.rated){
+        Session.set('playNotification', "true");
+        Session.set('rating', user.lastRating);
+        comp.stop();
+      }
+    });
     //FlowRouter.go('/');
   }
   openModal () {
@@ -82,9 +97,7 @@ export default class ClosedPage extends React.Component {
       title: "BotOrNot",
     }
     return (<div>
-        {Meteor.user().rated && this.state.submitted ? this.renderRatings(): ""}
-        {!this.state.submitted ? this.renderBotOrNotButtons(): ""}
-        {!Meteor.user().rated && this.state.submitted ? this.renderWaitForRating() : ""}
+        {!this.state.submitted ? this.renderBotOrNotButtons(): this.renderThanksForRating()}
 		    {blazeToReact('shareit')(links)}
         </div>
     );
@@ -99,12 +112,13 @@ export default class ClosedPage extends React.Component {
     return (<div><p> If you would like to see your rating, please wait for the other bot/human to rate you </p>
           {this.renderNextChatButton()}</div>);
   }
-  renderRatings(){
+/*  renderRatings(){
     return (<div><p> You were rated {Meteor.user().lastRating} </p> 
           <p> You rated the other user {this.state.rating}. The other user was {Meteor.user().lastOtherUser} </p>
           {this.renderNextChatButton()}
           </div>);
   }
+  */
   renderNextChatButton() {
     return (
         <Button bsStyle='primary' bsSize='large' onClick={this.handleNextSubmit.bind(this)}>Next Chat</Button>
@@ -115,10 +129,11 @@ export default class ClosedPage extends React.Component {
     if(!loading && userLeft && !this.state.onRating ){
       object = this.renderUserLeft();     
 			title = "User Disconnected";
-    } else if(!loading && userLeft && this.state.submitted && !Meteor.user().rated){
+    } 
+    /*else if(!loading && userLeft && this.state.submitted && !Meteor.user().rated){
       object = this.renderUserLeftSubmitted();
       title = "User Disconnected";
-    } 
+    } */
     else if(!loading && (!userLeft || this.state.onRating)){
       object = this.renderNotUserLeft();        
 			title = "Conversation Ended";

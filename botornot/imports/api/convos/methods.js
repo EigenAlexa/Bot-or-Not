@@ -64,7 +64,7 @@ Meteor.methods({
         $inc: {curSessions: 1}
       });
       Meteor.users.update({_id: userId}, {
-        $set: {in_convo: true, curConvo: convoId}
+        $set: {in_convo: true, curConvo: convoId, rated: false}
       });
     },
     'convos.finishConvoUsers'(convoId) {
