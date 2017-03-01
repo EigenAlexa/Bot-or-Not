@@ -46,4 +46,7 @@ Meteor.methods({
       return 'nice try hacker man';
     }
   }, 
+  'users.setRated'(userId){
+    Meteor.users.update({_id: userId}, {$set: {rated: false}});
+  } 
 });

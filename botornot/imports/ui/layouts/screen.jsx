@@ -14,6 +14,7 @@ export default class Screen extends React.Component {
 
       };
       this.refs.notificationsystem.addNotification(notification);
+      Meteor.call('users.setRated', Meteor.userId());
       Session.set('playNotification', "false");
     }
     componentDidMount(){ 

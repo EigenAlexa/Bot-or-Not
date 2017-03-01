@@ -55,7 +55,7 @@ export default class ClosedPage extends React.Component {
 		this.setState({canClose : true});
     Tracker.autorun((comp) => {
       user = Meteor.users.findOne({_id: Meteor.userId()});
-      console.log(user.rated);
+      console.log("user.rated", user.rated);
       if(user.rated){
         Session.set('playNotification', "true");
         Session.set('rating', user.lastRating);
