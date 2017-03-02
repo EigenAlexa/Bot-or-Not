@@ -19,10 +19,13 @@ export default class Chat extends React.Component {
                     inputValidState: null, 
                     errorMsgs: null, 
                     progress:0.0, 
-                    time_pass: 0.0,};
+                    time_pass: 0.0,
+                    markedOffTopic: false, 
+       };
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
       this.updateProgressBar = this.updateProgressBar.bind(this);
+      this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
       this.progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
     }
     updateLoadingInterval() {
@@ -81,6 +84,7 @@ export default class Chat extends React.Component {
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
                     {this.props.room.closed || this.props.room.canRate ? "": <Button bsStyle='primary' size='medium' onClick={this.handleNextChat.bind(this)}>Next Chat</Button>} 
+                    {this.state.markedOffTopic ? "": <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>} 
                     {!this.props.room.closed && this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
@@ -97,6 +101,10 @@ export default class Chat extends React.Component {
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);
       Meteor.call('convos.finishConvoUsers', this.props.room._id);
+    }
+    handleOffTopicButton(event) {
+      this.setState({markedOffTopic : true});
+      Meteor.call('convos.markOffTopic', this.props.room._id, Meteor.userId());
     }
     handleEnter(event) {
       event.preventDefault();
