@@ -1,0 +1,15 @@
+{ 
+    "SeedDatabase" : true,
+    "ResetDb" : false,
+    "Debug" : true,
+    "botServerUrl" : "http://10.0.1.75:5000",
+    "serverUrl" : "one.botornot.ml",
+    "magicPhrase" : "hilaryyas",
+    "botPassword" : "supthen",
+    "kadira": { 
+      "appId": "SagxruT5Cu4WrC4fk", 
+      "appSecret": "e13c47ae-3826-403b-8222-2d16521ea70c" 
+    },
+    "maxTurns" : 15,
+    "hostID": "HOST_ID"
+}
