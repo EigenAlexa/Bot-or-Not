@@ -31,6 +31,7 @@ Meteor.methods({
         Meteor.setTimeout(() => {
           Meteor.call('startBot', convoId);
         }, timeout * 1000);
+        return convoId;
       }
     },
     'convos.updateChat'(text, convoId, userId) {
