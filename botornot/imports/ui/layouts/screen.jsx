@@ -10,7 +10,7 @@ export default class Screen extends React.Component {
         message: "You were just rated as a " + rating + " for a previous conversation.",
         position: 'bc',
         level: rating == 'not'? 'success' : 'error',
-        autoDismiss: 0,
+        autoDismiss: 5,
 
       };
       this.refs.notificationsystem.addNotification(notification);
