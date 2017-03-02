@@ -15,12 +15,22 @@ export default ChatContainer = createContainer(({ params: { id } }) => {
     const loading = !roomHandle.ready() || !msgHandle.ready() || !userHandle.ready();
     const roomExists = !loading && !!room;
     const connected = Meteor.status().connected;
-   
-return {
+    const userConvoDict = roomExists ? room.users.filter((obj) => {return obj.id === Meteor.userId()})[0] : {};
+
+    if (roomExists) {
+      console.log('convboj', room.users.filter((obj) => {return obj.id === Meteor.userId()})[0]);
+    } else {
+      console.log({});
+    }
+
+    const userOffTopic = roomExists && userConvoDict !== {} ? userConvoDict.markedOffTopic : true;
+    console.log('client side offtopic' ,userOffTopic);
+    return {
         room,
         loading,
         roomExists,
         connected,
         messages : roomExists ? room.messages() : [],
+        userOffTopic
 	};
 }, Chat);

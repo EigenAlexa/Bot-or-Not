@@ -102,19 +102,10 @@ Meteor.methods({
     'convos.markOffTopic'(convoId, userId){
       console.log('marking convo off topic');
       convo = Convos.findOne({_id: convoId});
-      users = convo.users.filter((user) => {
-        return user.id !== userId;
-      }).map((user) => {
-        return user.id
+      console.log('marking convo off topic for user', userId)
+      Convos.update({_id: convoId, "users.id": userId}, {
+        $set: {"users.$.markedOffTopic": true}
       });
-      if (!!users){
-        console.log('marking convo off topic for user', users[0])
-        Convos.update({_id: convoId, "users.id": users[0]}, {
-          $set: {"users.$.markedOffTopic": true}
-        });
-      } else {
-        throw new Error('Can\'t find a user with the userID');
-      }
     },
     'convos.updateRatings'(convoId, userId, rating){
       convo = Convos.findOne({_id: convoId});
