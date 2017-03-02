@@ -75,6 +75,11 @@ ConvoSchema = new SimpleSchema({
     type: Boolean,
     label: 'canRate',
     defaultValue: false
+  },
+  hostID: {
+    type: String,
+    label: 'hostID',
+    defaultValue: ""
   }
 });
 

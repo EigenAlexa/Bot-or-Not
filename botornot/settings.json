@@ -10,5 +10,6 @@
       "appId": "SagxruT5Cu4WrC4fk", 
       "appSecret": "e13c47ae-3826-403b-8222-2d16521ea70c" 
     },
-    "maxTurns" : 15
+    "maxTurns" : 15,
+    "hostID": "0"
 }

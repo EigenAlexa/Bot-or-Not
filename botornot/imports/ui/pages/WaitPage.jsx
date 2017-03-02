@@ -17,7 +17,7 @@ export default class WaitPage extends React.Component {
     }
     joinRoom() {
         this.room = this.props.openRooms[0];
-        Cookie.set('convo', this.room._id);
+        Cookie.set('convoroute', this.room.hostID);
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     render() {

@@ -52,5 +52,6 @@ Meteor.publish('openrooms', () => {
     }, { fields :{
         curSessions: 1,
         closed : 1,
+        hostID: 1,
     }});
 });
