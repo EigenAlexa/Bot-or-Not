@@ -9,7 +9,12 @@ function startBot(roomId) {
   console.log(roomId, 'roomId');
   convo = Convos.findOne({'_id' : roomId})
   console.log('starting bot', convo);
-  
+
+  // check to make sure that convos has more htan one user
+  // mainly for debugging 
+  if (convo.users.length == 0) {
+    throw new Error('Convo has no users, not starting bot');
+  }
   if (!!convo && convo['curSessions'] < 2) {
     let bot_url;
 
