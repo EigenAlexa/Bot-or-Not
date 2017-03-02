@@ -50,7 +50,7 @@ FlowRouter.route('/chat', {
   triggersExit: (context) => {
     console.log('exited chat');
     Meteor.call('users.exitConvo', Meteor.userId());
-    Cookie.remove('convo');
+    Cookie.remove('convoroute');
   }
 });
 

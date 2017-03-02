@@ -6,5 +6,6 @@
     "serverUrl" : "localhost:3000",
     "magicPhrase" : "hilaryyas",
     "botPassword" : "supthen",
-    "maxTurns" : 10
+    "maxTurns" : 10,
+    "hostID": "0"
 }

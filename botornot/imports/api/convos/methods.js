@@ -17,11 +17,13 @@ Meteor.methods({
           time: Date.now(),
           convoId: "null"
         });
+        console.log("hostID", Meteor.settings.hostID);
         convoId = Convos.insert({
           closed: false,
           curSessions: 0,
           time: Date.now(),
           msgs: [msgId],
+          hostID: Meteor.settings.hostID, 
         });
         Messages.update({_id: msgId}, {$set: {convoId: convoId}});
         console.log(convoId, '- new convo');
