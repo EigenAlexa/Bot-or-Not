@@ -18,6 +18,13 @@ var Footer = React.createClass({
 									<a className="large btn tw-share" href="mailto:botornot.ml@gmail.com"><i className="fa fa-envelope"></i></a>
 								</div>
 							</div>
+              
+              <div className="columns links">
+                <a href="/privacy">Privacy policy</a>
+              </div>
+              <div className="columns links">
+                <a href="/contact">Questions? Contact Us</a>
+              </div>
 					</div>
 			</footer>
 		);

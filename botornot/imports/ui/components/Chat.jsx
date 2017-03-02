@@ -7,6 +7,7 @@ import { _ } from 'meteor/underscore';
 import { Panel, FormControl, ProgressBar, Button, FormGroup, ControlLabel, Modal } from 'react-bootstrap';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
+import ChatPanel from '/imports/ui/components/ChatPanel.jsx';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -73,7 +74,7 @@ export default class Chat extends React.Component {
         user = Meteor.user();
         return (<div>
                   <div id="modal-div"> </div>
-                  <Panel className="message-panel">{Messages}</Panel>
+                    <ChatPanel messages={Messages}/>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
@@ -89,6 +90,7 @@ export default class Chat extends React.Component {
     }
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());
+      Cookie.remove('convo');
     }
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);
@@ -96,15 +98,15 @@ export default class Chat extends React.Component {
     }
     handleEnter(event) {
       event.preventDefault();
-        const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        result = validate(text, this.props.room._id);
-        if (result.valid) {
-          this.setState({inputValidState: null, errorMsgs: null});
-          Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
-        }else{
-          this.setState({inputValidState: "error", errorMsgs: result.errors});
-        }
-        ReactDOM.findDOMNode(this.refs.textInput).value = '';
+      const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+      result = validate(text, this.props.room._id);
+      if (result.valid) {
+        this.setState({inputValidState: null, errorMsgs: null});
+        Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
+      }else{
+        this.setState({inputValidState: "error", errorMsgs: result.errors});
+      }
+      ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
     handleKeystroke(event) {
       if (event.charCode == 13){
