@@ -48,7 +48,8 @@ Meteor.publish('userBotConvos', (userName) => {
 Meteor.publish('openrooms', () => {
     return Convos.find({
         curSessions : {$lt : 2},
-        closed : false
+        closed : false,
+        hostID: Meteor.settings.hostID,
     }, { fields :{
         curSessions: 1,
         closed : 1,
