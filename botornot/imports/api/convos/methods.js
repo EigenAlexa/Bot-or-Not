@@ -70,7 +70,7 @@ Meteor.methods({
     },
     'convos.addUserToRoom'(userId, convoId) {
       Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
-        $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0}},
+        $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0, markedOffTopic: false}},
         $inc: {curSessions: 1}
       });
       Meteor.users.update({_id: userId}, {
@@ -98,6 +98,23 @@ Meteor.methods({
           $set: {convoClosed: true, left: true}
         });
       });
+    },
+    'convos.markOffTopic'(convoId, userId){
+      console.log('marking convo off topic');
+      convo = Convos.findOne({_id: convoId});
+      users = convo.users.filter((user) => {
+        return user.id !== userId;
+      }).map((user) => {
+        return user.id
+      });
+      if (!!users){
+        console.log('marking convo off topic for user', users[0])
+        Convos.update({_id: convoId, "users.id": users[0]}, {
+          $set: {"users.$.markedOffTopic": true}
+        });
+      } else {
+        throw new Error('Can\'t find a user with the userID');
+      }
     },
     'convos.updateRatings'(convoId, userId, rating){
       convo = Convos.findOne({_id: convoId});
