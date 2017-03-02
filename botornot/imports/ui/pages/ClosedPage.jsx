@@ -74,6 +74,7 @@ export default class ClosedPage extends React.Component {
 
   handleNextSubmit(event) {
     Meteor.call('users.exitConvo', Meteor.userId());
+    Cookie.remove('convo');
   }
   renderNotUserLeft() {
     let links = {

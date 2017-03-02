@@ -92,6 +92,7 @@ export default class Chat extends React.Component {
     }
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());
+      Cookie.remove('convo');
     }
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);

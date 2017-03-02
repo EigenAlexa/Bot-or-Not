@@ -24,6 +24,7 @@ caching-compiler@1.1.9
 caching-html-compiler@1.1.0
 callback-hook@1.0.10
 check@1.2.5
+chuangbo:cookie@1.1.0
 coffeescript@1.0.17
 cosmos:browserify@0.8.4
 cultofcoders:grapher@1.2.6
