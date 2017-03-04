@@ -1,0 +1,41 @@
+.background-video{
+    height: 100%;
+    width: 100%;
+    float: left;
+    padding: none;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+}
+.playPause { 
+    position: absolute;
+    bottom : 5%;
+}
+.centerText {
+	text-transform: uppercase;
+	font-size: 4vw;
+	position: fixed; /* or absolute */
+	top: 50%;
+	left: 50%;
+	/* bring your own prefixes */
+	transform: translate(-50%, -50%);
+}
+.bot {
+	color: @bg-2;
+}
+.not {
+	color: @fg;
+}
+.media {
+    display: block;
+}
+#video-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
