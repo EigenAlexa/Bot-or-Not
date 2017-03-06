@@ -46,13 +46,6 @@ class NavBar extends React.Component {
     window.addEventListener("resize", this.updateDimensions);
   }
   render() {
-    let logo;
-
-    if (this.state.width >= 768 && this.state.width < 900) {
-      logo = "img/logo_icon.png"
-    } else {
-      logo = "img/logo.png"
-    }
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">
@@ -64,8 +57,8 @@ class NavBar extends React.Component {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <a className="navbar-left" href="/" title="HOME"><i className="none" />
-              <img src={logo} alt="Brand" className="img-response"/>
+            <a className="navbar-brand" href="/" title="HOME"><i className="none" />
+              Bot <span>or Not</span>
             </a>
           </div> {/* /.navbar-header */}
           {/* Collect the nav links, forms, and other content for toggling */}
