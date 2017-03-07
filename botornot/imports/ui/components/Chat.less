@@ -16,8 +16,32 @@
 .wrapper-message {
   clear: both;
 }
-
+.text-bubble{
+	position:relative;
+    max-width: 400px;
+    padding:10px 20px;
+	border-radius:10px;
+    margin:10px;
+    border: 1px solid;
+}
 .from-me {
+    .text-bubble;
+	color: black; 
+	background: white;
+    border-color: @fg;
+	float: right;
+}
+.from-them {
+    .text-bubble;
+	background: white;
+	color: black;
+    border-color: @bg-1;
+    float: left;
+  }
+.progress-bar {
+    background-color: @fg;
+}
+.from-me-imessage {
 	position:relative;
 	max-width: 400px;
 	padding:10px 20px;
@@ -52,7 +76,36 @@
 		-webkit-transform:translate(-30px, -2px);
 	}
 }
-.from-them {
+.track3 {
+    width: 10px;
+    background: rgba(0, 0, 0, 0);
+    margin-right: 2px;
+    border-radius: 10px;
+    /* -webkit-transition: background 250ms linear;
+    transition: background 250ms linear; */
+}
+
+.track3:hover,
+.track3.dragging {
+    background: #d9d9d9; 
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.handle3 {
+    width: 7px;
+    right: 0;
+    background: #999;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 7px;
+/*     -webkit-transition: width 250ms;
+    transition: width 250ms; */
+}
+
+.track3:hover .handle3,
+.track3.dragging .handle3 {
+    width: 10px;
+}
+.from-them-imessage {
 	position:relative;
 	max-width: 400px;	
 	padding:10px 20px;
