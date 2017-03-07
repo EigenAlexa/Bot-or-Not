@@ -5,10 +5,11 @@ import LeaderboardEntry from '/imports/ui/components/LeaderboardEntry.jsx';
 export default class LeaderboardPage extends React.Component {
     
   render() {
-    LeaderboardEntries = this.props.users.map(user => ( 
+    LeaderboardEntries = this.props.users.map((user, index) => ( 
       <LeaderboardEntry 
       key={user._id} 
-      user={user} />  
+      user={user}
+      number={index +1 } />  
     ));
     return (
       <div>
@@ -26,8 +27,9 @@ export default class LeaderboardPage extends React.Component {
             <table>
             <thead>
             <tr className="row">
-              <td className="col-md-1">Username</td>
-              <td className="col-md-1">Rating</td>
+            <td className="col-md-1 leader-elem"></td>
+              <td className="col-md-1 leader-elem">Username</td>
+              <td className="col-md-1 leader-elem leader-rating">Rating</td>
             </tr>
             </thead>
             <tbody>

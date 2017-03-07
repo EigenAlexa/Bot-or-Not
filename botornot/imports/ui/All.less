@@ -16,17 +16,32 @@ body {
 	text-align: center;
 	background-size: cover;
 }
+
 .page-header{
-	color: #000;
+    transition: all .4s ease-in-out;
+    color: #000;
 	font-weight: 200;
 	border-bottom: none;
-    padding-top: 85px;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
-    font-size: 48px;
-    text-transform: uppercase;
-    
+	text-transform: uppercase;
 }
+
+@media (min-width: 414px) {
+	.page-header{
+	    padding-top: 85px;
+	    padding-bottom: 5px;
+	    margin-bottom: 5px;
+	    font-size: 48px;
+	}
+}
+@media (max-width: 413px){
+	.page-header{
+		padding-top: 30px;
+	    padding-bottom: 5px;
+	    margin-bottom: 5px;
+	    font-size: 24px;
+	}
+}
+
 .breadcrumb{
     list-style: none;
     background-color: transparent;
@@ -54,19 +69,50 @@ body {
 
 
 .leaderboardentries{
-	background-color: @fg;
-	margin-left:auto;
-	margin-right:auto;
-	width: auto;
-	text-transform: uppercase;
-	color: #000;
-	max-width: 520px;
-	padding: 10px;
-	padding-top: 50px;
-	padding-bottom: 50px;
-	font-size: 16px;
+    transition: all .4s ease-in-out;
 }
 
+@media (max-width: 399px) {
+	.leaderboardentries{
+		background-color: @fg;
+		margin-left:auto;
+		margin-right:auto;
+		width: auto;
+		text-transform: uppercase;
+		color: #000;
+		max-width: 300px;
+		padding: 10;
+		font-size: 12px;
+	}
+
+}
+
+
+@media (min-width: 400px) {
+	.leaderboardentries{
+		background-color: @fg;
+		margin-left:auto;
+		margin-right:auto;
+		width: auto;
+		text-transform: uppercase;
+		color: #000;
+		max-width: 400px;
+		padding: 50px;
+		font-size: 16px;
+	}
+
+
+}
+
+
 .leaderboardentries a {
-	color: @bg-1;
+	color: @bg-2;
+}
+
+.leader-elem {
+	padding: 10px;
+}
+
+.leader-rating{
+	text-align: center;
 }
