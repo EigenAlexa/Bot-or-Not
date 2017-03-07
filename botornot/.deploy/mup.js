@@ -16,29 +16,32 @@ module.exports = {
       pem: "~/.ssh/james_ncal.pem",
         
     },
- /*   'three':{
+    'three':{
       host: "54.219.161.184",
       username: "ubuntu",
       pem: "~/.ssh/james_ncal.pem",
        
-    }*/
+    }
   },
+  appName: "meteorHOST_PORT",
   meteor: {
-    name: "meteor",
+    name: "meteorHOST_PORT",
     path: "../",
     servers: {
-      'one':{env:{}},//CLUSTER_BALANCER_URL: "http://one.botornot.ml"}},
-//      'two': {env:{}},//CLUSTER_BALANCER_URL: "http://two.botornot.ml"}},
-      //'three':{env:{ CLUSTER_BALANCER_URL: "http://three.botornot.ml"}},
+      'one':{},//{env:{CLUSTER_BALANCER_URL: "http://one.botornot.ml", CLUSTER_ENDPOINT_URL: "52.215.251.172: "}},
+      'two':{},// {env:{}}//{CLUSTER_BALANCER_URL: "http://two.botornot.ml"}},
+      'three':{},//{env:{ CLUSTER_BALANCER_URL: "http://three.botornot.ml"}},
     },  
     buildOptions: {
       serverOnly: true,
+      cleanAfterBuild: false,
       debug: true
     },
     env: {
       ROOT_URL: "http://beta.botornot.ml",
       MONGO_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=majority",
-//      CLUSTER_DISCOVERY_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=majority",
+      PORT: HOST_PORT,
+//      CLUSTER_DISCOVERY_URL: "mongodb://172.17.0.2/meteor",
 //      CLUSTER_WORKERS_COUNT: "auto",
 //      CLUSTER_SERVICE: "web",
 //      DISABLE_WEBSOCKETS: "1",
@@ -58,4 +61,12 @@ module.exports = {
     enableUploadProgressBar: false
   },
 
+/*	mongo: { // (optional)
+    oplog: true,
+    port: 27017,
+    version: '3.4.1', // (optional), default is 3.4.1
+    servers: {
+      one: {},
+    },
+  }, */
 };
