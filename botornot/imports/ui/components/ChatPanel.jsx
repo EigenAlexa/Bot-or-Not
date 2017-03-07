@@ -12,14 +12,24 @@ export default class ChatPanel extends React.Component {
     let panelNode = ReactDOM.findDOMNode(this.refs.chatPanel);
     panelNode.scrollTop = panelNode.scrollHeight;
   }
-  
+  componentDidMount() {
+    let panelNode = ReactDOM.findDOMNode(this.refs.chatPanel);
+    // panelNode.enscroll({
+    //   showOnHover: false,
+    // verticalTrackClass: 'track3',
+    // verticalHandleClass: 'handle3'
+// });
+
+  }
   componentDidUpdate(prevProps, prevState) {
     // TODO actually check for changes in messages
     this.scrollToBottom();
   }
-
+    
   render() {
     let messages = this.props.messages;
-    return <Panel className="message-panel" ref="chatPanel">{messages}</Panel>;
+    let panel = (<Panel className="message-panel" ref="chatPanel">{messages}</Panel>);
+  
+    return panel;
   }
 }
