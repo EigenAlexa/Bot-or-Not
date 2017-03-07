@@ -1,9 +1,9 @@
 export count=0;
-cat hosts | while read a;
-do
-echo $a;
-sed "s/HOST_IP/$a/g" mup.main.js > mup-$a.js;
-sed "s/HOST_ID/$count/g" settings.main.json > settings-$a.json;
-mup --config mup-$a.js --settings settings-$a.json $1 ;
-count=$((count + 1));
-done
+  cat ports | while read port;
+    do
+    echo $port;
+    sed "s/HOST_PORT/$port/g" mup.main.js > mup-$port.js;
+    sed "s/HOST_ID/$count/g" settings.main.json > settings-$port.json;
+    mup --config mup-$port.js --settings settings-$port.json $1 ;
+    count=$((count + 1));
+  done
