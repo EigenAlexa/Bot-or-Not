@@ -1,4 +1,5 @@
 @import url(http://allfont.net/allfont.css?fonts=league-spartan);
+@fg-1: #e02929;
 @fg: #F08521;
 @bg-1: #000;
 @bg-2: #FFF;
@@ -8,3 +9,64 @@ body {
 }
 
 
+.section-background{
+	background-repeat: no-repeat;
+	background-position: bottom;
+	background-attachment: fixed;
+	text-align: center;
+	background-size: cover;
+}
+.page-header{
+	color: #000;
+	font-weight: 200;
+	border-bottom: none;
+    padding-top: 85px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    font-size: 48px;
+    text-transform: uppercase;
+    
+}
+.breadcrumb{
+    list-style: none;
+    background-color: transparent;
+    border-radius: 0px;
+}
+.breadcrumb .active{
+	color: #fff;
+}
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #fff;
+    content: "\f3d3";
+    font-family: "ionicons";
+}
+.breadcrumb a{
+	color: #fff;
+	border: 1px solid transparent;
+	text-decoration: none;
+	padding: 5px;
+}
+.breadcrumb a:hover{
+	color: #fff;
+	border: 1px solid #fff;
+}
+
+
+.leaderboardentries{
+	background-color: @fg;
+	margin-left:auto;
+	margin-right:auto;
+	width: auto;
+	text-transform: uppercase;
+	color: #000;
+	max-width: 520px;
+	padding: 10px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	font-size: 16px;
+}
+
+.leaderboardentries a {
+	color: @bg-1;
+}

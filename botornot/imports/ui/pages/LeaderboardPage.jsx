@@ -17,23 +17,25 @@ export default class LeaderboardPage extends React.Component {
         <section className="section-background">
           <div className="container">
             <h2 className="page-header">
-              Leaderboards
+              Leaderboard
             </h2>
           </div> {/* /.container */}
         </section> {/* /.section-background */}
-      <div className="container">
-        <table className="table leaderboard-entries">
-        <thead>
-        <tr className="row">
-          <td className="col-md-1">Username</td>
-          <td className="col-md-1">Rating</td>
-        </tr>
-        </thead>
-        <tbody>
-        {LeaderboardEntries}
-        </tbody>
-        </table>
-      </div>
+        <div className="container">
+          <div className="leaderboardentries">
+            <table>
+            <thead>
+            <tr className="row">
+              <td className="col-md-1">Username</td>
+              <td className="col-md-1">Rating</td>
+            </tr>
+            </thead>
+            <tbody>
+            {LeaderboardEntries}
+            </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }
