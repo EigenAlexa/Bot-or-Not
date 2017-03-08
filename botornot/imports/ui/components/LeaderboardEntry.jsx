@@ -16,7 +16,7 @@ export default class LeaderboardEntry extends React.Component {
         <tr className="row">
           <td className="col-md-1 leader-elem">{content.number}</td>
           <td className="col-md-1 leader-elem"><a href={"/profile/" + content.username}>{content.username}</a></td>
-          <td className="col-md-1 leader-elem leader-rating">{content.rating}</td>
+          <td className="col-md-1 leader-elem leader-rating">{content.rating.toFixed(2)}</td>
         </tr>
     );
 
