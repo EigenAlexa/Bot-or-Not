@@ -15,22 +15,26 @@ export default class ProfilePage extends React.Component {
       const sessions = user.sessions;
       const rating = user.rating;
       const playerType = this.getPlayerType(rating);
-      const profPic = user.profPic;
       const badges = user.badges;
-      console.log('profPic', profPic);
       return (
-          <div> 
-            <img src={profPic} className='profile-image'/>
-            <p> PlayerType: {playerType} </p>
-            <p>Not Ratings: {notratings} </p>
-            <p>Sessions: {sessions} </p>
-            <p>Rating: {rating} </p>
-            <p>Ranking: {ranking} </p>
-            <p>Badges : {badges} </p>
-          {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
-          </div>
+					<div>
+						<div className="profile-align profile-attributes"> 
+							<p> PlayerType: {playerType} </p>
+							<p>Not Ratings: {notratings} </p>
+							<p>Sessions: {sessions} </p>
+							<p>Rating: {rating} </p>
+							<p>Ranking: {ranking} </p>
+							<p>Badges : {badges} </p>
+						</div>
+						{this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
+					</div>
       )
   }
+	getProfPic() {
+		const user = this.props.user;
+    const profPic = user.profPic;
+		return <img src={profPic} className='profile-img'/>;
+	}
   getConvos() {
       console.log('not convos',this.props.notConvos);
       console.log('bot convos',this.props.botConvos);
@@ -48,13 +52,13 @@ export default class ProfilePage extends React.Component {
           />
       ));
     return (
-        <div>
-            <div>
-                <h3>Human</h3>
+        <div className="convos">
+            <div className="convos-human">
+                <h3 className="convos-title">Human</h3>
                 {HumanConvos}
             </div>
-            <div>
-                <h3>Bot</h3>
+            <div className="convos-bot">
+                <h3 className="convos-title">Bot</h3>
                 { BotConvos }
             </div>
         </div>);
@@ -86,11 +90,12 @@ export default class ProfilePage extends React.Component {
 
     return (
       <div>
-        <section className="section-background">
+        <section className="section-background profile-align">
             <div className="container">
                 <h3 className="page-header">
                     {username}
                 </h3>
+										{this.props.loading ? "" : this.getProfPic()}
             </div>
         </section>
         {this.props.loading ? this.getLoading() : this.getContent()}
