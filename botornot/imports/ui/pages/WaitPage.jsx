@@ -1,6 +1,7 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
+import { cookies } from '/imports/startup/client/config.js';
 
 export default class WaitPage extends React.Component {
     getContent() {
@@ -18,7 +19,8 @@ export default class WaitPage extends React.Component {
     }
     joinRoom() {
         this.room = this.props.openRooms[0];
-        Cookie.set('convoroute', this.room.hostID);
+        cookies.set('convoroute', this.room.hostID);
+        cookies.send();
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     render() {
