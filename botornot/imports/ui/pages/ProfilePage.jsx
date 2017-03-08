@@ -2,7 +2,7 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
-export default class AccountPage extends React.Component {
+export default class ProfilePage extends React.Component {
   getContent() {
       const username = this.props.username;
       const user = this.props.user;
@@ -99,7 +99,7 @@ export default class AccountPage extends React.Component {
   }
 }
 
-AccountPage.propTypes = {
+ProfilePage.propTypes = {
     user : React.PropTypes.object,
     username: React.PropTypes.string,
     loading: React.PropTypes.bool,
