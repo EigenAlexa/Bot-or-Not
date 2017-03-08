@@ -18,3 +18,12 @@ console.log('share');
     faSize: '',            // font awesome size
     faClass: ''       // font awesome classes like square
   });
+
+cookies = new Cookies();
+
+updateCookiesOnExit = () => {
+  cookies.remove('session');
+  cookies.remove('convoroute');
+}
+
+export { cookies, updateCookiesOnExit };
