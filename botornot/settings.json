@@ -3,7 +3,7 @@
     "ResetDb" : false,
     "Debug" : true,
     "botServerUrl" : "http://10.0.1.75:5000",
-    "serverUrl" : "one.botornot.ml",
+    "serverUrl" : "beta.botornot.ml",
     "magicPhrase" : "hilaryyas",
     "botPassword" : "supthen",
     "maxTurns" : 10,
