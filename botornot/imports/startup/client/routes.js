@@ -9,7 +9,7 @@ import ContactPage from '/imports/ui/pages/ContactPage.jsx';
 import LeaderboardContainer from '/imports/ui/containers/LeaderboardPageContainer.jsx';
 import PrivacyPage from '/imports/ui/pages/PrivacyPage.jsx';
 import WaitPageContainer from '/imports/ui/containers/WaitPageContainer.jsx';
-import ProfileContainer from '/imports/ui/containers/ProfilePageContainer.jsx';
+import ProfilePageContainer from '/imports/ui/containers/ProfilePageContainer.jsx';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import { getARoom } from '/imports/startup/client/methods.js';
 import { updateCookiesOnExit } from '/imports/startup/client/config.js';
