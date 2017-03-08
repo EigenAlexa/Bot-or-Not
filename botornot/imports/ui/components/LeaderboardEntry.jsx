@@ -5,7 +5,8 @@ export default class LeaderboardEntry extends React.Component {
     console.log(this.props.user);
     return {
       username: this.props.user.username, 
-      rating: this.props.user.rating
+      rating: this.props.user.rating,
+      number: this.props.number
     }
   }
   render() {
@@ -13,8 +14,9 @@ export default class LeaderboardEntry extends React.Component {
     console.log(content);
     return (
         <tr className="row">
-          <td className="col-md-1"><a href={"/profile/" + content.username}>{content.username}</a></td>
-          <td className="col-md-1">{content.rating}</td>
+          <td className="col-md-1 leader-elem">{content.number}</td>
+          <td className="col-md-1 leader-elem"><a href={"/profile/" + content.username}>{content.username}</a></td>
+          <td className="col-md-1 leader-elem leader-rating">{content.rating.toFixed(2)}</td>
         </tr>
     );
 

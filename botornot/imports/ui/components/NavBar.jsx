@@ -45,34 +45,37 @@ class NavBar extends React.Component {
     window.addEventListener("resize", this.updateDimensions);
   }
   render() {
-    let logo;
+    routeName = FlowRouter.current().route.name;
 
-    if (this.state.width >= 768 && this.state.width < 900) {
-      logo = "img/logo_icon.png"
-    } else {
-      logo = "img/logo.png"
-    }
+    var navbar_class = "navstyle-";
+    if(routeName == "home")
+      navbar_class += "home";
+    else
+      navbar_class += "default";
+
     return (
+    <div className={navbar_class}>
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">
-          {/* Brand and toggle get grouped for better mobile display */}
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-            </button>
-            <a className="navbar-left" href="/" title="HOME"><i className="none" />
-              <img src={logo} alt="Brand" className="img-response"/>
-            </a>
-          </div> {/* /.navbar-header */}
+            {/* Brand and toggle get grouped for better mobile display */}
+            <div className="navbar-default">
+              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+              </button>
+              <a className="navbar-brand" href="/" title="HOME"><i className="none" />
+                Bot <span>or Not</span>
+              </a>
+            </div> {/* /.navbar-header */}
           {/* Collect the nav links, forms, and other content for toggling */}
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {this.navLinks()}
           </div>{/* /.navbar-collapse */}
         </div>{/* /.container */}
       </nav>
+    </div> 
     );
   }
 }

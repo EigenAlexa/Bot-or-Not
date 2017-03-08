@@ -1,7 +1,137 @@
-.navbar-left {
+/*=================================================
+||              GENEARL NAVBAR
+==================================================*/
+
+           
+.navbar-default .navbar-brand{
+    border: 1px solid transparent;
+    color: #60c9eb;
+    font-size: 33px;
+    padding: 10px 0px;
+    height: auto;
+    font-weight: 400;
+    letter-spacing: -1px;
+    text-transform: capitalize;
+}
+ul.nav.navbar-nav.navbar-right{
     margin-top: 10px;
-    margin-left: 15px;
 }
-.navbar-header img {
-    height: 38px
+.navbar-default .navbar-brand span{
+    color: #583b54;
 }
+.navbar-default {
+    background-color: #fff;
+    border-color: transparent;
+    padding: 0px 0px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+.navbar-default .navbar-nav>li>a{
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    marin-botton: 5px;
+    padding-left: 20px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    transition: all .4s ease-in-out;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+    background: @bg-2;
+}
+
+@media (min-width: 768px) {
+    .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        margin-top: 10px;
+        margin-left : 20px;
+    }
+}
+
+
+/*####################
+   Mobile Toggle Stuff
+######################*/
+
+.navbar-toggle:hover .icon-bar, .navbar-toggle:focus .icon-bar {
+    background-color: rgb(0,0,0,0);
+}
+
+.navbar-default .navbar-toggle {
+    background-color: rgb(0,0,0, 0);
+    border: 1px solid #FFF;
+    border-radius: 0;
+    transition: all .4s ease-in-out;
+}
+.navbar-default .navbar-toggle .icon-bar{
+    background: #fff;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+    background: #fff;
+}
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+
+/*=================================================
+||              HOMEPAGE NAVBAR
+==================================================*/
+
+
+.navstyle-home .navbar-default .navbar-nav > li > a {
+    color: @bg-2;
+}
+
+.navstyle-home  .navbar-default .navbar-nav>li>a:hover{
+    color: @fg;
+}
+
+.navstyle-home .navbar-default .navbar-brand span {
+    color: @bg-2;
+}
+.navstyle-home .navbar-default .navbar-brand {
+    text-transform: uppercase;
+    color: @fg;
+}
+.navstyle-home .navbar-default { 
+    background-color : rgba(0,0,0,0);
+    border-color: rgba(0, 0, 0, 0);
+}
+
+/*=================================================
+||               NON HOME PAGE NAVBAR
+==================================================*/
+
+.navstyle-default .navbar-default .navbar-nav > li > a {
+    color: @bg-1;
+}
+
+.navstyle-default  .navbar-default .navbar-nav>li>a:hover{
+    color: @bg-2;
+    background-color: @bg-1;
+}
+
+.navstyle-default .navbar-default .navbar-brand span {
+    color: @fg;
+}
+.navstyle-default .navbar-default .navbar-brand {
+    text-transform: uppercase;
+    color: @bg-1;
+    margin-top: 10px;
+    margin-left:20px;
+}
+.navstyle-default .navbar-default { 
+    background-color :  @bg-2;
+    border-color:  rgba(0,0,0,0);
+}
+
+
