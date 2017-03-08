@@ -33,7 +33,13 @@ Meteor.methods({
   },
   'getBotUsername'(magicphrase){
     if(magicphrase=== Meteor.settings.magicPhrase) {
-      let user_dict = {'user' : faker.commerce.productAdjective() + faker.company.bsBuzz(), 'pwd' : Meteor.settings.botPassword};
+      console.log('getting username');
+      let username = '';
+      while (username === '' && !(Meteor.users.findOne({username: username}))) {
+        username = faker.commerce.productAdjective() + faker.company.bsBuzz();
+      }
+      console.log('got username', username);
+      let user_dict = {'user' : username, 'pwd' : Meteor.settings.botPassword};
       Accounts.createUser({
         username : user_dict['user'],
         password : user_dict['pwd']

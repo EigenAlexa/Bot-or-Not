@@ -1,8 +1,13 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
+import { cookies } from '/imports/startup/client/config.js';
 
 export default class WaitPage extends React.Component {
+    constructor(props) {
+      super(props);
+      this.makeOrJoinRoom = _.debounce(this.makeOrJoinRoom, 500);
+    }
     getContent() {
         const roomId = this.room._id;
         const userId = Meteor.userId();
@@ -10,14 +15,25 @@ export default class WaitPage extends React.Component {
         // render the input box
         return ( <ChatContainer params={{ id: {room: roomId, user: userId} }}/> );
     }
-    makeRoom() {
+    makeOrJoinRoom() {
         // checks whether there is an open room and returns that. Otherwise
         // will make a new room.
-        Meteor.call('convos.newRoom');
+        console.log('making a room');
+        noRooms = this.props.openRooms.length === 0;
+        if (noRooms) {
+          console.log('making a new room');
+          Meteor.call('convos.newRoom', (error, result) => {
+            console.log(result._id, 'newroom id on callback');
+            Meteor.call('convos.addUserToRoom', Meteor.userId(), result._id);
+          });
+        } else {
+          this.joinRoom()
+        }
     }
     joinRoom() {
         this.room = this.props.openRooms[0];
-        Cookie.set('convoroute', this.room.hostID);
+        cookies.set('convoroute', this.room.hostID);
+        cookies.send();
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     render() {
@@ -27,11 +43,9 @@ export default class WaitPage extends React.Component {
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());
           });  
         } else if(!loading && !!user){
-          noRooms = openRooms.length === 0 && !user.in_convo;
-          if (noRooms) {
-            this.makeRoom();
-          } else if (!user.in_convo) {
-            this.joinRoom();
+          console.log(user);
+          if (!user.in_convo) {
+            this.makeOrJoinRoom();
           }
           if (user.in_convo){
             this.room = {_id: user.curConvo}; 

@@ -8,6 +8,7 @@ import { Panel, FormControl, ProgressBar, Button, FormGroup, ControlLabel, Modal
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 import ChatPanel from '/imports/ui/components/ChatPanel.jsx';
+import { updateCookiesOnExit } from '/imports/startup/client/config.js';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -19,10 +20,12 @@ export default class Chat extends React.Component {
                     inputValidState: null, 
                     errorMsgs: null, 
                     progress:0.0, 
-                    time_pass: 0.0,};
+                    time_pass: 0.0,
+       };
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
       this.updateProgressBar = this.updateProgressBar.bind(this);
+      this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
       this.progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
     }
     updateLoadingInterval() {
@@ -79,6 +82,7 @@ export default class Chat extends React.Component {
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
                     {this.props.room.closed || this.props.room.canRate ? "": <Button bsStyle='primary' size='medium' onClick={this.handleNextChat.bind(this)}>Next Chat</Button>} 
+                    {this.props.userOffTopic ? "": <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>} 
                     {!this.props.room.closed && this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
@@ -90,11 +94,15 @@ export default class Chat extends React.Component {
     }
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());
-      Cookie.remove('convoroute');
+      updateCookiesOnExit();
     }
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);
       Meteor.call('convos.finishConvoUsers', this.props.room._id);
+    }
+    handleOffTopicButton(event) {
+      Session.set('curConvo', this.props.room._id);
+      Session.set('notifyOffTopic', 'true');
     }
     handleEnter(event) {
       event.preventDefault();

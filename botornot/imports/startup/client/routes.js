@@ -14,7 +14,7 @@ import AccountPageContainer from '/imports/ui/containers/AccountPageContainer.js
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 //import SignInPage from '/imports/ui/pages/SignInPage.jsx';
 import { getARoom } from '/imports/startup/client/methods.js';
-
+import { updateCookiesOnExit } from '/imports/startup/client/config.js';
 FlowRouter.wait();
 
 FlowRouter.route('/', {
@@ -50,7 +50,7 @@ FlowRouter.route('/chat', {
   triggersExit: (context) => {
     console.log('exited chat');
     Meteor.call('users.exitConvo', Meteor.userId());
-    Cookie.remove('convoroute');
+    updateCookiesOnExit();
   }
 });
 

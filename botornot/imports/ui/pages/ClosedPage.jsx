@@ -2,6 +2,8 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { Button, Modal } from 'react-bootstrap';
+import { updateCookiesOnExit } from '/imports/startup/client/config.js';
+
 
 export default class ClosedPage extends React.Component {
   constructor(props){
@@ -72,7 +74,7 @@ export default class ClosedPage extends React.Component {
 
   handleNextSubmit(event) {
     Meteor.call('users.exitConvo', Meteor.userId());
-    Cookie.remove('convoroute');
+    updateCookiesOnExit();
   }
   renderNotUserLeft() {
     let links = {

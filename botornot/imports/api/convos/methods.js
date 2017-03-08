@@ -30,6 +30,7 @@ Meteor.methods({
         Meteor.setTimeout(() => {
           Meteor.call('startBot', convoId);
         }, timeout * 1000);
+        return convoId;
       }
     },
     'convos.updateChat'(text, convoId, userId) {
@@ -66,7 +67,7 @@ Meteor.methods({
     },
     'convos.addUserToRoom'(userId, convoId) {
       Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
-        $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0}},
+        $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0, markedOffTopic: false}},
         $inc: {curSessions: 1}
       });
       Meteor.users.update({_id: userId}, {
@@ -92,6 +93,14 @@ Meteor.methods({
         Meteor.users.update({_id: user.id}, {
           $set: {convoClosed: true, left: true}
         });
+      });
+    },
+    'convos.markOffTopic'(convoId, userId){
+      console.log('marking convo off topic');
+      convo = Convos.findOne({_id: convoId});
+      console.log('marking convo off topic for user', userId)
+      Convos.update({_id: convoId, "users.id": userId}, {
+        $set: {"users.$.markedOffTopic": true}
       });
     },
     'convos.updateRatings'(convoId, userId, rating){

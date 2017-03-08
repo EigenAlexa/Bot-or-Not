@@ -22,6 +22,11 @@ UserSchema = new SimpleSchema({
     type: Number,
     label: "englishCount",
     defaultValue: 0
+  }, 
+  markedOffTopic: {
+    type: Boolean, 
+    label: "markedOffTopic",
+    defaultValue: false
   }
 });
 
