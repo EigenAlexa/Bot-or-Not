@@ -3,7 +3,19 @@ import React from 'react';
 import LeaderboardEntry from '/imports/ui/components/LeaderboardEntry.jsx';
 
 export default class LeaderboardPage extends React.Component {
-    
+  constructor(props) {
+    super(props);
+    this.state = {rank: 0}
+  }
+  componentDidMount() {
+    Meteor.call('users.getUserRanking', Meteor.userId(), (error, result) => {
+      if (!error){
+        this.setState({'rank': result});
+      } else {
+        console.log(error);
+      }
+    });
+  }  
   render() {
     LeaderboardEntries = this.props.users.map((user, index) => ( 
       <LeaderboardEntry 
@@ -23,6 +35,7 @@ export default class LeaderboardPage extends React.Component {
           </div> {/* /.container */}
         </section> {/* /.section-background */}
         <div className="container">
+          <div className="row"><h1>{this.state.rank}</h1></div>
           <div className="leaderboardentries">
             <table>
             <thead>
