@@ -74,7 +74,7 @@ body {
     transition: all .4s ease-in-out;
 }
 
-@media (max-width: 399px) {
+@media (max-width: 449px) {
 	.leaderboardentries{
 		background-color: @fg;
 		margin-left:auto;
@@ -86,11 +86,13 @@ body {
 		padding: 10;
 		font-size: 12px;
 	}
-
+.leader-elem {
+	padding: 5px;
+}
 }
 
 
-@media (min-width: 400px) {
+@media (min-width: 450px) {
 	.leaderboardentries{
 		background-color: @fg;
 		margin-left:auto;
@@ -102,7 +104,9 @@ body {
 		padding: 50px;
 		font-size: 16px;
 	}
-
+.leader-elem {
+	padding: 10px;
+}
 
 }
 
@@ -111,10 +115,20 @@ body {
 	color: @bg-2;
 }
 
-.leader-elem {
-	padding: 10px;
-}
+
 
 .leader-rating{
 	text-align: center;
+}
+
+.leader-ranking{
+  text-align: center;
+}
+
+.leader-username{
+  text-align: center;
+}
+
+.leader-username a {
+  color: @bg-1;
 }

@@ -35,7 +35,8 @@ export default class LeaderboardPage extends React.Component {
           </div> {/* /.container */}
         </section> {/* /.section-background */}
         <div className="container">
-          <div className="row"><h1>{this.state.rank}</h1></div>
+          <div className="row"><h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1></div>
+          <div className="row"><h2 className="leader-ranking">Your Ranking: #{this.state.rank}</h2></div>
           <div className="leaderboardentries">
             <table>
             <thead>
@@ -57,5 +58,6 @@ export default class LeaderboardPage extends React.Component {
 }
 
 LeaderboardPage.propTypes = {
-  users: React.PropTypes.array
+  users: React.PropTypes.array,
+  currentUser: React.PropTypes.object
 }
