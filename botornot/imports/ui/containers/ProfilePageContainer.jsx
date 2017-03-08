@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Convos } from '/imports/api/convos/convos.js';
-import AccountPage from '../pages/AccountPage.jsx';
+import ProfilePage from '/imports/ui/pages/ProfilePage.jsx';
 
-export default AccountContainer = createContainer(({ params: { params } }) => {
+export default ProfileContainer = createContainer(({ params: { params } }) => {
     const username = params.username;
     const userHandle = Meteor.subscribe('userProfile', username);
     const notConvoHandle = Meteor.subscribe('userNotConvos', username);
@@ -39,4 +39,4 @@ export default AccountContainer = createContainer(({ params: { params } }) => {
       botConvos,
       notConvos 
     };
-}, AccountPage);
+}, ProfilePage);
