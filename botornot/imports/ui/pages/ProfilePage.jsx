@@ -29,22 +29,21 @@ export default class ProfilePage extends React.Component {
       return (
         <div className="profile">
           <div className="row profile-center-sm">
-            <div className="col-xs-12 col-sm-6 col-md-4">
+            <div className="col-xs-12 col-sm-6 col-md-4 profile-top-right">
               {this.getProfPic()}
             </div>
             <div className="col-xs-12 col-sm-6 col-md-8">
               <div className="profile-username">{username}</div>
-              <p> Player Type</p>
-              <p className="bold-item">{playerType}</p>
+              <p className="bold-item">"{playerType}"</p>
             </div>
           </div>
           <div className="row">
             <ProfAttribute 
-              title={"Ranking"}
-              value={ranking}/>
-            <ProfAttribute 
               title={"Sessions"}
               value={sessions}/>
+            <ProfAttribute 
+              title={"Ranking"}
+              value={ranking}/>
           
             <ProfAttribute 
               title={"Ratings"}
@@ -92,13 +91,13 @@ export default class ProfilePage extends React.Component {
       ));
     return (
         <div className="profile-center-sm">
-          <div className="col-xs-12 col-sm-6">
+          <div className="col-xs-12 col-sm-6 profile-div ">
             <div className="profile-attribute-title"> Rated Human </div>
-            { HumanConvos.length > 0 ? HumanConvos : "Never Rated Human"}
+            { HumanConvos.length > 0 ? HumanConvos : <div className="never-rated">Never Rated Human</div>}
           </div>
-          <div className="col-xs-12 col-sm-6">
+          <div className="col-xs-12 col-sm-6 profile-div">
             <div className="profile-attribute-title"> Rated Bot </div>
-            { BotConvos.length > 0 ? BotConvos : "Never Rated Bot"}
+            { BotConvos.length > 0 ? BotConvos : <div className="never-rated">Never Rated Bot</div>}
           </div>
           <br style={{clear : "both"}}/>
         </div>);
