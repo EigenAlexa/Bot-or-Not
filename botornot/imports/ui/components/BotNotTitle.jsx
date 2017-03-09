@@ -14,13 +14,13 @@ class BotNotTitle extends React.Component {
 	}
 
   renderBot() {
-		return (<div className="centerText">
+		return (<div className="">
 			<p className="bot">Bot? </p>
 		</div>);
   }
 
   renderNot() {
-    return (<div className="centerText">
+    return (<div className="">
 			<p className="not"> Or Not? </p>
 		</div>);
   }
@@ -38,10 +38,15 @@ class BotNotTitle extends React.Component {
 
   render() {
 		if (Math.floor(this.props.media.currentTime / 5) % 2 == 0) {
-		  return this.renderBot() 
+		  title = this.renderBot() 
 		} else {
-			return this.renderNot();
+			title =  this.renderNot();
 		}
+    return ( <div className="centerText">
+      {title}
+      <a className="btn custom-btn home-btn" href='/chat'>
+        Start Chatting</a>
+      </div>);
 	}
 }
 export default withMediaProps(BotNotTitle);
