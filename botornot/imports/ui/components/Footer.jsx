@@ -3,9 +3,11 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
 var Footer = React.createClass({
+	
   render: function() {
+		is_home = FlowRouter.getRouteName() === 'home';
     return ( 
-			<footer className="footer-lower" id="footer">
+			<footer className={!!is_home ? "footer-lower footer-home" : "footer-lower"} id="footer">
 					<div className="row">
 							<div className="columns">
 									<span>© 2017 BotOrNot - All Rights Reserved</span>
