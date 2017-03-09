@@ -2,6 +2,16 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
+
+function ProfAttribute(props) {
+  return (<div className="col-xs-12 col-sm-4 profile-attribute">
+    <div className="profile-attribute-title">{props.title} </div>
+    <p>{props.value}</p>
+  </div>);
+        
+}
+
+
 export default class ProfilePage extends React.Component {
   getContent() {
       const username = this.props.username;
@@ -17,18 +27,46 @@ export default class ProfilePage extends React.Component {
       const playerType = this.getPlayerType(rating);
       const badges = user.badges;
       return (
-					<div>
-						<div className="profile-align profile-attributes"> 
-							<p> PlayerType: {playerType} </p>
-							<p>Not Ratings: {notratings} </p>
-							<p>Sessions: {sessions} </p>
-							<p>Rating: {rating} </p>
-							<p>Ranking: {ranking} </p>
-							<p>Badges : {badges} </p>
-						</div>
-						{this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
-					</div>
-      )
+        <div className="profile">
+          <div className="row profile-center-sm">
+            <div className="col-xs-12 col-sm-6 col-md-4">
+              {this.getProfPic()}
+            </div>
+            <div className="col-xs-12 col-sm-6 col-md-8">
+              <div className="profile-username">{username}</div>
+              <p> Player Type</p>
+              <p className="bold-item">{playerType}</p>
+            </div>
+          </div>
+          <div className="row">
+            <ProfAttribute 
+              title={"Ranking"}
+              value={ranking}/>
+            <ProfAttribute 
+              title={"Sessions"}
+              value={sessions}/>
+          
+            <ProfAttribute 
+              title={"Ratings"}
+              value={rating}/>
+          </div>
+          {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
+        </div>);
+      // return (
+					// <div className="profile-align profile">
+      //     <div className="container">
+						// <div className="profile-attributes"> 
+							// <p>Not Ratings: {notratings} </p>
+							// <p>Sessions: {sessions} </p>
+							// <p>Rating: {rating} </p>
+							// <p>Ranking: {ranking} </p>
+							// <p>Badges : {badges} </p>
+						// </div>
+      //       <div className="convos">
+      //         {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
+      //       </div>
+					// </div>
+      // )
   }
 	getProfPic() {
 		const user = this.props.user;
@@ -41,6 +79,7 @@ export default class ProfilePage extends React.Component {
       HumanConvos = this.props.notConvos.map(convo => (
           <ConvoItem 
             convo={convo}
+            key={convo._id}
             time={convo.time}
           />
       ));
@@ -52,15 +91,16 @@ export default class ProfilePage extends React.Component {
           />
       ));
     return (
-        <div className="convos">
-            <div className="convos-human">
-                <h3 className="convos-title">Human</h3>
-                {HumanConvos}
-            </div>
-            <div className="convos-bot">
-                <h3 className="convos-title">Bot</h3>
-                { BotConvos }
-            </div>
+        <div className="profile-center-sm">
+          <div className="col-xs-12 col-sm-6">
+            <div className="profile-attribute-title"> Rated Human </div>
+            { HumanConvos.length > 0 ? HumanConvos : "Never Rated Human"}
+          </div>
+          <div className="col-xs-12 col-sm-6">
+            <div className="profile-attribute-title"> Rated Bot </div>
+            { BotConvos.length > 0 ? BotConvos : "Never Rated Bot"}
+          </div>
+          <br style={{clear : "both"}}/>
         </div>);
 
   }
@@ -90,15 +130,9 @@ export default class ProfilePage extends React.Component {
 
     return (
       <div>
-        <section className="section-background profile-align">
-            <div className="container">
-                <h3 className="page-header">
-                    {username}
-                </h3>
-										{this.props.loading ? "" : this.getProfPic()}
-            </div>
-        </section>
-        {this.props.loading ? this.getLoading() : this.getContent()}
+        <div className="container">
+          {this.props.loading ? this.getLoading() : this.getContent()}
+        </div>
       </div>
     );
   }
