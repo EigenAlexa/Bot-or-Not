@@ -68,6 +68,7 @@ export default class Screen extends React.Component {
         return (
             <div>
                 <header>
+                    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
                     <NavBar /> 
                 </header>
               <div className="content">

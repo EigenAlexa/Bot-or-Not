@@ -75,14 +75,14 @@ export default class Chat extends React.Component {
             />
         )});
         user = Meteor.user();
-        const showBot = this.props.room.turns > 4;
+        const showBot = this.props.room.turns > 4 && !this.props.room.closed;
         return (<div>
                   <div id="modal-div"> </div>
                     <ChatPanel messages={Messages}/>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
-                    {this.props.room.closed || this.props.room.canRate || !showBot ? "": <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Rate Now</Button>} 
+                    { !showBot ? "": <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Rate Now</Button>} 
                     {this.props.userOffTopic ? "": <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
