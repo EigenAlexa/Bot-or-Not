@@ -75,15 +75,15 @@ export default class Chat extends React.Component {
             />
         )});
         user = Meteor.user();
+        const showBot = this.props.room.turns > 4;
         return (<div>
                   <div id="modal-div"> </div>
                     <ChatPanel messages={Messages}/>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
-                    {this.props.room.closed || this.props.room.canRate ? "": <Button bsStyle='primary' size='medium' onClick={this.handleNextChat.bind(this)}>Next Chat</Button>} 
+                    {this.props.room.closed || this.props.room.canRate || !showBot ? "": <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Rate Now</Button>} 
                     {this.props.userOffTopic ? "": <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>} 
-                    {!this.props.room.closed && this.props.room.canRate ? <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Finish and Rate</Button>: ""} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>);
@@ -95,6 +95,9 @@ export default class Chat extends React.Component {
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());
       updateCookiesOnExit();
+    }
+    handleRatenowButton(event) {
+
     }
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);
