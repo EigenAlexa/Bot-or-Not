@@ -47,6 +47,8 @@ function startBot(roomId) {
           'max_turns' : maxTurns
         }
       }).data;
+      // flag the room as containing a bot
+      Convos.update({'_id' : roomId}, {$set: {'hasBot' : true}});
     } catch(error) {
       // TODO add handling that would send us an email or something
       console.log('error: ', error);
