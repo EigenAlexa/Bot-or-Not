@@ -8,26 +8,78 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+.bold-item {
+    font-family: 'Futura-Bold', arial;
+}
+.profile-username {
+    font-family: 'League Spartan Bold', arial;
+    text-transform: uppercase;
+    color: @fg;
+    font-size: 30px;
+}
+.profile {
+    font-family: 'Futura-Normal', arial;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 73px;
+}
+
+.profile-attribute {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.profile-attribute-title {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+.profile-attribute > p {
+    .bold-item;
+}
 .profile-attributes {
+    margin-left: 0;
+    margin-right: 0;
 	text-align: left;
 	max-width: 300px;
 }
 .convos-title {
 	text-align: center;
 }
-.convos {
-	max-width: 400px;
-	margin-left: auto;
-	margin-right: auto;
-}	
-.convos-type {
-	width: 50%
+
+@media (min-width: 768px){
+    .convos {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }	
+    .convos-type {
+        width: 50%
+    }
+    .convos-human {
+        .convos-type;
+        float: left;
+    }
+    .convos-bot {
+        .convos-type;
+        float: right;
+    }
 }
-.convos-human {
-	.convos-type;
-	float: left;
-}
-.convos-bot {
-	.convos-type;
-	float: right;
+@media (max-width: 767px){
+    .profile-center-sm{
+        text-align: center;
+    }
+    .convos {
+        margin-left: auto;
+        margin-right: auto;
+    }	
+    .convos-type {
+        width: 100%
+    }
+    .convos-human {
+        .convos-type;
+    }
+    .convos-bot {
+        .convos-type;
+    }
 }
