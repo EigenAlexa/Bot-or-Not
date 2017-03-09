@@ -27,6 +27,9 @@ var Footer = React.createClass({
               <div className="columns links">
                 <a href="/contact">Questions? Contact Us</a>
               </div>
+              <div className="columns links">
+                <a href="/contact">Report a Bug</a>
+              </div>
 					</div>
 			</footer>
 		);
