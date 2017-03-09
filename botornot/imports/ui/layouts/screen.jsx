@@ -70,7 +70,9 @@ export default class Screen extends React.Component {
                 <header>
                     <NavBar /> 
                 </header>
-                    {this.props.children}
+              <div className="content">
+                 {this.props.children}
+              </div>
               <Footer />
               <NotificationSystem ref='notificationsystem' />
             </div>
