@@ -21,14 +21,13 @@ export default class WaitPage extends React.Component {
         // will make a new room.
         console.log('making a room');
         noRooms = this.props.openRooms.length === 0;
-        if (noRooms) {
+        if (noRooms && !this.makingNewRoom) {
           console.log('making a new room');
           this.makingNewRoom = true;
           Meteor.call('convos.newRoom', (error, result) => {
             console.log(error);
             console.log(result, 'newroom id on callback');
-            this.makingNewRoom = false;
-            Meteor.call('convos.addUserToRoom', Meteor.userId(), result);
+            Meteor.call('convos.addUserToRoom', Meteor.userId(), result, (error, result)=>{this.makingNewRoom = false});
           });
         } else if (!this.makingNewRoom){
           this.joinRoom();
