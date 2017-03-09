@@ -85,6 +85,11 @@ ConvoSchema = new SimpleSchema({
     type: String,
     label: 'hostID',
     defaultValue: ""
+  },
+  hasBot : {
+    type: Boolean,
+    label: 'hasBot',
+    defaultValue: false,
   }
 });
 
