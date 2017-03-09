@@ -10,7 +10,7 @@ class HomePage extends React.Component {
 			videoURL: 'botnotvid.mp4'
 		}
 	}
-  renderTest() {
+  renderBG() {
     return <Media>
       <div className="media">
         <BotNotTitle />
@@ -23,26 +23,13 @@ class HomePage extends React.Component {
         </div>
 				<div id="video-overlay"></div>
         <div className="playPause media-controls">
-          // <BotNotTitle />
+          <BotNotTitle />
         </div>
       </div>
     </Media>
   }
-  renderBGVideo() {
-    console.log(this.getCurrentVideoTime());
-    return (
-			<div>
-				<video className="background-video" ref={(input) => { this.bgVid = input; }} loop autoPlay>
-					<source src={this.state.videoURL} type="video/mp4" />
-					<source src={this.state.videoURL} type="video/ogg" />
-						Your browser does not support the video tag.
-				</video>
-				<div id="video-overlay"></div>
-			</div>
-		);
-	}
   render() {
-		return this.renderTest();
+		return this.renderBG();
 	}
     // return (
 
