@@ -90,7 +90,8 @@ export default class Chat extends React.Component {
 
     }
     getLoadingPage() {
-        return (<div> <h1>Loading, hang tight.</h1></div>);
+      return "";
+        // return (<div> <h1>Loading, hang tight.</h1></div>);
     }
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());

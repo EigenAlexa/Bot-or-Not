@@ -68,7 +68,7 @@ export default class WaitPage extends React.Component {
                   </div>
                 </section>
                 <div className="container">
-                  { !noRooms || inconvo ? this.getContent() : <h4> Please wait while we connect you to an available bot or human. </h4>}
+                  { !noRooms || inconvo ? this.getContent() : ""}
                 </div>
             </div>
               
