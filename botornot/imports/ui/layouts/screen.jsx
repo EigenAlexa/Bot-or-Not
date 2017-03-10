@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import NavBar from '/imports/ui/components/NavBar.jsx';
 import Footer from '/imports/ui/components/Footer.jsx';
 import NotificationSystem from 'react-notification-system';
+import Favicon from 'react-favicon';
 
 export default class Screen extends React.Component {
     constructor(props) {
@@ -69,7 +70,7 @@ export default class Screen extends React.Component {
         return (
             <div>
                 <header>
-                    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+                    <Favicon url={["/icon.ico"]} />
                     <NavBar /> 
                 </header>
               <div className="content">
