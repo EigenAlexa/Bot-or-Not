@@ -1,5 +1,6 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import BugReport from '/imports/ui/components/BugReport.jsx';
 import { Button, Modal } from 'react-bootstrap';
@@ -9,41 +10,38 @@ class Footer extends React.Component {
     super(props);
     this.reportBug = this.reportBug.bind(this);
     this.closeBug = this.closeBug.bind(this);
-    this.state = {
-      showModal : false,
-    };
   }
 
 	renderModal(title,modalChild) {
+    console.log(Session.get('showBugModal'), typeof Session.get('showBugModal'));
     return (
-        <Modal show={true} backdrop='static' className="bugModal" >
-          <Modal.Header> 
-            <Modal.Title>{title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {modalChild}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.closeBug}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+      <Modal show={true} backdrop='static' className="bugModal" >
+        <Modal.Header> 
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {modalChild}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.closeBug}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     );
 	}
 
   reportBug() {
-    this.setState({
-      showModal : true
-    });
+    Session.set('showBugModal', true);
   }
 
   closeBug() {
-    this.setState({
-      showModal: false
-    });
+    Session.set('showBugModal', false);
   }
 
   render() {
 		is_home = FlowRouter.getRouteName() === 'home';
+    this.showBugModal = false;
+    const bugModal = () => {this.showBugModal = Session.get('showBugModal') };
+    Tracker.autorun(bugModal.bind(this));
     return ( 
 			<footer className={!!is_home ? "footer-lower footer-home" : "footer-lower"} id="footer">
 					<div className="row">
@@ -66,13 +64,17 @@ class Footer extends React.Component {
                 <a href="/contact">Questions? Contact Us</a>
               </div>
               <div className="columns links">
-                <button onClick={this.reportBug}>Report a Bug</button>
+                <a onClick={this.reportBug}>Report a Bug</a>
               </div>
-              { this.state.showModal ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : "" }
+              { this.props.showBugReport ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : ""}
 					</div>
 			</footer>
 		);
 	}
 }
 
-export default Footer;
+export default createContainer(() => {
+  return {
+    showBugReport : Session.get('showBugModal')
+  }
+}, Footer);
