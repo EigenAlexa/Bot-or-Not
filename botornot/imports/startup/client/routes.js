@@ -15,6 +15,7 @@ import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx'
 //import SignInPage from '/imports/ui/pages/SignInPage.jsx';
 import { getARoom } from '/imports/startup/client/methods.js';
 import { updateCookiesOnExit } from '/imports/startup/client/config.js';
+import BugReport from '/imports/ui/components/BugReport.jsx';
 FlowRouter.wait();
 
 FlowRouter.route('/', {

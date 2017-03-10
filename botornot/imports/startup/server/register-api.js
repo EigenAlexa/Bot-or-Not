@@ -4,6 +4,7 @@ import '/imports/api/messages/messages.js';
 import '/imports/api/users/users.js';
 import '/imports/api/ratings/ratings.js';
 import '/imports/api/prompts/prompts.js';
+import '/imports/api/bugs/bugs.js';
 
 // then import links next
 import '/imports/api/convos/linker.js';

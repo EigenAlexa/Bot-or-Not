@@ -1,10 +1,48 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import BugReport from '/imports/ui/components/BugReport.jsx';
+import { Button, Modal } from 'react-bootstrap';
 
-var Footer = React.createClass({
-	
-  render: function() {
+class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.reportBug = this.reportBug.bind(this);
+    this.closeBug = this.closeBug.bind(this);
+    this.state = {
+      showModal : false,
+    };
+  }
+
+	renderModal(title,modalChild) {
+    return (
+        <Modal show={true} backdrop='static' className="bugModal" >
+          <Modal.Header> 
+            <Modal.Title>{title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {modalChild}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.closeBug}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+    );
+	}
+
+  reportBug() {
+    this.setState({
+      showModal : true
+    });
+  }
+
+  closeBug() {
+    this.setState({
+      showModal: false
+    });
+  }
+
+  render() {
 		is_home = FlowRouter.getRouteName() === 'home';
     return ( 
 			<footer className={!!is_home ? "footer-lower footer-home" : "footer-lower"} id="footer">
@@ -28,12 +66,13 @@ var Footer = React.createClass({
                 <a href="/contact">Questions? Contact Us</a>
               </div>
               <div className="columns links">
-                <a href="/contact">Report a Bug</a>
+                <button onClick={this.reportBug}>Report a Bug</button>
               </div>
+              { this.state.showModal ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : "" }
 					</div>
 			</footer>
 		);
 	}
-});
+}
 
 export default Footer;
