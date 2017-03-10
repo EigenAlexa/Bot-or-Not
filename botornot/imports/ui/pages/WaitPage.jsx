@@ -6,7 +6,7 @@ import { cookies } from '/imports/startup/client/config.js';
 export default class WaitPage extends React.Component {
     constructor(props) {
       super(props);
-      this.makeOrJoinRoom = _.debounce(this.makeOrJoinRoom, 500);
+      //this.makeOrJoinRoom = _.debounce(this.makeOrJoinRoom, 5000);
       this.makingNewRoom = false;
     }
     getContent() {

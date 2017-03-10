@@ -31,7 +31,7 @@ module.exports = {
     },  
     buildOptions: {
       serverOnly: true,
-      cleanAfterBuild: false,
+      cleanAfterBuild: true,
       debug: true
     },
     env: {

@@ -66,13 +66,14 @@ Meteor.methods({
       }
     },
     'convos.addUserToRoom'(userId, convoId) {
+      Meteor.users.update({_id: userId}, {
+        $set: {in_convo: true, curConvo: convoId, rated: false}
+      });
       Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
         $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0, markedOffTopic: false}},
         $inc: {curSessions: 1}
       });
-      Meteor.users.update({_id: userId}, {
-        $set: {in_convo: true, curConvo: convoId, rated: false}
-      });
+      
     },
     'convos.finishConvoUsers'(convoId) {
       convo = Convos.findOne({_id: convoId});
