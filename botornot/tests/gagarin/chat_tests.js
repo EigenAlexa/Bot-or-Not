@@ -102,7 +102,6 @@ describe('chat connection suite', () => {
   client1 = browser(server); 
   client2 = browser(server);
 
- 
 
   it('should be able to route to /chat', () => {
     return waitForFlowRoute(client1, '/chat')
@@ -232,4 +231,3 @@ describe('chat interface anonymous', () => {
 
   runChatInterfaceTests(server3, client5, client6);
 });
-
