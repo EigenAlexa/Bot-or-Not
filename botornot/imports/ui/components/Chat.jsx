@@ -15,12 +15,13 @@ export default class Chat extends React.Component {
       super(props);
       this.handleEnter = _.debounce(this.handleEnter, 100, false);
       this.snippets = Snippets;
-      this.state = {isLoading: false, 
-                    index: 0, 
-                    inputValidState: null, 
-                    errorMsgs: null, 
-                    progress:0.0, 
-                    time_pass: 0.0,
+      this.state = {
+        isLoading: false, 
+        index: 0, 
+        inputValidState: null, 
+        errorMsgs: null, 
+        progress:0.0, 
+        time_pass: 0.0,
        };
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
@@ -29,15 +30,15 @@ export default class Chat extends React.Component {
       this.progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
     }
     updateLoadingInterval() {
-        if(this.state.index < this.snippets.length - 1){
-          this.setState({index: this.state.index + 1});
-        }
+      if(this.state.index < this.snippets.length - 1){
+        this.setState({index: this.state.index + 1});
+      }
     }
     updateProgressBar() {
-         var n = this.state.time_pass;
-         var new_time = (n+0.05);
-         this.setState({'time_pass': new_time});
-         this.setState({'progress': 97.0 - 97/(new_time)});
+      var n = this.state.time_pass;
+      var new_time = (n+0.05);
+      this.setState({'time_pass': new_time});
+      this.setState({'progress': 97.0 - 97/(new_time)});
     }
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
@@ -54,7 +55,7 @@ export default class Chat extends React.Component {
     }
     getContent() {
 	      if (! this.props.roomExists) {
-            return (<div> <p>404'd</p> </div>);
+            return (<div> <p>404d, Please refresh</p> </div>);
         }
         isReady = true;
         this.props.room.users.forEach((user) => {
@@ -90,15 +91,11 @@ export default class Chat extends React.Component {
 
     }
     getLoadingPage() {
-      return "";
-        // return (<div> <h1>Loading, hang tight.</h1></div>);
+        return (<div className="loading-btn"> <h3>Loading, hang tight.</h3></div>);
     }
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());
       updateCookiesOnExit();
-    }
-    handleRatenowButton(event) {
-
     }
     handleRateButton(event) {
       Meteor.call('convos.finishConvo', this.props.room._id);
@@ -117,7 +114,6 @@ export default class Chat extends React.Component {
         Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
       }else{
         this.setState({inputValidState: "error", errorMsgs: result.errors});
-        console.log(result.errors);
       }
       ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
