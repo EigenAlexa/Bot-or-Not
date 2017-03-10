@@ -7,6 +7,7 @@ export default class Screen extends React.Component {
     constructor(props) {
       super(props);
       this.renderOffTopicNotification = this.renderOffTopicNotification.bind(this);
+      Session.set('showBugModal', false);
     }
 
     renderRatingNotification(rating){
