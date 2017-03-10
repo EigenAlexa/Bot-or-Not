@@ -37,7 +37,9 @@ class Footer extends React.Component {
     Session.set('showBugModal', false);
   }
 
+
   render() {
+		is_home = FlowRouter.getRouteName() === 'home';
     return ( 
 			<footer className={this.props.isHome ? "footer-lower footer-home" : "footer-lower"} id="footer">
 					<div className="row">
@@ -63,6 +65,8 @@ class Footer extends React.Component {
                 <a onClick={this.reportBug}>Report a Bug</a>
               </div>
               { this.props.showBugReport ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : ""}
+                <button onClick={this.reportBug}>Report a Bug</button>
+              </div>
 					</div>
 			</footer>
 		);
