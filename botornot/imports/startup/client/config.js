@@ -19,6 +19,7 @@ console.log('share');
     faClass: ''       // font awesome classes like square
   });
 
+
 cookies = new Cookies();
 
 updateCookiesOnExit = () => {
