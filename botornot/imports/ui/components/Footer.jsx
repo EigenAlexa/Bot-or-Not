@@ -38,11 +38,8 @@ class Footer extends React.Component {
   }
 
   render() {
-		is_home = FlowRouter.getRouteName() === 'home';
-    this.showBugModal = false;
-    const bugModal = () => {this.showBugModal = Session.get('showBugModal') };
     return ( 
-			<footer className={!!is_home ? "footer-lower footer-home" : "footer-lower"} id="footer">
+			<footer className={this.props.isHome ? "footer-lower footer-home" : "footer-lower"} id="footer">
 					<div className="row">
 							<div className="columns">
 									<span>© 2017 BotOrNot - All Rights Reserved</span>
@@ -73,7 +70,10 @@ class Footer extends React.Component {
 }
 
 export default createContainer(() => {
+  FlowRouter.watchPathChange();
+  const isHome = FlowRouter.getRouteName() === 'home';
   return {
-    showBugReport : Session.get('showBugModal')
+    showBugReport : Session.get('showBugModal'),
+    isHome
   }
 }, Footer);
