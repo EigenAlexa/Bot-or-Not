@@ -41,7 +41,6 @@ class Footer extends React.Component {
 		is_home = FlowRouter.getRouteName() === 'home';
     this.showBugModal = false;
     const bugModal = () => {this.showBugModal = Session.get('showBugModal') };
-    Tracker.autorun(bugModal.bind(this));
     return ( 
 			<footer className={!!is_home ? "footer-lower footer-home" : "footer-lower"} id="footer">
 					<div className="row">
