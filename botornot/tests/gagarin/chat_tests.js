@@ -102,6 +102,8 @@ describe('chat connection suite', () => {
   client1 = browser(server); 
   client2 = browser(server);
 
+  //TODO ADD before call that signs up two users
+
   waitForFlowRoute = (client, path) => {
     return client.execute(function (path) {
       FlowRouter.go(path);
@@ -117,6 +119,52 @@ describe('chat connection suite', () => {
         FlowRouter.go(path);
       }
     }, [ path ]);
+  };
+  
+  signUpOnPage = (client, user, password) => {
+    return client.execute(() => {
+      console.log("logging out");
+      return Meteor.logout(() => {console.log("logged out")});
+    }).wait(5000, "until logged out", () => {
+      if (!Meteor.userId()) {
+        return true; 
+      }else {
+        Meteor.logout();
+      }
+    })
+      .then( () => {
+        waitForFlowRoute(client, '/sign-up')
+      })
+      .then(() => {
+        return client.waitForDOM("#at-field-username", 10000);
+      })
+      .then(() => {
+        return client.sendKeys("#at-field-username", user);
+      })
+      .then(() => {
+        return client.sendKeys("#at-field-password", password);
+      })
+      .then(() => {
+        return client.sendKeys("#at-field-password_again", password);
+      })
+      .then(() => {
+        return client.click("#at-btn");
+      })
+      .then(() => {
+        return client.waitForDOM(".home-btn", 10000);
+      });
+  };
+  leaveChat = (client1, client2) => {
+    return waitForFlowRoute(client1, '/')
+      .then(() => {
+        return client2.waitForDOM("#next-chat", 5000);
+      })
+      .then(() => {
+        return client2.click('#next-chat');
+      })
+      .then(() => {
+        return waitForFlowRoute(client2, '/');
+      });
   }; 
 
   it('should be able to route to /chat', () => {
