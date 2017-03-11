@@ -106,7 +106,7 @@ export default class ClosedPage extends React.Component {
   */
   renderNextChatButton() {
     return (
-        <Button bsStyle='primary' bsSize='large' onClick={this.handleNextSubmit.bind(this)}>Next Chat</Button>
+        <Button bsStyle='primary' id="#next-chat" bsSize='large' onClick={this.handleNextSubmit.bind(this)}>Next Chat</Button>
         );
   }
   render() {
