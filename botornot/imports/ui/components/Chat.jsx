@@ -24,7 +24,7 @@ export default class Chat extends React.Component {
         time_pass: 0.0,
        };
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
-      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 5000);
+      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 500);
       this.updateProgressBar = this.updateProgressBar.bind(this);
       this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
       this.progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
@@ -83,7 +83,7 @@ export default class Chat extends React.Component {
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
-                    { !showBot ? "": <Button bsStyle='primary' size='medium' onClick={this.handleRateButton.bind(this)}>Rate Now</Button>} 
+                    { !showBot ? "": <Button bsStyle='primary' size='medium' className="rate-now" onClick={this.handleRateButton.bind(this)}>Rate Now</Button>} 
                     {this.props.userOffTopic ? "": <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>} 
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>

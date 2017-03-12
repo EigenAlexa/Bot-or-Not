@@ -252,7 +252,7 @@ runChatInterfaceTests = (server, client1, client2) => {
       })
   });
   it('should show rate now button after max turns', () => {
-    return connectUsersToChat(client1, client2, 5000)
+    return connectUsersToChat(client1, client2, 30000)
       .then(() => {
         return sendMaxTurnsMessages(client1, client2)
       })
@@ -262,7 +262,7 @@ runChatInterfaceTests = (server, client1, client2) => {
       });
   });
   it('should show rating modal when the rate now button is clicked', () => {
-    return connectUsersToChat(client1, client2, 5000)
+    return connectUsersToChat(client1, client2, 30000)
       .then(() => {
         return sendMaxTurnsMessages(client1, client2); 
       })
