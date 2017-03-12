@@ -158,6 +158,7 @@ describe('chat connection suite', () => {
       .then(() => {
         return waitForFlowRoute(client2, '/chat');
       })
+      .waitForDOM("#next-chat", 2000)
       .click("#next-chat")
       .waitForDOM(".message-panel", 15000)
       .then(() => {
@@ -167,7 +168,7 @@ describe('chat connection suite', () => {
 });
 
 runChatInterfaceTests = (server, client1, client2) => {
-  sendMaxTurnsMessages = (client1, client2) => {
+  sendMaxTurnsMessages = (server, client1, client2) => {
      return server.execute(() => {return Meteor.settings.maxTurns})
       .then((maxTurns) => {
         return promiseFor( (count) => {return count < maxTurns / 2}, (count) => {
@@ -205,23 +206,23 @@ runChatInterfaceTests = (server, client1, client2) => {
   it('should show rate now button after max turns', () => {
     return connectUsersToChat(client1, client2, 30000)
       .then(() => {
-        return sendMaxTurnsMessages(client1, client2)
+        return sendMaxTurnsMessages(server,client1, client2)
       })
-      .waitForDOM("#rate-now", 2000)
+      .waitForDOM(".rate-now", 2000)
       .then(() => {
         return leaveChat(client1, client2);
       });
   });
-  it('should show rating modal when the rate now button is clicked', () => {
-    return connectUsersToChat(client1, client2, 30000)
-      .then(() => {
-        return sendMaxTurnsMessages(client1, client2); 
-      })
-    .waitForDOM("#rate-now", 2000)
-    .then(() => {
-      return leaveChat(client1, client2);
-    });
-  });
+ // it('should show rating modal when the rate now button is clicked', () => {
+ //   return connectUsersToChat(client1, client2, 30000)
+ //     .then(() => {
+ //       return sendMaxTurnsMessages(server,client1, client2); 
+ //     })
+ //   .waitForDOM(".rate-now", 2000)
+ //   .then(() => {
+ //     return leaveChat(client1, client2);
+ //   });
+ // });
 };
 
 describe('chat interface logged in', () => {
