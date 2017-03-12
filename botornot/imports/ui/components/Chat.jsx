@@ -146,7 +146,6 @@ export default class Chat extends React.Component {
     }
     renderPrepScreen(){
       firstTime = Meteor.user().firstTime;
-      console.log("room id", this.props.room._id);
       readyToChat = this.props.room.curSessions == 2 && (!firstTime || this.state.index == this.snippets.length - 1);
       if(readyToChat){
         Meteor.clearInterval(this.loadingInterval);  
