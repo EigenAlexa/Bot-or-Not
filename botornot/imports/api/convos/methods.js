@@ -66,6 +66,7 @@ Meteor.methods({
       }
     },
     'convos.addUserToRoom'(userId, convoId) {
+      console.log("adding user: ", userId, "to room ", convoId);
       Meteor.users.update({_id: userId}, {
         $set: {in_convo: true, curConvo: convoId, rated: false}
       });

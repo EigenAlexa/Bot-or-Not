@@ -8,11 +8,13 @@ Meteor.methods({
     });
   },
   'users.exitConvo'(userId) {
+    console.log("exiting convo ", userId);
     Meteor.users.update({_id: userId}, {
       $set: {in_convo: false, rated: false, isReady: false}
     });
     user = Meteor.users.findOne({_id: userId});
     convo = Convos.findOne({_id: user.curConvo});
+    console.log("convo sessions ", convo.curSessions);
     Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);
   },
