@@ -73,7 +73,7 @@ export default class Screen extends React.Component {
                     <Favicon url={["/icon.ico"]} />
                     <NavBar /> 
                 </header>
-              <div className="content">
+              <div className="align-container">
                  {this.props.children}
               </div>
               <Footer />
