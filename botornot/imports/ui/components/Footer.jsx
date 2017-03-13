@@ -64,8 +64,6 @@ class Footer extends React.Component {
               <div className="columns links">
                 <a onClick={this.reportBug}>Report a Bug</a>
               </div>
-              { this.props.showBugReport ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : ""}
-                <button onClick={this.reportBug}>Report a Bug</button>
 					</div>
 			</footer>
 		);
