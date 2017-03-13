@@ -81,6 +81,13 @@ FlowRouter.route("/closed", {
 */
 
 // UserAccounts Routes
+AccountsTemplates.configure({
+  defaultLayoutType: 'blaze-to-react',
+  defaultTemplate: 'customSignIn',  // default
+  defaultLayout: Screen,
+  defaultLayoutRegions: {},
+  defaultContentRegion: 'children',
+});
 AccountsTemplates.configureRoute("changePwd");
 AccountsTemplates.configureRoute("resetPwd");
 AccountsTemplates.configureRoute("signIn");
