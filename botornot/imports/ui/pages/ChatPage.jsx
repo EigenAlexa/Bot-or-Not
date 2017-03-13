@@ -16,11 +16,9 @@ export default class ChatPage extends React.Component {
         return (
             <div>
                 <section className="section-background">
-                  <div className="container">
                     <h3 className="page-header">
                     Chat
                     </h3>
-                  </div> 
                 </section> 
                 { !this.props.waiting? this.getContent() : <p> Please wait while we connect you to an available bot or human. </p> }
             </div>

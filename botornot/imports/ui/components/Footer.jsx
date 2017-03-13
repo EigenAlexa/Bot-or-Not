@@ -41,7 +41,7 @@ class Footer extends React.Component {
   render() {
 		is_home = FlowRouter.getRouteName() === 'home';
     return ( 
-			<footer className={this.props.isHome ? "footer-lower footer-home" : "footer-lower"} id="footer">
+			<footer className={this.props.isHome ? "footer-lower footer-home" : "footer-lower align-container"} id="footer">
 					<div className="row">
 							<div className="columns">
 									<span>© 2017 BotOrNot - All Rights Reserved</span>

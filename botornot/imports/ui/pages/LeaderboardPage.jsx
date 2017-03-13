@@ -26,12 +26,11 @@ export default class LeaderboardPage extends React.Component {
     return (
       <div className="leaderboard">
         <title>Bot or Not</title>
-        
-        <section className="section-background">
-            <h2 className="page-header">
-              Leaderboard
-            </h2>
-        </section> {/* /.section-background */}
+
+        <h2 className="page-header">
+          Leaderboard
+        </h2>
+
         <div className="">
           <div className="leader-info">
             <h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1>
