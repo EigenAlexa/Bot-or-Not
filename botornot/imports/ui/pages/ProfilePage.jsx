@@ -28,13 +28,14 @@ export default class ProfilePage extends React.Component {
       const badges = user.badges;
       return (
         <div className="profile">
+          <div className="profile-top">
+            <div className="profile-username">{username}</div>
+            <p className="bold-item">"{playerType}"</p>
+          </div>
+
           <div className="row profile-center-sm">
             <div className="col-xs-12 col-sm-6 col-md-4 profile-top-right">
               {this.getProfPic()}
-            </div>
-            <div className="col-xs-12 col-sm-6 col-md-8">
-              <div className="profile-username">{username}</div>
-              <p className="bold-item">"{playerType}"</p>
             </div>
           </div>
           <div className="row">
@@ -113,7 +114,7 @@ export default class ProfilePage extends React.Component {
     } = this.props;
 
     return (
-        <div className="profile-container right-page-align">
+        <div> 
           {this.props.loading ? this.getLoading() : this.getContent()}
         </div>
     );
