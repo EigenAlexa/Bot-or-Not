@@ -51,21 +51,6 @@ export default class ProfilePage extends React.Component {
           </div>
           {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
         </div>);
-      // return (
-					// <div className="profile-align profile">
-      //     <div className="container">
-						// <div className="profile-attributes"> 
-							// <p>Not Ratings: {notratings} </p>
-							// <p>Sessions: {sessions} </p>
-							// <p>Rating: {rating} </p>
-							// <p>Ranking: {ranking} </p>
-							// <p>Badges : {badges} </p>
-						// </div>
-      //       <div className="convos">
-      //         {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
-      //       </div>
-					// </div>
-      // )
   }
 	getProfPic() {
 		const user = this.props.user;
@@ -128,11 +113,9 @@ export default class ProfilePage extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <div className="container">
+        <div className="profile-container right-page-align">
           {this.props.loading ? this.getLoading() : this.getContent()}
         </div>
-      </div>
     );
   }
 }
