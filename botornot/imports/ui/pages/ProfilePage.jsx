@@ -33,11 +33,6 @@ export default class ProfilePage extends React.Component {
             <p className="bold-item">"{playerType}"</p>
           </div>
 
-          <div className="row profile-center-sm">
-            <div className="col-xs-12 col-sm-6 col-md-4 profile-top-right">
-              {this.getProfPic()}
-            </div>
-          </div>
           <div className="row">
             <ProfAttribute 
               title={"Sessions"}
