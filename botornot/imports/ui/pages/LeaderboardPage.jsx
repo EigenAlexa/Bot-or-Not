@@ -24,19 +24,19 @@ export default class LeaderboardPage extends React.Component {
       number={index +1 } />  
     ));
     return (
-      <div>
+      <div className="leaderboard">
         <title>Bot or Not</title>
         
         <section className="section-background">
-          <div className="container">
             <h2 className="page-header">
               Leaderboard
             </h2>
-          </div> {/* /.container */}
         </section> {/* /.section-background */}
-        <div className="container">
-          <div className="row"><h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1></div>
-          <div className="row"><h2 className="leader-ranking">Your Ranking: #{this.state.rank}</h2></div>
+        <div className="">
+          <div className="leader-info">
+            <h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1>
+            <h2 className="leader-ranking">Rank: #{this.state.rank}</h2>
+          </div>
           <div className="leaderboardentries">
             <table>
             <thead>
@@ -47,7 +47,7 @@ export default class LeaderboardPage extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {LeaderboardEntries}
+              {LeaderboardEntries}
             </tbody>
             </table>
           </div>

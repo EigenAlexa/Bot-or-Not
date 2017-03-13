@@ -73,19 +73,14 @@ export default class WaitPage extends React.Component {
         }
 
         return (
-            <div>
-                <section className="section-background">
-                  <div className="container">
-                    <h2 className="page-header">
-                    CHAT
-                    </h2>
-                  </div>
-                </section>
-                <div className="container">
-                  { !noRooms || inconvo ? this.getContent() : ""}
-                </div>
+          <div className="pageContent">
+            <h2 className="page-header">
+              CHAT
+            </h2>
+            <div >
+              { !noRooms || inconvo ? this.getContent() : ""}
             </div>
-              
+          </div>
         );
     }
 }

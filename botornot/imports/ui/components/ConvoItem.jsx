@@ -4,7 +4,7 @@ export const ConvoItem = ({ convo, time }) => {
   date = moment(time);
   console.log(date);
   return <div className="wrapper-message">
-    {date.format('MMMM Do YYYY, h:mm:ss a')}
+    {date.format('M/D @ h:mm a')}
   </div>
 };
 
