@@ -66,17 +66,37 @@ body {
         margin-right: auto;
     }
 }
-.btn-primary {
+// button style
+.btn-style {
     background-color: @fg;
-    border-color: rgba(0,0,0,0);
+    border-color: @fg;
+}
+.btn-primary {
+    .btn-style;
 }
 .btn-alt {
     background-color: @bg-1;
 }
-.btn:hover {
-    background-color: @bg-2;
+.btn-hover {
+    .btn-style;
     color: @bg-1;
 }
+.btn-primary:active:focus {
+    .btn-style;
+}
+.btn-primary:focus {
+    .btn-style;
+}
+.btn-primary:active {
+    .btn-style;
+}
+.btn-primary:hover {
+    .btn-hover;
+}
+.btn[disabled]:hover {
+    .btn-hover;
+}
+//breadcrumb
 .breadcrumb{
     list-style: none;
     background-color: transparent;
