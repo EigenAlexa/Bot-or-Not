@@ -44,7 +44,7 @@ export default class ProfilePage extends React.Component {
           
             <ProfAttribute 
               title={"Score"}
-              value={rating}/>
+              value={rating.toFixed(2)}/>
           </div>
           {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
         </div>);
