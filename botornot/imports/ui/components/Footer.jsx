@@ -43,9 +43,6 @@ class Footer extends React.Component {
     return ( 
 			<footer className={this.props.isHome ? "footer-lower footer-home" : "footer-lower align-container"} id="footer">
 					<div className="row">
-							<div className="columns">
-									<span>© 2017 BotOrNot - All Rights Reserved</span>
-							</div>
 
 							<div className="columns">
 								<div className="share-buttons">
@@ -59,11 +56,11 @@ class Footer extends React.Component {
                 <a href="/privacy">Privacy policy</a>
               </div>
               <div className="columns links">
-                <a href="/contact">Questions? Contact Us</a>
-              </div>
-              <div className="columns links">
                 <a onClick={this.reportBug}>Report a Bug</a>
               </div>
+							<div className="columns">
+									<span>© 2017 BotOrNot - All Rights Reserved</span>
+							</div>
               { this.props.showBugReport ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : ""}
 					</div>
 			</footer>
