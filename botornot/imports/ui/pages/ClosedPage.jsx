@@ -23,7 +23,7 @@ export default class ClosedPage extends React.Component {
   }
   renderUserLeft() {
     return ( <div>
-            <span className="update-span">Sorry the other user left, please feel free to join another chat.</span>
+            <p>Sorry the other user left, please feel free to join another chat.</p>
              {this.renderNextChatButton()}
              </div>
              );
@@ -61,8 +61,8 @@ export default class ClosedPage extends React.Component {
   }
 	renderModal(title,modalChild) {
     return (
-        <Modal show={true} backdrop='static' >
-          <Modal.Header> 
+        <Modal show={true} backdrop='static' className="close-page-modal">
+          <Modal.Header className="modal-header"> 
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>

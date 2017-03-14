@@ -74,9 +74,6 @@ body {
 .btn-primary {
     .btn-style;
 }
-.btn-alt {
-    background-color: @bg-1;
-}
 .btn-hover {
     .btn-style;
     color: @bg-1;
@@ -95,6 +92,24 @@ body {
 }
 .btn[disabled]:hover {
     .btn-hover;
+}
+// alt button style 
+.btn-alt {
+    background-color: @bg-1;
+    border-color: @bg-1;
+}
+.btn-alt:hover {
+    .btn-alt;
+    color: @fg;
+}
+.btn-alt:active:focus {
+    .btn-alt;
+}
+.btn-alt:focus {
+    .btn-alt;
+}
+.btn-alt:active {
+    .btn-alt;
 }
 //breadcrumb
 .breadcrumb{
