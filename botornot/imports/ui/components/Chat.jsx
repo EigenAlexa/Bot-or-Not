@@ -22,6 +22,8 @@ export default class Chat extends React.Component {
         errorMsgs: null, 
         progress:0.0, 
         time_pass: 0.0,
+        focusInput : false,
+        firstChatRender: true,
        };
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 500);
@@ -43,12 +45,23 @@ export default class Chat extends React.Component {
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload); 
+      // Doesn't work because the page is rendered before
+      // the text input
+      ReactDOM.findDOMNode(this.refs.textInput).focus();
     }
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
       Meteor.clearInterval(this.loadingInterval);
       Meteor.clearInterval(this.progressInterval);
+    }
+    componentDidUpdate(prevProps, prevState){
+      if (this.state.focusInput ) {
+        ReactDOM.findDOMNode(this.refs.textInput).focus();
+        this.setState({
+          focusInput : false
+        });
+      }
     }
     beforeunload(event){
       event.returnValue="Are you sure you want to leave";
@@ -129,6 +142,12 @@ export default class Chat extends React.Component {
       }
     }
     renderChatInput(){
+      if (this.state.firstChatRender) {
+        this.setState({
+          focusInput :true,
+          firstChatRender: false,
+        });
+      }
       return (
         <FormGroup validationState={this.state.inputValidState}>
         <ControlLabel>{this.state.errorMsgs}</ControlLabel> 
