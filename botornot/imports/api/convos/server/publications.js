@@ -12,9 +12,10 @@ function getUserId(userName) {
     return !!user ? user._id: user;
 }
 function getConvos(userId, bot) {
-    console.log('getting convos', Convos.find({'users.id' : userId},
+    console.log('getting convos', Convos.find(
+        {'users.id' : userId, 'users.ratedBot': bot},
         {fields: { _id : 1, time: 1}}).fetch());
-    cursor = Convos.find({'users.id' : userId}, {
+    cursor = Convos.find({'users.id' : userId, 'users.ratedBot': bot}, {
         sort : {time : -1},
         limit : 5,
         fields: {

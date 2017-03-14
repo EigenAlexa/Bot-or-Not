@@ -2,6 +2,7 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
+import { ProgressBar } from 'react-bootstrap';
 
 function ProfAttribute(props) {
   return (<div className="col-xs-12 col-sm-4 profile-attribute">
@@ -23,13 +24,14 @@ export default class ProfilePage extends React.Component {
       }
       const notratings = user.notratings
       const sessions = user.sessions;
+      const botratings = sessions - notratings;
       const rating = user.rating;
-      const playerType = this.getPlayerType(rating);
       const badges = user.badges;
       return (
         <div className="profile">
           <div className="profile-top">
             <div className="profile-username">{username}</div>
+           {this.getHumanity()}
           </div>
 
           <div className="row">
@@ -41,11 +43,33 @@ export default class ProfilePage extends React.Component {
               value={ranking}/>
           
             <ProfAttribute 
-              title={"Ratings"}
+              title={"Score"}
               value={rating}/>
           </div>
           {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
         </div>);
+  }
+  getHumanity(){
+    const user = this.props.user;
+    const notratings = user.notratings
+    const sessions = user.sessions;
+    const botratings = sessions - notratings;
+    console.log(notratings, botratings, sessions)
+    return (       
+      <div>   
+         <div className="col-xs-12 col-sm-12 profile-attribute">
+          <div className="profile-attribute-title">Humanity </div>
+          <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+          </div>  
+          {sessions >0 ?   
+        <div className="col-xs-12 col-sm-12 profile-attribute">
+        <p> Players think you're {botratings > notratings ? "a bot.": "human."} </p>
+          <ProgressBar>
+                <ProgressBar active bsStyle="danger botBar" now={(botratings/sessions)*100} key={2} label={"BOT: "+ botratings} />
+                <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
+            </ProgressBar>
+        </div> : <div></div>}
+      </div>);
   }
 	getProfPic() {
 		const user = this.props.user;
