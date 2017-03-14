@@ -83,14 +83,14 @@ export default class ClosedPage extends React.Component {
     }
     return (<div>
         {!this.state.submitted ? this.renderBotOrNotButtons(): this.renderThanksForRating()}
-		    {blazeToReact('shareit')(links)}
         </div>
     );
+		    // {blazeToReact('shareit')(links)}
   }
   renderBotOrNotButtons(){
-     return (<div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
-        <Button name="bot" bsStyle="primary" bsSize='small' className='btn-alt' onClick={this.handleSubmit.bind(this)}>Bot</Button>
-        <Button name="not" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Not</Button>
+     return (<div>
+        <Button name="bot" bsStyle="primary" bsSize='large' className='btn-alt btn-bot-not' onClick={this.handleSubmit.bind(this)}>Bot</Button>
+        <Button name="not" bsStyle="primary" bsSize='large' className='btn-bot-not' onClick={this.handleSubmit.bind(this)}>Not</Button>
         </div>);
   }
   renderWaitForRating(){
@@ -120,8 +120,14 @@ export default class ClosedPage extends React.Component {
       title = "User Disconnected";
     } */
     else if(!loading && (!userLeft || this.state.onRating)){
-      object = this.renderNotUserLeft();        
-			title = "Conversation Ended";
+      if (!this.state.submitted) {
+        object = this.renderBotOrNotButtons();
+        title = "Please Rate the Other Player";
+      }
+      else {
+        object = this.renderThanksForRating();        
+        title= "Thanks for Rating";
+      }
     } else {
       object = (<p> Hang on a tick, this page is loading </p>);
 			title = "Page loading";
