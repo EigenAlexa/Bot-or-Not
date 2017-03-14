@@ -37,31 +37,40 @@ class Footer extends React.Component {
     Session.set('showBugModal', false);
   }
 
-
+  socialLinks() {
+    return (
+      <div className="columns">
+        <div className="share-buttons">
+          <a className="large btn fb-share" href="http://www.facebook.com/botornot.ml" target="_blank"><i className="fa fa-facebook"></i></a>
+          <a className="large btn tw-share" href="http://twitter.com/botornot_ml" target="_blank"><i className="fa fa-twitter"></i></a>
+          <a className="large btn tw-share" href="mailto:botornot.ml@gmail.com"><i className="fa fa-envelope"></i></a>
+        </div>
+      </div>
+    );
+  }
+  desktopLinks() {
+    return (
+      <div>
+        <div className="columns links">
+          <a href="/privacy">Privacy policy</a>
+        </div>
+        <div className="columns links">
+          <a onClick={this.reportBug}>Report a Bug</a>
+        </div>
+        <div className="columns">
+            <span>© 2017 BotOrNot - All Rights Reserved</span>
+        </div>
+      </div>
+    );
+  }
   render() {
-		is_home = FlowRouter.getRouteName() === 'home';
     return ( 
 			<footer className={this.props.isHome ? "footer-lower footer-home" : "footer-lower align-container"} id="footer">
 					<div className="row">
-
-							<div className="columns">
-								<div className="share-buttons">
-									<a className="large btn fb-share" href="http://www.facebook.com/botornot.ml" target="_blank"><i className="fa fa-facebook"></i></a>
-									<a className="large btn tw-share" href="http://twitter.com/botornot_ml" target="_blank"><i className="fa fa-twitter"></i></a>
-									<a className="large btn tw-share" href="mailto:botornot.ml@gmail.com"><i className="fa fa-envelope"></i></a>
-								</div>
-							</div>
-              
-              <div className="columns links">
-                <a href="/privacy">Privacy policy</a>
-              </div>
-              <div className="columns links">
-                <a onClick={this.reportBug}>Report a Bug</a>
-              </div>
-							<div className="columns">
-									<span>© 2017 BotOrNot - All Rights Reserved</span>
-							</div>
-              { this.props.showBugReport ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : ""}
+            {this.socialLinks()}
+            
+            {!this.props.isMobile ? this.desktopLinks() : ""}
+            { this.props.showBugReport ? this.renderModal('Report a Bug', <BugReport submitHook={this.closeBug.bind(this)}/>) : ""}
 					</div>
 			</footer>
 		);
@@ -71,8 +80,10 @@ class Footer extends React.Component {
 export default createContainer(() => {
   FlowRouter.watchPathChange();
   const isHome = FlowRouter.getRouteName() === 'home';
+  const isMobile = window.innerWidth < 450;
   return {
     showBugReport : Session.get('showBugModal'),
+    isMobile,
     isHome
   }
 }, Footer);
