@@ -83,7 +83,6 @@ export default class Chat extends React.Component {
                     <ChatPanel messages={Messages}/>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
-                    {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
                     <Button bsStyle='primary' size='medium' className={"rate-now " + rateButtonClass} onClick={this.handleRateButton.bind(this)} >Rate Now</Button>
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
