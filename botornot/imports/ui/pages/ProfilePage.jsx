@@ -30,7 +30,6 @@ export default class ProfilePage extends React.Component {
         <div className="profile">
           <div className="profile-top">
             <div className="profile-username">{username}</div>
-            <p className="bold-item">"{playerType}"</p>
           </div>
 
           <div className="row">
