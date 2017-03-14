@@ -76,14 +76,15 @@ export default class Chat extends React.Component {
             />
         )});
         user = Meteor.user();
-        const showBot = this.props.room.turns > 4 && !this.props.room.closed;
+        const showBot = this.props.room.turns > Meteor.settings.public.ratingTurns && !this.props.room.closed;
+        const rateButtonClass = showBot ? "" : "btn-disabled";
         return (<div>
                   <div id="modal-div"> </div>
                     <ChatPanel messages={Messages}/>
                     <div className="progress-input row">
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
-                    <Button bsStyle='primary' size='medium' className="rate-now" onClick={this.handleRateButton.bind(this)} disabled={!showBot}>Rate Now</Button>
+                    <Button bsStyle='primary' size='medium' className={"rate-now " + rateButtonClass} onClick={this.handleRateButton.bind(this)} >Rate Now</Button>
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>);
@@ -98,8 +99,13 @@ export default class Chat extends React.Component {
       updateCookiesOnExit();
     }
     handleRateButton(event) {
-      Meteor.call('convos.finishConvo', this.props.room._id);
-      Meteor.call('convos.finishConvoUsers', this.props.room._id);
+      if (this.props.room.turns >= Meteor.settings.public.ratingTurns) {
+        Meteor.call('convos.finishConvo', this.props.room._id);
+        Meteor.call('convos.finishConvoUsers', this.props.room._id);
+      } else {
+        Session.set('turnsLeft', Meteor.settings.public.ratingTurns - this.props.room.turns);
+        Session.set('notifyNumTurns', "true");
+      }
     }
     handleOffTopicButton(event) {
       Session.set('curConvo', this.props.room._id);

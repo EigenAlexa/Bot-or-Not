@@ -9,6 +9,7 @@ export default class Screen extends React.Component {
       super(props);
       this.renderOffTopicNotification = this.renderOffTopicNotification.bind(this);
       Session.set('showBugModal', false);
+      Session.set('notifyNumTurnsOpen', 'false');
     }
 
     renderRatingNotification(rating){
@@ -49,6 +50,23 @@ export default class Screen extends React.Component {
       
     }
 
+    renderTurnsNotification(turnsLeft) {
+      notification = {
+        title: 'Keep Talking!',
+        message: "You have " + turnsLeft + " conversation turns left before you can rate the other user.",
+        level: 'error',
+        autoDismiss: 5,
+        onRemove: () => {
+          Session.set('notifyNumTurnsOpen', 'false');
+        }
+
+      };
+      Session.set('notifyNumTurnsOpen', 'true');
+      this.refs.notificationsystem.addNotification(notification);
+      Session.set('notifyNumTurns', "false");
+
+    }
+
     componentDidMount(){ 
       Tracker.autorun(() => {
         playNotification = Session.get('playNotification');
@@ -56,10 +74,17 @@ export default class Screen extends React.Component {
         if(playNotification == "true"){
           this.renderRatingNotification(rating);
         }
-
+    
         offTopicNotification = Session.get('notifyOffTopic');
         if (offTopicNotification == "true") {
           this.renderOffTopicNotification();
+        }
+
+        turnsNotification = Session.get('notifyNumTurns');
+        turnsNotifOpen = Session.get('notifyNumTurnsOpen');
+        if (turnsNotification == "true" && turnsNotifOpen == "false") {
+          turnsLeft = Session.get('turnsLeft');
+          this.renderTurnsNotification(turnsLeft);
         }
       });
     }
