@@ -55,7 +55,8 @@ class NavBar extends React.Component {
     }
     else {
       navbar_class += "default";
-      home_screen_align="nav-align";
+      home_screen_align="navbar-right";
+      // home_screen_align="nav-align";
     }
 
     return (
