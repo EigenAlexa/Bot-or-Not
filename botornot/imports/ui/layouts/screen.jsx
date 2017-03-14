@@ -15,7 +15,6 @@ export default class Screen extends React.Component {
       notification = {
         title: rating == 'not' ? 'NOT' : 'BOT',
         message: "You were just rated as a " + rating + " for a previous conversation.",
-        position: 'bc',
         level: rating == 'not'? 'success' : 'error',
         autoDismiss: 5,
 
@@ -30,7 +29,6 @@ export default class Screen extends React.Component {
       notification = {
         title: 'Marked Conversation as Off Topic',
         message: "Thanks for letting us know that the conversation was off topic.",
-        position: 'bc',
         level: 'success',
         autoDismiss: 5,
         action : {
