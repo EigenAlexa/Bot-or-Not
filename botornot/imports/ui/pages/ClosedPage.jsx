@@ -89,7 +89,7 @@ export default class ClosedPage extends React.Component {
   }
   renderBotOrNotButtons(){
      return (<div><p> Thanks for playing. Please guess whether the other person was a bot or not. </p> 
-        <Button name="bot" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Bot</Button>
+        <Button name="bot" bsStyle="primary" bsSize='small' className='btn-alt' onClick={this.handleSubmit.bind(this)}>Bot</Button>
         <Button name="not" bsStyle="primary" bsSize='small' onClick={this.handleSubmit.bind(this)}>Not</Button>
         </div>);
   }
