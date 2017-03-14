@@ -84,12 +84,11 @@ export default class Chat extends React.Component {
                     {this.props.room.closed ? "": this.renderChatInput()}
                     {this.props.room.closed || this.props.room.canRate ? "": this.renderProgressBar()}
                     <Button bsStyle='primary' size='medium' className="rate-now" onClick={this.handleRateButton.bind(this)} disabled={!showBot}>Rate Now</Button>
-                    {this.props.userOffTopic ? "": <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>} 
-                    <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>);
 
+                    // <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>
     }
     getLoadingPage() {
         return (<div className="loading-btn"> <h3>Loading, hang tight.</h3></div>);
