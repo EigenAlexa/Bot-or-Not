@@ -26,9 +26,15 @@ export default ProfileContainer = createContainer(({ params: { params } }) => {
     const ranking = !!user && ratingsHandle.ready() ? Meteor.users.find({rating: {$gt: user.rating}}).count() + 1: -1;
     const convosLoading = !botConvoHandle.ready() || !notConvoHandle.ready();
     
-    const notConvos = convosLoading ? [] : Convos.find({'users.ratedBot': false}).fetch();
+    const notConvos = convosLoading ? [] : Convos.find(
+      {'users.ratedBot': false},  
+      {limit : 5}).fetch();
+
     console.log(Convos.find().fetch(), 'finding convos');
-    const botConvos = convosLoading ? [] : Convos.find({'users.ratedBot': true}).fetch();
+    const botConvos = convosLoading ? [] : Convos.find(
+      {'users.ratedBot': true},
+      {limit : 5}).fetch();
+
     return {
       user, 
       username,
