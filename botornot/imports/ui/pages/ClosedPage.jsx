@@ -37,7 +37,6 @@ export default class ClosedPage extends React.Component {
   }
   renderThanksForRating() {
     return ( <div>
-              <p> Thanks for rating. Please feel free to join another chat. </p>
               {this.renderNextChatButton()}
               </div>
         );
@@ -106,7 +105,7 @@ export default class ClosedPage extends React.Component {
   */
   renderNextChatButton() {
     return (
-        <Button bsStyle='primary' id="next-chat"  bsSize='large' onClick={this.handleNextSubmit.bind(this)}>Next Chat</Button>
+        <Button bsStyle='primary' id="next-chat"  bsSize='large' className='btn-full-modal' onClick={this.handleNextSubmit.bind(this)}>Next Chat</Button>
         );
   }
   render() {
