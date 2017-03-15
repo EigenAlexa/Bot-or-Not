@@ -2,7 +2,7 @@ import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-
+import ReactDOM from 'react-dom';
 class NavBar extends React.Component {
   constructor(params) {
     super(params);
@@ -33,27 +33,6 @@ class NavBar extends React.Component {
     <ul className={classes}>
       {NavLinks}
     </ul> );
-    if (this.props.userLoggedIn) {
-      return (
-        <ul className={classes}>
-          <li><a href="/" data-toggle="collapse" data-target=".nav-collapse.in">Home</a></li>
-          <li><a href="/chat" data-toggle="collapse" data-target=".nav-collapse.in">Chat</a></li>
-          <li><a href="/leaderboards">Leaderboards</a></li>
-          <li><a href={"/profile/" + username}>Profile</a></li>
-          <li><a href="/logout">Logout</a></li>
-        </ul> 
-      );
-    } else {
-      return (
-        <ul className={classes}>
-          <li><a href="/">Home</a></li>
-          <li><a href="/chat">Chat</a></li>
-          <li><a href="/leaderboards">Leaderboards</a></li>
-          <li><a href="/sign-in">Sign In</a></li>
-          <li><a href="/sign-up">Sign Up</a></li>
-        </ul> 
-      );
-    }
   }
   updateDimensions() {
     this.setState({width: $(window).width(), height: $(window).height()});
@@ -72,6 +51,10 @@ class NavBar extends React.Component {
   renderActiveUsers() {
     return  <div className='active-user-div'>Users Online: <span>{this.props.usersOnline}</span></div> ;
   }
+  // onBlurEvent() {
+  //   console.log('onBlur');
+  //    ReactDOM.findDOMNode(this.refs.collapseDiv).collapse('hide');
+  // }
   render() {
     routeName = FlowRouter.current().route.name;
     console.log(routeName);
@@ -106,7 +89,7 @@ class NavBar extends React.Component {
               </a>
             </div> {/* /.navbar-header */}
           {/* Collect the nav links, forms, and other content for toggling */}
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div ref='collapseDiv' className="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
             {this.navLinks("nav navbar-nav " + home_screen_align)}
             {displayActiveUsers ? this.renderActiveUsers(): ""}
           </div>{/* /.navbar-collapse */}

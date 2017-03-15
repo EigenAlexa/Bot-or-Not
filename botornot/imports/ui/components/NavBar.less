@@ -62,12 +62,15 @@ ul.nav.navbar-nav.navbar-right{
 .navbar-default .navbar-toggle .icon-bar{
     background: #fff;
 }
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: #404040;
+}
 @media (min-width: 768px) {
 	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
 		background: #fff;
 	}
 }
-@media (max-width: 450px) {
+@media (max-width: 767px) {
 	.collapse.in {
 		margin-top: 50px;
 		overflow-y: visible;
@@ -90,7 +93,7 @@ ul.nav.navbar-nav.navbar-right{
 }
 
 
-/*=================================================
+/*================================================
 ||              HOMEPAGE NAVBAR
 ==================================================*/
 
@@ -109,12 +112,18 @@ ul.nav.navbar-nav.navbar-right{
 .navstyle-home .navbar-default .navbar-brand {
     text-transform: uppercase;
     color: @bg-2;
+    margin-top: 10px;
+    margin-left: 20px;
 }
 .navstyle-home .navbar-default { 
     background-color : rgba(0,0,0,0);
     border-color: rgba(0, 0, 0, 0);
 }
-
+@media (max-width: 767px) {
+	.navstyle-home .navbar-default {
+		background-color: rgba(0, 0, 0, 0.28);
+	}
+}
 /*=================================================
 ||               NON HOME PAGE NAVBAR
 ==================================================*/
