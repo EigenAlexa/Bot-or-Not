@@ -79,6 +79,10 @@ FlowRouter.route("/closed", {
 
 });
 */
+FlowRouter.triggers.exit(context => {
+  Session.set('lastRoute', context.route.name);
+});
+  
 
 // UserAccounts Routes
 AccountsTemplates.configure({

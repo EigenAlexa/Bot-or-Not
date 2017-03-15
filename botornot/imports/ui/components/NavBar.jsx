@@ -1,6 +1,7 @@
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
 class NavBar extends React.Component {
   constructor(params) {
@@ -12,7 +13,7 @@ class NavBar extends React.Component {
     return Meteor.user();
   }
   navLinks(classes) {
-    if (!Meteor.loggingIn() && Meteor.user()) {
+    if (this.props.userLoggedIn) {
       const username = this.user().username;
       return (
         <ul className={classes}>
@@ -44,12 +45,20 @@ class NavBar extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
   }
+  getActiveUsers() {
+		users = UserConnections.find().count()
+    console.log('active users', users)
+    return users;
+  }
+  renderActiveUsers() {
+    return  <div className='active-user-div'>Users Online: <span>{this.props.usersOnline}</span></div> ;
+  }
   render() {
     routeName = FlowRouter.current().route.name;
-
+    console.log(routeName);
     let navbar_class = "navstyle-";
     let home_screen_align = ""
-    if(routeName == "home") {
+    if(this.props.isHome) {
       navbar_class += "home";
       home_screen_align="navbar-right";
     }
@@ -58,7 +67,8 @@ class NavBar extends React.Component {
       home_screen_align="navbar-right";
       // home_screen_align="nav-align";
     }
-
+    const displayActiveUsers= this.props.usersOnline >= 1; //TODO 
+		console.log(this.props.usersOnline, displayActiveUsers, 'usersOnline.com');
     return (
     <div className={navbar_class}>
       <nav className="navbar navbar-default navbar-fixed-top">
@@ -78,6 +88,7 @@ class NavBar extends React.Component {
           {/* Collect the nav links, forms, and other content for toggling */}
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {this.navLinks("nav navbar-nav " + home_screen_align)}
+            {displayActiveUsers ? this.renderActiveUsers(): ""}
           </div>{/* /.navbar-collapse */}
         </div>{/* /.container */}
       </nav>
@@ -85,5 +96,19 @@ class NavBar extends React.Component {
     );
   }
 }
-
-export default NavBar;
+const NavBarContainer = createContainer(() => {
+	const usersHandle = Meteor.subscribe('userStatus');
+	const loadingUserCount = !usersHandle.ready();
+	const usersOnline = loadingUserCount ? 0 : Meteor.users.find({'status.online': true}).count();
+  const routeName = FlowRouter.getRouteName();
+  const lastRoute = Session.get('lastRoute');
+  const isHome = routeName === 'home' || (routeName === 'logout' && lastRoute === 'home');
+  const userLoggedIn = !Meteor.loggingIn() && Meteor.user();
+	return {
+		loadingUserCount,
+		usersOnline,
+    isHome,
+    userLoggedIn,
+	}	
+}, NavBar);
+export default NavBarContainer;

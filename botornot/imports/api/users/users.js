@@ -169,7 +169,12 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'firstTime',
     defaultValue: true
-  }
+  },
+	status: {
+			type: Object,
+			optional: true,
+			blackbox: true
+	}
 });
 
 Meteor.users.attachSchema(Schema.User);

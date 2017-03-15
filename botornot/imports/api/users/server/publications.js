@@ -7,9 +7,12 @@ Meteor.publish('topNUsers', (N) => {
     fields: {username: 1, rating: 1}
   });
 });
-
+Meteor.publish("userStatus", function() {
+  return Meteor.users.find({ "status.online": true }, { fields: { "status.online" : 1 } });
+});
 Meteor.publish('users.ratings', () => {
-    return Meteor.users.find({}, { fields :{ rating : 1} });
+	return UserStatus.connections.find();
+    // return Meteor.users.find({}, { fields :{ rating : 1} });
 });
 
 Meteor.publishComposite('currentUsers', (convoId) => {
