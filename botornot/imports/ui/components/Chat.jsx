@@ -28,6 +28,18 @@ export default class Chat extends React.Component {
       this.updateProgressBar = this.updateProgressBar.bind(this);
       this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
       this.progressInterval = Meteor.setInterval(this.updateProgressBar, 100);
+
+      // This is hacky and makes the  pro tips out of order.
+      this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
+      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 500);
+    }
+    updateLoadingInterval() {
+      if(this.state.index < this.snippets.length - 1){
+        this.setState({index: this.state.index + 1});
+      }
+      else{
+        this.setState({'index': 0});
+      }
     }
     updateProgressBar() {
       var n = this.state.time_pass;
@@ -55,6 +67,7 @@ export default class Chat extends React.Component {
       window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
       Meteor.clearInterval(this.progressInterval);
+      Meteor.clearInterval(this.loadingInterval);
     }
     componentDidUpdate(prevProps, prevState){
       if (this.state.focusInput ) {
