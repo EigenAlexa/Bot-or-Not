@@ -90,7 +90,7 @@ ConvoSchema = new SimpleSchema({
     type: Boolean,
     label: 'hasBot',
     defaultValue: false,
-  }
+  },
 });
 
 const Convos = new Mongo.Collection("convos");
