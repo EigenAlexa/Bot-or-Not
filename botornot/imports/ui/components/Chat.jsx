@@ -59,9 +59,6 @@ export default class Chat extends React.Component {
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload); 
-      // Doesn't work because the page is rendered before
-      // the text input
-      ReactDOM.findDOMNode(this.refs.textInput).focus();
     }
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
