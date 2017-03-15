@@ -25,22 +25,24 @@ export default class Chat extends React.Component {
         focusInput : false,
         firstChatRender: true,
        };
-      this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
-      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 500);
       this.updateProgressBar = this.updateProgressBar.bind(this);
       this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
-      this.progressInterval = Meteor.setInterval(this.updateProgressBar, 50);
-    }
-    updateLoadingInterval() {
-      if(this.state.index < this.snippets.length - 1){
-        this.setState({index: this.state.index + 1});
-      }
+      this.progressInterval = Meteor.setInterval(this.updateProgressBar, 100);
     }
     updateProgressBar() {
       var n = this.state.time_pass;
-      var new_time = (n+0.05);
+      var max = !!Meteor.settings.timeout ? Meteor.settings.timeout : 20;
+      var incr = 100/(max*1000);
+
+      var new_time = (n+incr);
+      var progress = 0;
+      if( new_time > .99 ){
+        progress = 99 - 2/(0.5*(new_time - 0.99)/incr);
+      }
+      else
+        progress = new_time*100;
       this.setState({'time_pass': new_time});
-      this.setState({'progress': 97.0 - 97/(new_time)});
+      this.setState({'progress': progress });
     }
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
@@ -52,7 +54,6 @@ export default class Chat extends React.Component {
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
-      Meteor.clearInterval(this.loadingInterval);
       Meteor.clearInterval(this.progressInterval);
     }
     componentDidUpdate(prevProps, prevState){
@@ -169,10 +170,8 @@ export default class Chat extends React.Component {
       return( <ClosedPageContainer params={{roomId: user.curConvo, userLeft: user.left}} /> );
     }
     renderPrepScreen(){
-      firstTime = Meteor.user().firstTime;
-      readyToChat = this.props.room.curSessions == 2 && (!firstTime || this.state.index == this.snippets.length - 1);
+      readyToChat = this.props.room.curSessions == 2;
       if(readyToChat){
-        Meteor.clearInterval(this.loadingInterval);  
         Meteor.clearInterval(this.progressInterval);  
         Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
       }
@@ -180,12 +179,10 @@ export default class Chat extends React.Component {
       progress = this.state.progress;
       return (
         <div className="loading-btn word-wrap">
-        {isLoading ? "" : <h3>Looking for chat rooms</h3>}
+        {isLoading ? "" : <h3>Looking for users or bots.</h3>}
         <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
         <div className="progress-for-loader">
-          <ProgressBar  now={progress} active striped bsStyle={isLoading ? "success" : "info"} 
-          label={isLoading ? "Connnected! Waiting on other user."
-          : ""}/> 
+          <ProgressBar  now={progress} active striped bsStyle="info"/> 
         </div>
         </div>);
     }
