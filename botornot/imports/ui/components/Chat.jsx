@@ -99,6 +99,7 @@ export default class Chat extends React.Component {
                     {this.props.room.closed ? "": this.renderChatInput()}
                     <Button bsStyle='primary' size='medium' className={"rate-now " + rateButtonClass} onClick={this.handleRateButton.bind(this)} >Rate Now</Button>
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
+                    <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4> 
                     </div>
                   </div>);
 
@@ -177,10 +178,11 @@ export default class Chat extends React.Component {
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
       progress = this.state.progress;
+      
       return (
         <div className="loading-btn word-wrap">
-        {isLoading ? "" : <h3>Looking for users or bots.</h3>}
-        <h4 className="word-wrap"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4>
+         <h3>Looking for chat room.</h3>
+        
         <div className="progress-for-loader">
           <ProgressBar  now={progress} active striped bsStyle="info"/> 
         </div>
