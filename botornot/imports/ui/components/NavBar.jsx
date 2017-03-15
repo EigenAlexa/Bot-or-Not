@@ -13,12 +13,31 @@ class NavBar extends React.Component {
     return Meteor.user();
   }
   navLinks(classes) {
+    let navLinks = [
+      ['/', 'Home'],
+      ['/chat', 'Chat'],
+      ['/leaderboards', 'Leaderboards'],
+    ];
     if (this.props.userLoggedIn) {
       const username = this.user().username;
+      navLinks.push(['/profile/' + username, 'Profile']);
+      navLinks.push(['/logout', 'Logout']);
+    } else {
+      navLinks.push(['/sign-in', 'Sign In']);
+      navLinks.push(['/sign-up', 'Sign Up']);
+    }
+    NavLinks = navLinks.map((item) => {
+      return (<li key={item[0]}><a href={item[0]} data-toggle="collapse" data-target=".navbar-collapse.in">{item[1]}</a></li>)
+    });
+    return (
+    <ul className={classes}>
+      {NavLinks}
+    </ul> );
+    if (this.props.userLoggedIn) {
       return (
         <ul className={classes}>
-          <li><a href="/">Home</a></li>
-          <li><a href="/chat">Chat</a></li>
+          <li><a href="/" data-toggle="collapse" data-target=".nav-collapse.in">Home</a></li>
+          <li><a href="/chat" data-toggle="collapse" data-target=".nav-collapse.in">Chat</a></li>
           <li><a href="/leaderboards">Leaderboards</a></li>
           <li><a href={"/profile/" + username}>Profile</a></li>
           <li><a href="/logout">Logout</a></li>

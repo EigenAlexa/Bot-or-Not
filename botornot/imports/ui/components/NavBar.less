@@ -49,7 +49,6 @@ ul.nav.navbar-nav.navbar-right{
 /*####################
    Mobile Toggle Stuff
 ######################*/
-
 .navbar-toggle:hover .icon-bar, .navbar-toggle:focus .icon-bar {
     background-color: rgb(0,0,0,0);
 }
@@ -63,8 +62,25 @@ ul.nav.navbar-nav.navbar-right{
 .navbar-default .navbar-toggle .icon-bar{
     background: #fff;
 }
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
-    background: #fff;
+@media (min-width: 768px) {
+	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+		background: #fff;
+	}
+}
+@media (max-width: 450px) {
+	.collapse.in {
+		margin-top: 50px;
+		overflow-y: visible;
+	}
+	.navbar-default .navbar-collapse{
+		border: none;
+	}
+	.nav.navbar-nav.navbar-right{
+		overflow-y: visible;
+	}
+	.collapsing {
+		margin-top: 50px;
+	}
 }
 .form-control:focus {
     border-color: #66afe9;
