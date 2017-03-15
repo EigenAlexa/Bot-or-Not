@@ -35,6 +35,9 @@ export default ProfileContainer = createContainer(({ params: { params } }) => {
       {'users.ratedBot': true},
       {limit : 5}).fetch();
 
+    const currentUser = loading ? {}: Meteor.users.findOne({_id: Meteor.userId()});
+    const isSelfProfile = !!currentUser &&  !!currentUser['username'] &&currentUser.username == username;
+
     return {
       user, 
       username,
@@ -43,6 +46,7 @@ export default ProfileContainer = createContainer(({ params: { params } }) => {
       userExists : !!user, 
       convosLoading,
       botConvos,
-      notConvos 
+      notConvos,
+      isSelfProfile
     };
 }, ProfilePage);

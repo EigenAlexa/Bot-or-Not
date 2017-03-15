@@ -51,10 +51,12 @@ export default class ProfilePage extends React.Component {
   }
   getHumanity(){
     const user = this.props.user;
+    const username = this.props.username;
     const notratings = user.notratings
     const sessions = user.sessions;
     const botratings = sessions - notratings;
-    console.log(notratings, botratings, sessions)
+    const prefix = this.props.isSelfProfile ? "you're" : ( <span>
+      <span className='userColor'> {username} </span> is </span>);
     return (       
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
@@ -63,7 +65,7 @@ export default class ProfilePage extends React.Component {
           </div>  
           {sessions >0 ?   
         <div className="col-xs-12 col-sm-12 profile-attribute">
-        <p> Players think you're {botratings > notratings ? "a bot.": "human."} </p>
+        <p> Players think {prefix} {botratings > notratings ? "a bot.": "human."} </p>
           <ProgressBar>
                 <ProgressBar active bsStyle="danger botBar" now={(botratings/sessions)*100} key={2} label={"BOT: "+ botratings} />
                 <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
