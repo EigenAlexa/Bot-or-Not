@@ -1,3 +1,8 @@
+# Gag Testing
+Prereqs:
+1. Install chrome driver from [here](https://sites.google.com/a/chromium.org/chromedriver/downloads). Then start
+a chrome driver server before running.
+2. `npm install bluebird`
 First install `gagarin`. To do so run ``npm i -g gagarin``.
 Then if you are running tests that use bots, run ```docker run -it -p 5000:5000
 --name alice --net=host flask-alice``` in the flask-alice directory to start
