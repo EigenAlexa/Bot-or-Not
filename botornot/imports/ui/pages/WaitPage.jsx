@@ -73,7 +73,7 @@ export default class WaitPage extends React.Component {
         }
 
         return (
-          <div className="pageContent">
+          <div className="container">
             <h2 className="page-header">
               CHAT
             </h2>
