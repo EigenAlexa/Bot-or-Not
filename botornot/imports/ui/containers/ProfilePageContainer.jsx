@@ -27,12 +27,12 @@ export default ProfileContainer = createContainer(({ params: { params } }) => {
     const convosLoading = !botConvoHandle.ready() || !notConvoHandle.ready();
     
     const notConvos = convosLoading ? [] : Convos.find(
-      {'users.ratedBot': false},  
+      {'users.rated': 'not'},  
       {limit : 5}).fetch();
 
     console.log(Convos.find().fetch(), 'finding convos');
     const botConvos = convosLoading ? [] : Convos.find(
-      {'users.ratedBot': true},
+      {'users.rated': 'bot'},
       {limit : 5}).fetch();
 
     const currentUser = loading ? {}: Meteor.users.findOne({_id: Meteor.userId()});

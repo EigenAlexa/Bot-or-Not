@@ -81,7 +81,7 @@ Meteor.methods({
           $set: {in_convo: true, curConvo: convoId, rated: false}
         });
         Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
-          $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0, markedOffTopic: false}},
+          $push: {users: {id: userId, rated: 'none', isReady: false, englishCount: 0, markedOffTopic: false}},
           $inc: {curSessions: 1}
         });
         convo = Convos.findOne({_id: convoId});
@@ -153,7 +153,7 @@ Meteor.methods({
             $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
-            $set: {"users.$.ratedBot": false}
+            $set: {"users.$.rated": 'not'}
           });
         } else if (rating == 'bot'){
           if(correct){
@@ -165,7 +165,7 @@ Meteor.methods({
             $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
-            $set: {"users.$.ratedBot": true}
+            $set: {"users.$.rated": 'bot'}
           }); 
         }
       }
