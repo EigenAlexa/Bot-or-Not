@@ -79,7 +79,9 @@ class Footer extends React.Component {
 
 export default createContainer(() => {
   FlowRouter.watchPathChange();
-  const isHome = FlowRouter.getRouteName() === 'home';
+  const routeName = FlowRouter.getRouteName();
+  const lastRoute = Session.get('lastRoute');
+  const isHome = routeName === 'home' || (routeName === 'logout' && lastRoute === 'home');
   const isMobile = window.innerWidth < 450;
   return {
     showBugReport : Session.get('showBugModal'),
