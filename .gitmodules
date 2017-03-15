@@ -1,0 +1,3 @@
+[submodule "flask-alice"]
+	path = flask-alice
+	url = git@github.com:EigenAlexa/flask-alice.git

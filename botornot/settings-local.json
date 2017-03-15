@@ -1,0 +1,14 @@
+{ 
+    "SeedDatabase" : true,
+    "ResetDb" : false,
+    "Debug" : true,
+    "botServerUrl" : "http://127.0.0.1:5000",
+    "magicPhrase" : "hilaryyas",
+    "botPassword" : "supthen",
+    "maxTurns" : 10,
+    "hostID": "0",
+    "kadira": { 
+      "appId": "SagxruT5Cu4WrC4fk", 
+      "appSecret": "e13c47ae-3826-403b-8222-2d16521ea70c" 
+    }
+}
