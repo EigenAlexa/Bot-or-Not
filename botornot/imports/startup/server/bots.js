@@ -27,7 +27,10 @@ function startBot(roomId) {
   
     if (!!Meteor.settings.serverUrl) {
       server_url = Meteor.settings.serverUrl;
-    } else {
+    } else if (!!process.env.PORT) {
+      server_url = "localhost:" + process.env.PORT;
+    }else {
+      console.log("ENV Variables: " , process.env);
       throw new Error('Meteior server URL not in settings');
     }
 
