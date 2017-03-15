@@ -8,10 +8,10 @@ UserSchema = new SimpleSchema({
     label: "id",
     defaultValue: "",
   },
-  ratedBot: {
-    type: Boolean,
-    label: "ratedBot",
-    defaultValue: false,
+  rated: {
+    type: String,
+    label: "rated",
+    defaultValue: "none",
   },
   isReady: {
     type: Boolean,

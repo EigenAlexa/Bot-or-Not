@@ -13,9 +13,9 @@ function getUserId(userName) {
 }
 function getConvos(userId, bot) {
     console.log('getting convos', Convos.find(
-        {'users.id' : userId, 'users.ratedBot': bot},
+        {'users.id' : userId, 'users.rated': bot},
         {fields: { _id : 1, time: 1}}).fetch());
-    cursor = Convos.find({'users.id' : userId, 'users.ratedBot': bot}, {
+    cursor = Convos.find({'users.id' : userId, 'users.rated': bot}, {
         sort : {time : -1},
         limit : 5,
         fields: {
@@ -35,14 +35,14 @@ Meteor.publish('userNotConvos', (userName) => {
     let userId = getUserId(userName);
     console.log('userid for ', userName, userId);
     // return all conversations relevant to that userid
-    return getConvos(userId, false);
+    return getConvos(userId, 'not');
 });
 
 Meteor.publish('userBotConvos', (userName) => {
     // get user id from username
     let userId = getUserId(userName);
     // return all conversations relevant to that userid
-    return getConvos(userId, true);
+    return getConvos(userId, 'bot');
 });
 
 // returns details about the open rooms
