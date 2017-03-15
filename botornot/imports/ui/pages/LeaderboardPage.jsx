@@ -34,15 +34,15 @@ export default class LeaderboardPage extends React.Component {
         <div className="">
           <div className="leader-info">
             <h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1>
-            <h2 className="leader-ranking">Rank: #{this.state.rank}</h2>
+            <h2 className="leader-username">Rank: #{this.state.rank}</h2>
           </div>
           <div className="leaderboardentries">
             <table>
             <thead>
             <tr className="row">
             <td className="col-md-1 leader-elem"></td>
-              <td className="col-md-1 leader-elem">Username</td>
-              <td className="col-md-1 leader-elem leader-rating">Rating</td>
+              <td className="col-md-1 leader-elem  leader-header">Username</td>
+              <td className="col-md-1 leader-elem leader-header">Rating</td>
             </tr>
             </thead>
             <tbody>
