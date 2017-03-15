@@ -4,7 +4,7 @@ import { Convos } from '/imports/api/convos/convos.js';
 Meteor.methods({
   'users.updateAnonymousUsername'(userId) {
     Meteor.users.update({_id: userId}, {
-      $set: {username: faker.hacker.ingverb() + faker.hacker.noun(), firstTime: true}
+      $set: {username: faker.commerce.productAdjective() + faker.name.firstName(), firstTime: true}
     });
   },
   'users.exitConvo'(userId) {
