@@ -27,9 +27,18 @@ Meteor.methods({
         });
         Messages.update({_id: msgId}, {$set: {convoId: convoId}});
         timeout = !!Meteor.settings.timeout ? Meteor.settings.timeout : 5;
-        Meteor.setTimeout(() => {
-          Meteor.call('startBot', convoId);
-        }, timeout * 1000);
+        SyncedCron.add({
+          name: convoId,
+          schedule: (parser) => {
+            let time = new Date(Date.now() + timeout * 1000);
+            console.log(time);
+            return parser.recur().on(time).fullDate();
+          },
+          job: () => {
+            Meteor.call('startBot', convoId);
+          },
+        });
+        console.log(SyncedCron.nextScheduledAtDate(convoId));
         return convoId;
       }
     },
@@ -66,15 +75,27 @@ Meteor.methods({
       }
     },
     'convos.addUserToRoom'(userId, convoId) {
-      console.log("adding user: ", userId, "to room ", convoId);
-      Meteor.users.update({_id: userId}, {
-        $set: {in_convo: true, curConvo: convoId, rated: false}
-      });
-      Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
-        $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0, markedOffTopic: false}},
-        $inc: {curSessions: 1}
-      });
-      
+      if(!!convoId) {
+        console.log("adding user: ", userId, "to room ", convoId);
+        Meteor.users.update({_id: userId}, {
+          $set: {in_convo: true, curConvo: convoId, rated: false}
+        });
+        Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
+          $push: {users: {id: userId, ratedBot: false, isReady: false, englishCount: 0, markedOffTopic: false}},
+          $inc: {curSessions: 1}
+        });
+        convo = Convos.findOne({_id: convoId});
+        if (!!convo && convo.curSessions > 1) {
+          Meteor.call('convos.clearBotTimeout', convoId);
+        }
+      }
+    },
+    'convos.clearBotTimeout'(convoId) {
+      if(!this.isSimulation) {
+        if (!!SyncedCron.nextScheduledAtDate(convoId)) {
+          SyncedCron.remove(convoId);
+        }
+      }
     },
     'convos.finishConvoUsers'(convoId) {
       convo = Convos.findOne({_id: convoId});
@@ -88,6 +109,7 @@ Meteor.methods({
       Convos.update({_id: convoId}, {
         $set: {closed: true, curSession: 0}
       });
+      Meteor.call('convos.clearBotTimeout', convoId);
     },
     'convos.finishConvoUserLeft'(convoId){
       convo = Convos.findOne({_id: convoId});
