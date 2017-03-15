@@ -17,7 +17,7 @@ validate = (text, convoId, server) => {
               {func: checkPhone, errorMsg: "Please don't put phone numbers in your messages."},
               {func: checkEmojis, errorMsg: "Please don't put emojis in your messages."},
               {func: checkRepeated, errorMsg: "Please don't spam messages."},
-              {func: checkEnglish, errorMsg: "You have written too much nonsense, please type english."},
+              {func: checkEnglish, errorMsg: "We don't know what you're saying, please only type in English."},
             ] 
     tests.forEach((test) => {
       if(!test.func(text, convoId, server)){
