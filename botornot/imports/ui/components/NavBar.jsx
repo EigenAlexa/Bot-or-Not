@@ -67,7 +67,8 @@ class NavBar extends React.Component {
       home_screen_align="navbar-right";
       // home_screen_align="nav-align";
     }
-    const displayActiveUsers= this.props.usersOnline >= 1; //TODO 
+
+    const displayActiveUsers= this.props.usersOnline >= 10;
 		console.log(this.props.usersOnline, displayActiveUsers, 'usersOnline.com');
     return (
     <div className={navbar_class}>
@@ -96,6 +97,7 @@ class NavBar extends React.Component {
     );
   }
 }
+
 const NavBarContainer = createContainer(() => {
 	const usersHandle = Meteor.subscribe('userStatus');
 	const loadingUserCount = !usersHandle.ready();
