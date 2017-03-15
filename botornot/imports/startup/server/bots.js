@@ -9,13 +9,23 @@ function startBot(roomId) {
   console.log(roomId, 'roomId');
   convo = Convos.findOne({'_id' : roomId})
   console.log('starting bot', convo);
-
-  // check to make sure that convos has more htan one user
+  bot_convos = Convos.find({_id: {$ne: roomId},
+                            hasBot: true,
+                            closed: false}).fetch();
+    // check to make sure that convos has more htan one user
   // mainly for debugging 
   if (convo.users.length == 0) {
     throw new Error('Convo has no users, not starting bot');
-  }
-  if (!!convo && convo['curSessions'] < 2) {
+  } else if (!!bot_convos && bot_convos.length >= 1) {
+    bot_convo = bot_convos[0];
+    //kick bot from other bot convo
+    Meteor.call('convos.finishConvoUserLeft', bot_convo._id);
+    Meteor.call('convos.finishConvo', bot_convo._id);
+    //finish this convo as well
+    Meteor.call('convos.finishConvoUserLeft', convo._id);
+    Meteor.call('convos.finishConvo', convo._id);
+    return;
+  } else if (!!convo && convo['curSessions'] < 2) {
     let bot_url;
 
     // TODO move to some startup script that also checks whether botServer is running
