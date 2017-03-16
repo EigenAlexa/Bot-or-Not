@@ -14,11 +14,28 @@ function ProfAttribute(props) {
 
 
 export default class ProfilePage extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {rank: -1};
+  }
+  componentWillUpdate(){
+    console.log(this.state.rank)
+    if(!this.props.loading && this.state.rank < 0) {
+        Meteor.call('users.getUserRanking', this.props.user._id, (error, result) => {
+        if (!error){
+          this.setState({'rank': result});
+        } else {
+          console.log("Error!")
+          console.log(error);
+        }
+      });
+    }
+  }
   getContent() {
       const username = this.props.username;
       const user = this.props.user;
       const userExists = this.props.userExists;
-      const ranking = this.props.ranking;
+      const ranking = this.state.rank;
       if (!userExists) {
           return (<p> User '{username}' doesn't exist </p>);
       }
