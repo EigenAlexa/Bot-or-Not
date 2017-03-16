@@ -8,13 +8,15 @@ export default class LeaderboardPage extends React.Component {
     this.state = {rank: 0}
   }
   componentDidMount() {
-    Meteor.call('users.getUserRanking', Meteor.userId(), (error, result) => {
-      if (!error){
-        this.setState({'rank': result});
-      } else {
-        console.log(error);
-      }
-    });
+    if(Meteor.userId()){
+      Meteor.call('users.getUserRanking', Meteor.userId(), (error, result) => {
+        if (!error){
+          this.setState({'rank': result});
+        } else {
+          console.log(error);
+        }
+      });
+    }
   }  
   render() {
     LeaderboardEntries = this.props.users.map((user, index) => ( 
@@ -32,10 +34,12 @@ export default class LeaderboardPage extends React.Component {
         </h2>
 
         <div className="">
+          {!!this.props.currentUser ? (
           <div className="leader-info">
             <h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1>
             <h2 className="leader-username">Rank: #{this.state.rank}</h2>
-          </div>
+          </div>)
+          : "" }
           <div className="leaderboardentries">
             <table>
             <thead>
