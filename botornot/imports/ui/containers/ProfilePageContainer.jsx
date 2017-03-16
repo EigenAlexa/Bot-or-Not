@@ -23,7 +23,6 @@ export default ProfileContainer = createContainer(({ params: { params } }) => {
     // });
     const loading = !userHandle.ready();
     const user = Meteor.users.findOne({username: username});
-    const ranking = !!user && ratingsHandle.ready() ? Meteor.users.find({rating: {$gt: user.rating}}).count() + 1: -1;
     const convosLoading = !botConvoHandle.ready() || !notConvoHandle.ready();
     
     const notConvos = convosLoading ? [] : Convos.find(
@@ -42,7 +41,6 @@ export default ProfileContainer = createContainer(({ params: { params } }) => {
       user, 
       username,
       loading,
-      ranking,
       userExists : !!user, 
       convosLoading,
       botConvos,
