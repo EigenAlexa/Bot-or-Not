@@ -28,7 +28,7 @@ export default class ProfilePage extends React.Component {
       const rating = user.rating;
       const badges = user.badges;
       return (
-        <div className="profile">
+        <div className="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 profile">
           <div className="profile-top">
             <div className="profile-username">{username}</div>
            {this.getHumanity()}
