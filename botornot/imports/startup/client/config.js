@@ -23,7 +23,7 @@ console.log('share');
 cookies = new Cookies();
 
 updateCookiesOnExit = () => {
-  cookies.remove('session');
+  cookies.set('leave', 'true');
   cookies.remove('convoroute');
 }
 

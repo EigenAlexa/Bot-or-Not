@@ -7,7 +7,7 @@ describe('bots', () => {
 
   it('should connect to a user after the timeout length', () => {
     return utils.waitForFlowRoute(client1, '/chat')  
-      .waitForDOM(".message-panel", 40000) //TODO get value from meteor settings
+      .waitForDOM(".message-panel", 45000) //TODO get value from meteor settings
       .then(() => {
         return utils.waitForFlowRoute(client1, '/');
       })

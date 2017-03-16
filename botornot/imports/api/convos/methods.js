@@ -17,13 +17,13 @@ Meteor.methods({
           time: Date.now(),
           convoId: "null"
         });
-        console.log("hostID", Meteor.settings.hostID);
+        console.log("HOSTNAME", process.env.HOSTNAME);
         convoId = Convos.insert({
           closed: false,
           curSessions: 0,
           time: Date.now(),
           msgs: [msgId],
-          hostID: Meteor.settings.hostID, 
+          hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME, 
         });
         Messages.update({_id: msgId}, {$set: {convoId: convoId}});
         timeout = !!Meteor.settings.timeout ? Meteor.settings.timeout : 5;
