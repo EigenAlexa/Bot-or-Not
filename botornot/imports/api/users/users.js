@@ -174,7 +174,12 @@ Schema.User = new SimpleSchema({
 			type: Object,
 			optional: true,
 			blackbox: true
-	}
+	}, 
+	anon: {
+		type: Boolean, 
+		label: 'anon',
+		defaultValue: false,
+	},
 });
 
 Meteor.users.attachSchema(Schema.User);
