@@ -85,13 +85,17 @@ export default class WaitPage extends React.Component {
           noRooms = true;
           inconvo = false;
         }
+        const username = !!Meteor.user() ? Meteor.user().username : null;
         return (
           <div>
             <h2 className="page-header">
               CHAT
             </h2>
             <div className ="row">
-              <div >
+              <div className="col-sm-3">
+                < ProfileSideContainer username={username} />
+              </div>
+              <div>
                 { !noRooms || inconvo ? this.getContent() : ""}
               </div>
             </div>
