@@ -1,5 +1,5 @@
 .message-panel {
-  font-family: "Helvetica Neue";
+  font-family: @body-font;
   font-size: 20px;
   font-weight: normal;
   max-height: 800px;
@@ -153,7 +153,7 @@
 .loading-btn{
 	text-align:center;
     margin: auto;
-	width: 350px;
+	max-width: 350px;
 	background: #fff;
 	color: #000;
     border-color: #FFF;
@@ -181,7 +181,10 @@
   margin: 50px auto;
   margin-top: 5px;
 }
-
+.form-control { 
+    font-size: 17px;
+    font-family: @body-font;
+}
 
 
 /// Rate now button
