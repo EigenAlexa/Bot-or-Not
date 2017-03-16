@@ -73,14 +73,14 @@ export default class WaitPage extends React.Component {
         }
 
         return (
-          <div className="container">
+          <div>
             <h2 className="page-header">
               CHAT
             </h2>
             <div >
               { !noRooms || inconvo ? this.getContent() : ""}
             </div>
-          </div>
+            </div>
         );
     }
 }
