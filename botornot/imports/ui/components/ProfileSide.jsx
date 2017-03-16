@@ -77,6 +77,7 @@ export default class ProfileSide extends React.Component {
     const profPic = user.profPic;
 		return <img src={profPic} className='profile-img'/>;
 	}
+
     
   
   getLoading() {
