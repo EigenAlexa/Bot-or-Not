@@ -13,7 +13,7 @@ function ProfAttribute(props) {
 }
 
 
-export default class ProfilePage extends React.Component {
+export default class ProfileSide extends React.Component {
   getContent() {
       const username = this.props.username;
       const user = this.props.user;
@@ -28,7 +28,7 @@ export default class ProfilePage extends React.Component {
       const rating = user.rating;
       const badges = user.badges;
       return (
-        <div className="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 profile">
+        <div className="profile-side col-sm-3">
           <div className="profile-top">
             <div className="profile-username">{username}</div>
            {this.getHumanity()}
@@ -141,7 +141,7 @@ export default class ProfilePage extends React.Component {
   }
 }
 
-ProfilePage.propTypes = {
+ProfileSide.propTypes = {
     user : React.PropTypes.object,
     username: React.PropTypes.string,
     loading: React.PropTypes.bool,
