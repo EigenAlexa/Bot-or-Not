@@ -44,6 +44,7 @@ class BotNotTitle extends React.Component {
 		}
     return ( <div className="centerText">
       {title}
+      <div className="home-abt">Blurring the line between <span className="bot">Chatbot</span> and <span className="not">Human</span></div>
       <a className="btn custom-btn home-btn" href='/chat'>
         Start Chatting</a>
       </div>);
