@@ -32,9 +32,6 @@ describe('chat connection suite', () => {
     return client1.wait(2000, "until user is found", () => {
         return Meteor.users.findOne({username: "tester1"});
       })
-      .then((user) => {
-        return expect(user.firstTime).to.be.false;
-      })
       .then(() => {
         return client2.wait(2000, "until user is found", () => {
           return Meteor.users.findOne({username: "tester2"});  
