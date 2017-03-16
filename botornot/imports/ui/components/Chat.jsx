@@ -103,7 +103,7 @@ export default class Chat extends React.Component {
         const showBot = this.props.room.turns > Meteor.settings.public.ratingTurns && !this.props.room.closed;
         const rateButtonClass = showBot ? "" : "btn-disabled";
         return (<div className="row">
-                  <div className="col-sm-7 col-md-offset-1">
+                  <div className="col-sm-6">
                   <div id="modal-div"> </div>
                     <ChatPanel messages={Messages}/>
                     <div className="progress-input row">
@@ -111,7 +111,7 @@ export default class Chat extends React.Component {
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>
-                  <div className="col-sm-5 col-md-3">
+                  <div className="col-sm-3">
                     <h4 className="word-wrap pro-tip"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4> 
                     <Button bsStyle='primary' size='medium' className={"rate-now " + rateButtonClass} onClick={this.handleRateButton.bind(this)} >Rate Now</Button>
                   </div>

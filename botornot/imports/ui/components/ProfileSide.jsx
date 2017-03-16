@@ -5,7 +5,7 @@ import { ConvoItem } from '../components/ConvoItem.jsx';
 import { ProgressBar } from 'react-bootstrap';
 
 function ProfAttribute(props) {
-  return (<div className="col-xs-12 col-sm-4 profile-attribute">
+  return (<div className="col-lg-12 profile-attribute">
     <div className="profile-attribute-title">{props.title} </div>
     <p>{props.value}</p>
   </div>);
@@ -46,7 +46,6 @@ export default class ProfileSide extends React.Component {
               title={"Score"}
               value={rating.toFixed(2)}/>
           </div>
-          {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
         </div>);
   }
   getHumanity(){
@@ -78,37 +77,6 @@ export default class ProfileSide extends React.Component {
     const profPic = user.profPic;
 		return <img src={profPic} className='profile-img'/>;
 	}
-  getConvos() {
-      console.log('not convos',this.props.notConvos);
-      console.log('bot convos',this.props.botConvos);
-      HumanConvos = this.props.notConvos.map(convo => (
-          <ConvoItem 
-            convo={convo}
-            key={convo._id}
-            time={convo.time}
-          />
-      ));
-      BotConvos = this.props.botConvos.map(convo => (
-          <ConvoItem 
-            convo={convo}
-            key={convo._id}
-            time={convo.time}
-          />
-      ));
-    return (
-        <div className="profile-center-sm">
-          <div className="col-xs-12 col-sm-6 profile-div ">
-            <div className="profile-attribute-title"> Rated Human </div>
-            { HumanConvos.length > 0 ? HumanConvos : <div className="never-rated">Never Rated Human</div>}
-          </div>
-          <div className="col-xs-12 col-sm-6 profile-div">
-            <div className="profile-attribute-title"> Rated Bot </div>
-            { BotConvos.length > 0 ? BotConvos : <div className="never-rated">Never Rated Bot</div>}
-          </div>
-          <br style={{clear : "both"}}/>
-        </div>);
-
-  }
     
   
   getLoading() {
