@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Convos } from '/imports/api/convos/convos.js';
-import ProfilePage from '/imports/ui/pages/ProfilePage.jsx';
+import ProfileSide from '/imports/ui/components/ProfileSide.jsx';
 
-ProfileContainer = createContainer(({ params: { params } }) => {
+ProfileSideContainer = createContainer(({ params: { params } }) => {
     const username = params.username;
     const userHandle = Meteor.subscribe('userProfile', username);
     const notConvoHandle = Meteor.subscribe('userNotConvos', username);
@@ -23,6 +23,7 @@ ProfileContainer = createContainer(({ params: { params } }) => {
     // });
     const loading = !userHandle.ready();
     const user = Meteor.users.findOne({username: username});
+    const ranking = !!user && ratingsHandle.ready() ? Meteor.users.find({rating: {$gt: user.rating}}).count() + 1: -1;
     const convosLoading = !botConvoHandle.ready() || !notConvoHandle.ready();
     
     const notConvos = convosLoading ? [] : Convos.find(
@@ -41,11 +42,12 @@ ProfileContainer = createContainer(({ params: { params } }) => {
       user, 
       username,
       loading,
+      ranking,
       userExists : !!user, 
       convosLoading,
       botConvos,
       notConvos,
       isSelfProfile
     };
-}, ProfilePage);
-export {ProfileContainer };
+}, ProfileSide);
+export {ProfileSideContainer };

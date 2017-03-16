@@ -1,6 +1,7 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
+import { ProfileSideContainer } from '/imports/ui/containers/ProfileSideContainer.jsx';
 import { cookies } from '/imports/startup/client/config.js';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Random } from 'meteor/random';
@@ -84,16 +85,17 @@ export default class WaitPage extends React.Component {
           noRooms = true;
           inconvo = false;
         }
-
         return (
           <div>
             <h2 className="page-header">
               CHAT
             </h2>
-            <div >
-              { !noRooms || inconvo ? this.getContent() : ""}
+            <div className ="row">
+              <div >
+                { !noRooms || inconvo ? this.getContent() : ""}
+              </div>
             </div>
-            </div>
+          </div>
         );
     }
 }
