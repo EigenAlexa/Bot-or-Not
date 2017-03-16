@@ -47,10 +47,11 @@ Meteor.publish('userBotConvos', (userName) => {
 
 // returns details about the open rooms
 Meteor.publish('openrooms', () => {
+    console.log(process.env.HOSTNAME);
     return Convos.find({
         curSessions : {$lt : 2},
         closed : false,
-        hostID: Meteor.settings.hostID,
+        hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME,
     }, { fields :{
         curSessions: 1,
         closed : 1,
