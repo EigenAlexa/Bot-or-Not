@@ -62,7 +62,7 @@ FlowRouter.route('/chat', {
 FlowRouter.route('/profile/:username', {
 	name: 'profile',
 	action(params, queryParams) {
-		ReactLayout.render(Screen, {children:<ProfilePageContainer params={{ params: params}} />});
+		ReactLayout.render(Screen, {children:<ProfileContainer params={{ params: params}} />});
 	}
 });
 
