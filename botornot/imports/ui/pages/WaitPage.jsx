@@ -54,7 +54,6 @@ export default class WaitPage extends React.Component {
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());
           });  
         } else if(!loading && !!user){
-          console.log(user);
           if (!user.in_convo) {
             this.makeOrJoinRoom();
           }

@@ -17,14 +17,7 @@ export default ChatContainer = createContainer(({ params: { id } }) => {
     const connected = Meteor.status().connected;
     const userConvoDict = roomExists ? room.users.filter((obj) => {return obj.id === Meteor.userId()})[0] : {};
 
-    if (roomExists) {
-      console.log('convboj', room.users.filter((obj) => {return obj.id === Meteor.userId()})[0]);
-    } else {
-      console.log({});
-    }
-
     const userOffTopic = roomExists && userConvoDict !== {} ? userConvoDict.markedOffTopic : true;
-    console.log('client side offtopic' ,userOffTopic);
     return {
         room,
         loading,
