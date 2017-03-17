@@ -108,7 +108,24 @@ runChatInterfaceTests = (server, client1, client2) => {
       .then(() => {
         return utils.sendMaxTurnsMessages(server,client1, client2)
       })
-      .waitForDOM(".rate-now", 2000)
+      .then(() => {
+        return client1.waitForDOM('.rate-now')
+      })
+      .then(() => {
+        return client1.wait(2000, "until rate enabled", () => {
+          var elems = document.querySelector(".rate-now");
+          return !elems.classList.contains("btn-disabled");
+        })
+      })
+      .then(() => {
+        return client2.waitForDOM('.rate-now')
+      })
+      .then(() => {
+        return client2.wait(2000, "until rate enabled", () => {
+          var elems = document.querySelector(".rate-now");
+          return !elems.classList.contains("btn-disabled");
+        })
+      })
       .then(() => {
         return utils.leaveChat(client1, client2);
       });
