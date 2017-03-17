@@ -11,7 +11,9 @@ function startBot(roomId) {
   console.log('starting bot', convo);
   bot_convos = Convos.find({_id: {$ne: roomId},
                             hasBot: true,
-                            closed: false}).fetch();
+                            closed: false,
+                            hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME})
+                          .fetch();
     // check to make sure that convos has more htan one user
   // mainly for debugging 
   if (convo.users.length == 0) {
