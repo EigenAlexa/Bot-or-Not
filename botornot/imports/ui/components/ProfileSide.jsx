@@ -28,7 +28,7 @@ export default class ProfileSide extends React.Component {
       const rating = user.rating;
       const badges = user.badges;
       return (
-        <div className="profile-side col-sm-3">
+        <div className="profile-side col-sm-3 hidden-xs" >
           <div className="profile-top">
             <div className="profile-username">{username}</div>
            {this.getHumanity()}
@@ -60,7 +60,7 @@ export default class ProfileSide extends React.Component {
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
           <div className="profile-attribute-title">Humanity </div>
-          <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+          <img className={botratings > notratings ? "botico " : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
           </div>  
           {sessions >0 ?   
         <div className="col-xs-12 col-sm-12 profile-attribute">
