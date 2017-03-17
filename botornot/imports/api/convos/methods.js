@@ -153,7 +153,7 @@ Meteor.methods({
             lastOtherUser = 'bot';
           }
 
-          Meteor.users.update({_id: user.id}, {
+          Meteor.users.update({_id: users[0]}, {
             $inc: {prob: probInc},
             $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
@@ -166,7 +166,7 @@ Meteor.methods({
           }else{
             lastOtherUser = 'not';
       
-            Meteor.users.update({_id: user.id}, {
+            Meteor.users.update({_id: users[0]}, {
               $inc: {prob: probInc},
               $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
             });
