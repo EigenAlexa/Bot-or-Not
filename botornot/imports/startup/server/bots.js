@@ -34,11 +34,12 @@ function startBot(roomId) {
     } else {
       throw new Error('Bot Server URL not in settings');
     }
-  
-    if (!!Meteor.settings.serverUrl) {
+    if (!!process.env.SERVER_HOST && !!process.env.SERVER_PORT) {
+      server_url = process.env.SERVER_HOST + ":" + process.env.SERVER_PORT;
+    } else if (!!Meteor.settings.serverUrl) {
       server_url = Meteor.settings.serverUrl;
     } else if (!!process.env.PORT) {
-      server_url = "localhost:" + process.env.PORT;
+      server_url = "127.0.0.1:" + process.env.PORT;
     }else {
       console.log("ENV Variables: " , process.env);
       throw new Error('Meteior server URL not in settings');

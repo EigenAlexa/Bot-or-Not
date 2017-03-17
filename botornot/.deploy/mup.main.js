@@ -4,6 +4,9 @@ module.exports = {
       host: "54.215.251.172",
       username: "ubuntu",
       pem: "~/.ssh/james_ncal.pem",
+      env: {
+        SERVER_HOST: "54.215.251.172"
+      }
       // password:
       // or leave blank for authenticate from ssh-agent
     },
@@ -11,13 +14,18 @@ module.exports = {
       host: "52.53.198.198",
       username: "ubuntu",
       pem: "~/.ssh/james_ncal.pem",
+      env: {
+        SERVER_HOST: "52.53.198.198"
+      }
         
     },
     'three':{
       host: "54.219.161.184",
       username: "ubuntu",
       pem: "~/.ssh/james_ncal.pem",
-       
+      env: {
+        SERVER_HOST: "54.219.161.184"
+      }
     }
   },
   meteor: {
@@ -36,6 +44,7 @@ module.exports = {
       ROOT_URL: "http://beta.botornot.ml",
       MONGO_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=1",
       PORT: HOST_PORT,
+      SERVER_PORT: HOST_PORT,
 //      CLUSTER_DISCOVERY_URL: "mongodb://172.17.0.2/meteor",
 //      CLUSTER_WORKERS_COUNT: "auto",
 //      CLUSTER_SERVICE: "web",
