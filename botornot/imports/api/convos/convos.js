@@ -119,6 +119,31 @@ Convos.after.update( (userId, doc, fieldNames, modifier, options) => {
   }
 
 
+
+  // Update the user ratings if both ratings are in.
+  if(fieldNames.includes('users'))
+    finalizeRatings(doc);
 });
+
+
+function finalizeRatings(convo) {
+  ratedUsers = convo.users.filter((user) => {
+    return user.rated !== 'none';
+  });
+
+  if(ratedUsers.length == convo.users.length){
+    ratedUsers.forEach((user) => {
+      if(user.rated === 'not')
+        Meteor.users.update({_id: user.id}, {
+          $inc: {sessions: 1, notratings: 1}
+        });
+      else
+        // Update thew other user.
+        Meteor.users.update({_id: user.id}, {
+          $inc: {sessions: 1}
+        });
+    });
+  }
+}
 
 export { Convos };
