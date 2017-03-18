@@ -130,16 +130,67 @@ runChatInterfaceTests = (server, client1, client2) => {
         return utils.leaveChat(client1, client2);
       });
   });
- // it('should show rating modal when the rate now button is clicked', () => {
- //   return utils.connectUsersToChat(client1, client2, 30000)
- //     .then(() => {
- //       return utils.sendMaxTurnsMessages(server,client1, client2); 
- //     })
- //   .waitForDOM(".rate-now", 2000)
- //   .then(() => {
- //     return utils.leaveChat(client1, client2);
- //   });
- // });
+
+   it('should receive both notifications', () => {
+    return utils.connectUsersToChat(client1, client2, 30000)
+      .then(() => {
+        return utils.sendMaxTurnsMessages(server,client1, client2)
+      })
+      .then(() => {
+        return client1.waitForDOM('.rate-now')
+      })
+      .then(() => {
+        return client2.waitForDOM('.rate-now')
+      })
+      .then(() => {
+        return client2.wait(2000, "until rate enabled", () => {
+          var elems = document.querySelector(".rate-now");
+          return !elems.classList.contains("btn-disabled");
+        })
+      })      
+      .then(() => {
+        return client1.wait(2000, "until rate enabled", () => {
+          var elems = document.querySelector(".rate-now");
+          return !elems.classList.contains("btn-disabled");
+        })
+      })
+      .then(() => {
+         return client1.click('.rate-now')
+      })      
+      .then(() => {
+        return client1.waitForDOM('#botbutton')
+      })
+      .then(() => {
+        return client2.waitForDOM('#botbutton')
+      })
+      .then(() => {
+        console.log("SLEEP")
+         return client1.click('#botbutton')
+      })
+      .sleep(1000)
+      .then(() => {
+        console.log("SLEPT")
+        return client2.expectNotExist('.notification-message')
+      })        
+      .then(() => {
+        return client1.expectNotExist('.notification-message')
+      })  
+      .then(() => {
+        return client2.waitForDOM('#botbutton')
+      })
+      .then(() => {
+         return client2.click('#notbutton')
+      }) 
+      .then(() => {
+        return client1.waitForDOM('.notification-message')
+      })
+      .then(() => {
+        return client2.waitForDOM('.notification-message')
+      })
+      .then(() => {
+        return utils.leaveChat(client1, client2);
+      });
+  });
 };
 
 describe('chat interface logged in', () => {
