@@ -57,5 +57,6 @@ Meteor.publish('userProfile', (username) => {
       rating: 1,
       profPic: 1,
       badges: 1,
+      anon: 1,
   }});
 });

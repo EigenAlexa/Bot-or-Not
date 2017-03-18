@@ -2,7 +2,7 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
-import { ProgressBar } from 'react-bootstrap';
+import { Button, ProgressBar } from 'react-bootstrap';
 
 function ProfAttribute(props) {
   return (<div className="col-lg-12 profile-attribute">
@@ -14,11 +14,34 @@ function ProfAttribute(props) {
 
 
 export default class ProfileSide extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {rank: -1};
+  }
+
+  componentWillUpdate(){
+    console.log(this.state.rank)
+    if(!this.props.loading && this.state.rank < 0 && this.props.userExists) {	
+			this.updateRank();
+    }
+  }
+
+	updateRank() {
+			Meteor.call('users.getUserRanking', this.props.user._id, (error, result) => {
+			if (!error){
+				this.setState({'rank': result});
+			} else {
+				console.log("Error!")
+				console.log(error);
+			}
+		});
+	}
+
   getContent() {
       const username = this.props.username;
       const user = this.props.user;
       const userExists = this.props.userExists;
-      const ranking = this.props.ranking;
+      const ranking = this.state.rank;
       if (!userExists) {
           return (<p> User '{username}' doesn't exist </p>);
       }
@@ -27,14 +50,12 @@ export default class ProfileSide extends React.Component {
       const botratings = sessions - notratings;
       const rating = user.rating;
       const badges = user.badges;
+      const isAnon = user.anon;
       return (
-        <div className="profile-side col-sm-3 hidden-xs" >
-          <div className="profile-top">
-            <div className="profile-username">{username}</div>
-           {this.getHumanity()}
-          </div>
-
+        <div className="profile-side col-sm-3">
+          {this.getHeader(isAnon)}
           <div className="row">
+					<ProgressBar active bsStyle="danger" now={10} label={"XP: 10/100"} />
             <ProfAttribute 
               title={"Sessions"}
               value={sessions}/>
@@ -48,6 +69,31 @@ export default class ProfileSide extends React.Component {
           </div>
         </div>);
   }
+
+	getHeader(isAnon) {
+    // Return the headers of the profile
+    if (!isAnon) {
+      return (	
+        <div className="profile-top">
+          <div className="profile-username">{username}</div>
+         {this.getHumanity()}
+        </div>
+      );
+    } else {
+      return (	
+        <div className="profile-top">
+          You're not signed in! If you don't sign in or sign up, you'll lose your progress! 
+          <div className="signupCall">
+            <Button bsStyle='primary' size='medium' className="rate-now " onClick={this.handleSignUpButton.bind(this)} >Sign Up Now</Button>
+          </div>
+         {this.getHumanity()}
+        </div>
+      );
+    }
+	}
+  handleSignUpButton() {
+   console.log('Sign it up');
+  }
   getHumanity(){
     const user = this.props.user;
     const username = this.props.username;
@@ -60,7 +106,7 @@ export default class ProfileSide extends React.Component {
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
           <div className="profile-attribute-title">Humanity </div>
-          <img className={botratings > notratings ? "botico " : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+          <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
           </div>  
           {sessions >0 ?   
         <div className="col-xs-12 col-sm-12 profile-attribute">
@@ -103,7 +149,7 @@ export default class ProfileSide extends React.Component {
 
     return (
         <div> 
-          {this.props.loading ? this.getLoading() : this.getContent()}
+          {this.props.userExists && this.props.loading ? this.getLoading() : this.getContent()}
         </div>
     );
   }
