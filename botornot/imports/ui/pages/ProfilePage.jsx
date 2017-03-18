@@ -63,7 +63,7 @@ export default class ProfilePage extends React.Component {
               title={"Score"}
               value={rating.toFixed(2)}/>
           </div>
-          {this.props.convosLoading ?  <p>Loading convos</p> : this.getConvos()}
+          {this.props.convosLoading ?  <p>Loading conversations. </p> : this.getConvos()}
         </div>);
   }
   getHumanity(){

@@ -57,13 +57,13 @@ export default class Chat extends React.Component {
       this.setState({'progress': progress });
     }
     componentDidMount(){
-      window.addEventListener("beforeunload", this.beforeunload);
+      //window.addEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload); 
     }
     componentWillUnmount(){
-      window.removeEventListener("beforeunload", this.beforeunload);
+      //window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
-      Meteor.clearInterval(this.progressInterval);
+      Meteor.clearInterval(this.progressInterval)
       Meteor.clearInterval(this.loadingInterval);
     }
     componentDidUpdate(prevProps, prevState){
@@ -120,7 +120,7 @@ export default class Chat extends React.Component {
                     // <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>
     }
     getLoadingPage() {
-        return (<div className="loading-btn"> <h3>Loading, hang tight.</h3></div>);
+        return (<div className="loading-btn"> <h3>Loading, hang tight !</h3></div>);
     }
     handleNextChat(event){
       Meteor.call('users.exitConvo', Meteor.userId());
@@ -137,7 +137,7 @@ export default class Chat extends React.Component {
     }
     handleOffTopicButton(event) {
       Session.set('curConvo', this.props.room._id);
-      Session.set('notifyOffTopic', 'true');
+      Session.set('notifyOffTopic', 'true'); 
     }
     handleEnter(event) {
       event.preventDefault();
