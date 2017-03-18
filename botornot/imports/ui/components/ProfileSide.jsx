@@ -2,7 +2,9 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
+
 import { Button, ProgressBar } from 'react-bootstrap';
+
 
 function ProfAttribute(props) {
   return (<div className="col-lg-12 profile-attribute">
@@ -41,7 +43,9 @@ export default class ProfileSide extends React.Component {
       const username = this.props.username;
       const user = this.props.user;
       const userExists = this.props.userExists;
+
       const ranking = this.state.rank;
+
       if (!userExists) {
           return (<p> User '{username}' doesn't exist </p>);
       }
@@ -50,6 +54,7 @@ export default class ProfileSide extends React.Component {
       const botratings = sessions - notratings;
       const rating = user.rating;
       const badges = user.badges;
+
       const isAnon = user.anon;
       return (
         <div className="profile-side col-sm-3">
@@ -94,6 +99,7 @@ export default class ProfileSide extends React.Component {
   handleSignUpButton() {
    console.log('Sign it up');
   }
+
   getHumanity(){
     const user = this.props.user;
     const username = this.props.username;
@@ -106,7 +112,9 @@ export default class ProfileSide extends React.Component {
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
           <div className="profile-attribute-title">Humanity </div>
+
           <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+
           </div>  
           {sessions >0 ?   
         <div className="col-xs-12 col-sm-12 profile-attribute">
@@ -149,7 +157,9 @@ export default class ProfileSide extends React.Component {
 
     return (
         <div> 
+
           {this.props.userExists && this.props.loading ? this.getLoading() : this.getContent()}
+
         </div>
     );
   }
