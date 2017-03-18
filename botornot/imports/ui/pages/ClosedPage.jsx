@@ -88,8 +88,8 @@ export default class ClosedPage extends React.Component {
   }
   renderBotOrNotButtons(){
      return (<div>
-        <Button name="bot" bsStyle="primary" bsSize='large' className='btn-alt btn-bot-not' onClick={this.handleSubmit.bind(this)}>Bot</Button>
-        <Button name="not" bsStyle="primary" bsSize='large' className='btn-bot-not' onClick={this.handleSubmit.bind(this)}>Not</Button>
+        <Button id="botbutton" name="bot" bsStyle="primary" bsSize='large' className='btn-alt btn-bot-not' onClick={this.handleSubmit.bind(this)}>Bot</Button>
+        <Button id="notbutton" name="not" bsStyle="primary" bsSize='large' className='btn-bot-not' onClick={this.handleSubmit.bind(this)}>Not</Button>
         </div>);
   }
   renderWaitForRating(){

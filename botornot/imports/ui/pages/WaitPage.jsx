@@ -43,7 +43,7 @@ export default class WaitPage extends React.Component {
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     resetRoom() {
-      Meteor.call('users.exitConvo', this.room._id, Meteor.userId());
+      Meteor.call('users.exitConvo', Meteor.userId());
       this.room = null;
       this.forceUpdate(); 
     }
