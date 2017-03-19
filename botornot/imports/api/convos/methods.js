@@ -149,7 +149,7 @@ Meteor.methods({
             lastOtherUser = 'bot';
           }
           Meteor.users.update({_id: users[0]}, {
-            $inc: {sessions: 1, notratings: 1, prob: probInc},
+            $inc: {prob: probInc},
             $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
@@ -161,7 +161,7 @@ Meteor.methods({
           }else{
             lastOtherUser = 'not';
           }Meteor.users.update({_id: users[0]}, {
-            $inc: {sessions: 1, prob: probInc},
+            $inc: {prob: probInc},
             $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
