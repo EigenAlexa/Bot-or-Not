@@ -134,9 +134,6 @@ Meteor.methods({
       }).map((user) => {
         return user.id
       });
-
-      // Users now contains the other user.
-
       if(!!users){
         prob = Meteor.users.findOne({_id: users[0]}).prob;
         correct = Random.fraction() < prob;
@@ -145,16 +142,14 @@ Meteor.methods({
         }else{
           probInc = 0.01;
         }
-        // If rating to be given is not
         if(rating == 'not'){
           if(correct){
             lastOtherUser = rating;
           }else{
             lastOtherUser = 'bot';
           }
-
           Meteor.users.update({_id: users[0]}, {
-            $inc: {prob: probInc},
+            $inc: {sessions: 1, notratings: 1, prob: probInc},
             $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
           });
           Convos.update({_id: convoId, "users.id": users[0]}, {
@@ -165,17 +160,16 @@ Meteor.methods({
             lastOtherUser = rating;
           }else{
             lastOtherUser = 'not';
-      
-            Meteor.users.update({_id: users[0]}, {
-              $inc: {prob: probInc},
-              $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
-            });
-            Convos.update({_id: convoId, "users.id": users[0]}, {
-              $set: {"users.$.rated": 'bot'}
-            }); 
-          }
+          }Meteor.users.update({_id: users[0]}, {
+            $inc: {sessions: 1, prob: probInc},
+            $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
+          });
+          Convos.update({_id: convoId, "users.id": users[0]}, {
+            $set: {"users.$.rated": 'bot'}
+          }); 
         }
       }
+
     },
   'convos.makeReady'(convoId, userId){
     Convos.update({_id: convoId, "users.id": userId}, {
@@ -198,7 +192,6 @@ Meteor.methods({
     });
   }
 });
-
 function getOpenRooms() {
     // get all convos that have less than two people and aren't closed yet
     // filter all room.curssions < 2 and closed = false
@@ -208,28 +201,6 @@ function getOpenRooms() {
         curSessions : {$lt: 2}
     }).fetch();
     return convos;
-}
-function finalizeRatings(convo) {
-  ratedUsers = convo.users.filter((user) => {
-    return user.rated !== 'none';
-  });
-
-  console.log(convo);
-  console.log(ratedUsers.length)
-  console.log(convo.users.length)
-  if(ratedUsers.length == convo.users.length){
-    ratedUsers.forEach((user) => {
-      if(user.rated === 'not')
-        Meteor.users.update({_id: user.id}, {
-          $inc: {sessions: 1, notratings: 1}
-        });
-      else
-        // Update thew other user.
-        Meteor.users.update({_id: user.id}, {
-          $inc: {sessions: 1}
-        });
-    });
-  }
 }
 export const makeNewRoom = () => {
     // makes a new convo and returns the roomId
