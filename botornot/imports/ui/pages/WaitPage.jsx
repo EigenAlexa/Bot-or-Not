@@ -3,6 +3,7 @@ import {_} from 'meteor/underscore';
 import ChatContainer from '/imports/ui/containers/ChatContainer.jsx';
 import { cookies } from '/imports/startup/client/config.js';
 import { Convos } from '/imports/api/convos/convos.js';
+import { Random } from 'meteor/random';
 
 export default class WaitPage extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ export default class WaitPage extends React.Component {
     }
     componentWillMount() {
       this.makingNewRoom = false;
+      this.resetting = false;
     }
     getContent() {
         const roomId = this.room._id;
@@ -42,24 +44,31 @@ export default class WaitPage extends React.Component {
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     resetRoom() {
-      Meteor.call('users.exitConvo', Meteor.userId());
-      this.room = null;
-      this.forceUpdate(); 
+      exitCb = (error, result) => {
+        console.error("EXITING CONVO user: " + Meteor.userId());
+        //Meteor._sleepForMs(Random.fraction() * 10);
+        this.room = null;
+        //this.forceUpdate();
+        this.resetting = false; 
+      };
+      Meteor.call('users.exitConvo', Meteor.userId(), exitCb.bind(this));
+      this.resetting = true;
     }
     render() {
         const { openRooms, connected, loading, user } = this.props;
+        console.error("RESETTTING: " + this.resetting);
         if(!loading && !user){
           AccountsAnonymous.login((e) => {
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());
           });  
-        } else if(!loading && !!user){
+        } else if(!loading && !!user && !this.resetting){
           if (!user.in_convo) {
             this.makeOrJoinRoom();
           }
           if (user.in_convo){
             this.room = {_id: user.curConvo};
             convo = Convos.findOne({_id: user.curConvo});
-            if (this.props.openRooms.length > 1 && !!Convos.find({_id: this.room._id, curSessions: {$lt: 2} })){
+            if (this.props.openRooms.length > 1 && !!Convos.find({_id: this.room._id, curSessions: {$lt: 2}, closed: false })){
               this.resetRoom();
               user.in_convo = false;
             }
