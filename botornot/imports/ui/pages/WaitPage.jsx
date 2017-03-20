@@ -44,19 +44,20 @@ export default class WaitPage extends React.Component {
         Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
     }
     resetRoom() {
-      exitCb = (error, result) => {
-        console.error("EXITING CONVO user: " + Meteor.userId());
-        //Meteor._sleepForMs(Random.fraction() * 10);
-        this.room = null;
-        //this.forceUpdate();
-        this.resetting = false; 
-      };
-      Meteor.call('users.exitConvo', Meteor.userId(), exitCb.bind(this));
+      console.error("RESETTING ROOM");
+        exitCb = (error, result) => {
+          console.error("EXITING CONVO user: " + Meteor.userId());
+          //Meteor._sleepForMs(Random.fraction() * 50);
+          this.room = null;
+          //this.forceUpdate();
+          this.resetting = false; 
+        }
+        Meteor.call('users.exitConvo', Meteor.userId(), exitCb.bind(this));
       this.resetting = true;
     }
     render() {
         const { openRooms, connected, loading, user } = this.props;
-        console.error("RESETTTING: " + this.resetting);
+        //console.error("RESETTTING: " + this.resetting);
         if(!loading && !user){
           AccountsAnonymous.login((e) => {
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());
@@ -69,11 +70,16 @@ export default class WaitPage extends React.Component {
             this.room = {_id: user.curConvo};
             convo = Convos.findOne({_id: user.curConvo});
             if (this.props.openRooms.length > 1 && !!Convos.find({_id: this.room._id, curSessions: {$lt: 2}, closed: false })){
-              this.resetRoom();
-              user.in_convo = false;
+              this.resetTimeout = Meteor.setTimeout(this.resetRoom(), Random.fraction() * 200);
+              user.in_convo = false
+              //this.resetting = true;
             }
           } 
           inconvo = user.in_convo;
+        //} else if (this.resetting && this.props.openRooms.length < 2) {
+        //  Meteor.clearTimeout(this.resetTimeout);
+        //  noRooms = true;
+        //  inconvo = false;
         } else{
           noRooms = true;
           inconvo = false;
