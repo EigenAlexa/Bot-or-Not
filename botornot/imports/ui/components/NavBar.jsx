@@ -113,6 +113,7 @@ const NavBarContainer = createContainer(() => {
   const userLoggedIn = !Meteor.loggingIn() && Meteor.user();
   const notAnon = Meteor.user() && !Meteor.user().anon;
   console.log(Meteor.user() && Meteor.user().anon);
+  console.log(Meteor.user());
 	return {
 		loadingUserCount,
 		usersOnline,
