@@ -135,40 +135,34 @@ Meteor.methods({
         return user.id
       });
       if(!!users){
-        prob = Meteor.users.findOne({_id: users[0]}).prob;
-        correct = Random.fraction() < prob;
-        if(prob >= 0.7){
-          probInc = 0;
-        }else{
-          probInc = 0.01;
-        }
-        if(rating == 'not'){
-          if(correct){
-            lastOtherUser = rating;
-          }else{
-            lastOtherUser = 'bot';
-          }
-          Meteor.users.update({_id: users[0]}, {
-            $inc: {prob: probInc},
-            $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
-          });
-          Convos.update({_id: convoId, "users.id": users[0]}, {
-            $set: {"users.$.rated": 'not'}
-          });
-        } else if (rating == 'bot'){
-          if(correct){
-            lastOtherUser = rating;
-          }else{
-            lastOtherUser = 'not';
-          }Meteor.users.update({_id: users[0]}, {
-            $inc: {prob: probInc},
-            $set: {lastRating: rating, lastOtherUser: lastOtherUser, rated: true}
-          });
-          Convos.update({_id: convoId, "users.id": users[0]}, {
-            $set: {"users.$.rated": 'bot'}
-          }); 
-        }
+        Convos.update({_id: convoId, "users.id": users[0]}, {
+            $set: {"users.$.rated": rating}
+        });
+        Meteor.users.update({_id: users[0]}, {
+            $set: {lastRating: rating, rated: true}
+        });
       }
+      prob = Meteor.users.findOne({_id: userId}).prob;
+      correct = Random.fraction() < prob;
+      if(prob >= 0.9)
+        probInc = 0;
+      else
+        probInc = 0.01;
+      if(rating == 'not') {
+        if(correct)
+          lastOtherUser = rating;
+        else
+          lastOtherUser = 'bot';
+      } else if (rating == 'bot'){
+        if(correct)
+          lastOtherUser = rating;
+        else
+          lastOtherUser = 'not';
+      }
+      Meteor.users.update({_id: userId}, {
+        $inc: {prob: probInc},
+        $set: {lastOtherUser: lastOtherUser}
+      });
 
     },
   'convos.makeReady'(convoId, userId){
