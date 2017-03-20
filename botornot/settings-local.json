@@ -13,6 +13,7 @@
       "appSecret": "e13c47ae-3826-403b-8222-2d16521ea70c" 
     },
     "public": {
-        "ratingTurns": 4
+        "ratingTurns": 4,
+        "tipSpeed" : 3000
     }
 }

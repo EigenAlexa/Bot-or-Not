@@ -31,7 +31,7 @@ export default class Chat extends React.Component {
 
       // This is hacky and makes the  pro tips out of order.
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
-      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, 500);
+      this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, (!!Meteor.settings.public.tipSpeed ? Meteor.settings.public.tipSpeed : 2000));
     }
     updateLoadingInterval() {
       if(this.state.index < this.snippets.length - 1){
