@@ -18,10 +18,13 @@ class NavBar extends React.Component {
       ['/chat', 'Chat'],
       ['/leaderboards', 'Leaderboards'],
     ];
-    if (this.props.userLoggedIn) {
+    if (this.props.userLoggedIn && this.props.notAnon) {
       const username = this.user().username;
       navLinks.push(['/profile/' + username, 'Profile']);
       navLinks.push(['/logout', 'Logout']);
+    } else if (this.props.userLoggedIn && !this.props.notAnon) {
+      navLinks.push(['/sign-in-anon', 'Sign In']);
+      navLinks.push(['/sign-up', 'Sign Up']);
     } else {
       navLinks.push(['/sign-in', 'Sign In']);
       navLinks.push(['/sign-up', 'Sign Up']);
@@ -108,11 +111,14 @@ const NavBarContainer = createContainer(() => {
   const lastRoute = Session.get('lastRoute');
   const isHome = routeName === 'home' || (routeName === 'logout' && lastRoute === 'home');
   const userLoggedIn = !Meteor.loggingIn() && Meteor.user();
+  const notAnon = Meteor.user() && !Meteor.user().anon;
+  console.log(Meteor.user() && Meteor.user().anon);
 	return {
 		loadingUserCount,
 		usersOnline,
     isHome,
     userLoggedIn,
+    notAnon,
 	}	
 }, NavBar);
 export default NavBarContainer;

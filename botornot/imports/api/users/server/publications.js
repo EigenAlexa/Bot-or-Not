@@ -38,7 +38,7 @@ Meteor.publish('currentUser', (userId) => {
     return [];
   }
   user = Meteor.users.find({_id: userId}, 
-      {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1, convoClosed: 1, lastRating: 1, lastOtherUser: 1, rated: 1, firstTime: 1}});
+      {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1, convoClosed: 1, lastRating: 1, lastOtherUser: 1, rated: 1, firstTime: 1, anon:1}});
   session = Meteor.server.sessions[Object.keys(Meteor.server.sessions).filter((key) => {
     return Meteor.server.sessions[key].userId == userId;  
   })[0]];
