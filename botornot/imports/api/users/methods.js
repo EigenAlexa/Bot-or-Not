@@ -21,6 +21,9 @@ Meteor.methods({
     console.log("convo sessions ", convo.curSessions);
     Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);
+    Meteor.users.update({_id: userId}, {
+      $set: {curConvo: "" }
+    });
   },
   'getBotUsername'(magicphrase){
     if(magicphrase=== Meteor.settings.magicPhrase) {

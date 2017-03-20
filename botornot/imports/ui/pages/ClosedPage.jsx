@@ -51,11 +51,21 @@ export default class ClosedPage extends React.Component {
       user = Meteor.users.findOne({_id: Meteor.userId()});
       console.log(user.curConvo)
       conv = Meteor.users.findOne({_id: user.curConvo });
+      users = convo.users.filter((otherUser) => {
+        return otherUser.id !== user._id;
+      }).map((user) => {
+        return user.id
+      });
+      if (!!users && !!users[0]) {
+        other = Meteor.users.findOne({_id: users[0]});
+      }
 
       console.log("user.rated", user.rated);
       if(user.rated){
         Session.set('playNotification', "true");
         Session.set('rating', user.lastRating);
+        comp.stop();
+      } else if (!!other && other.curConvo !== user.curConvo){
         comp.stop();
       }
     });
