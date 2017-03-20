@@ -8,7 +8,7 @@ Meteor.publish('topNUsers', (N) => {
   });
 });
 Meteor.publish("userStatus", function() {
-  return Meteor.users.find({ "status.online": true }, { fields: { "status.online" : 1 } });
+  return Meteor.users.find({ "status.online": true }, { fields: { "status.online" : 1, anon: 1 } });
 });
 Meteor.publish('users.ratings', () => {
 	return UserStatus.connections.find();
@@ -59,3 +59,4 @@ Meteor.publish('userProfile', (username) => {
       badges: 1,
   }});
 });
+
