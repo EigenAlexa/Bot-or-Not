@@ -25,22 +25,22 @@ export default class Chat extends React.Component {
         focusInput : false,
         firstChatRender: true,
        };
-      this.updateProgressBar = this.updateProgressBar.bind(this);
+      //this.updateProgressBar = this.updateProgressBar.bind(this);
       this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
       this.progressInterval = Meteor.setInterval(this.updateProgressBar, 100);
 
       // This is hacky and makes the  pro tips out of order.
-      this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
+      //this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, (!!Meteor.settings.public.tipSpeed ? Meteor.settings.public.tipSpeed : 2000));
     }
-    updateLoadingInterval() {
+    /*updateLoadingInterval() {
       if(this.state.index < this.snippets.length - 1){
         this.setState({index: this.state.index + 1});
       }
       else{
         this.setState({'index': 0});
       }
-    }
+    }*/
     updateProgressBar() {
       var n = this.state.time_pass;
       var max = !!Meteor.settings.timeout ? Meteor.settings.timeout : 20;
@@ -187,21 +187,22 @@ export default class Chat extends React.Component {
     renderPrepScreen(){
       readyToChat = this.props.room.curSessions == 2;
       if(readyToChat){
-        Meteor.clearInterval(this.progressInterval);  
+        //Meteor.clearInterval(this.progressInterval);  
         Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
-      progress = this.state.progress;
+      //progress = this.state.progress;
       
       return (
         <div className="loading-btn word-wrap">
          <h3>Looking for chat room.</h3>
         
         <div className="progress-for-loader">
-          <ProgressBar  now={progress} active striped bsStyle="info"/> 
+          <img className="loading-anim" src="/img/loading.gif"/>
         </div>
         </div>);
     }
+          /*<ProgressBar  now={progress} active striped bsStyle="info"/>*/ 
    /* renderPrompt(){
       return (<p>{this.props.room.promptText}</p>);
     }*/
