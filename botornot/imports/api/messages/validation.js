@@ -25,7 +25,7 @@ validate = (text, convoId, server) => {
         errorMsgs.push(test.errorMsg);
       }
     });
-    return {valid: valid, errors: errorMsgs};
+    return {valid: valid, errors: errorMsgs[0]};
   }
 
 checkSwear = (text, convoId, server) => {
