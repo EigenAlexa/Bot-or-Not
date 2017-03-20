@@ -117,7 +117,8 @@ Schema.User = new SimpleSchema({
   curConvo: {
     type: String,
     label: 'curConvo',
-    defaultValue: ""
+    defaultValue: "",
+    optional: true,
   },
   left: {
     type: Boolean,
