@@ -13,6 +13,7 @@ export default ClosedContainer = createContainer(({ params }) => {
     room: Convos.findOne({_id: roomId}),
     loading: !roomHandle.ready() || !usersHandle.ready(),
     connected: Meteor.status().connected,
-    userLeft: userLeft
+    userLeft: userLeft,
+    user: Meteor.user()
   };
 }, ClosedPage);

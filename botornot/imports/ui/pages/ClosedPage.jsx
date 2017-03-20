@@ -37,6 +37,8 @@ export default class ClosedPage extends React.Component {
   }
   renderThanksForRating() {
     return ( <div>
+              <p>The other user was </p>
+              {this.props.user.lastOtherUser == 'bot' ? <p>BOT</p> : <p>NOT</p>}
               {this.renderNextChatButton()}
               </div>
         );
@@ -151,5 +153,6 @@ ClosedPage.propTypes = {
     room: React.PropTypes.object,
     connected : React.PropTypes.bool,
     loading: React.PropTypes.bool,
-    userLeft: React.PropTypes.bool
+    userLeft: React.PropTypes.bool,
+    user: React.PropTypes.object,
 }
