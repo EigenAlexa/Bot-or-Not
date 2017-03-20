@@ -84,7 +84,7 @@ export default class ProfileSide extends React.Component {
         <div className="profile-top">
           You're not signed in! If you don't sign in or sign up, you'll lose your progress! 
           <div className="signupCall">
-            <Button bsStyle='primary' size='medium' className="rate-now " onClick={this.handleSignUpButton.bind(this)} >Sign Up Now</Button>
+            <Button bsStyle='primary' size='medium' className="sign-up" onClick={this.handleSignUpButton.bind(this)} >Sign Up Now</Button>
           </div>
          {this.getHumanity()}
         </div>
