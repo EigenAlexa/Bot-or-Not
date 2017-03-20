@@ -184,6 +184,8 @@ Schema.User = new SimpleSchema({
 
 Meteor.users.attachSchema(Schema.User);
 
+
+
 Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
   // update the rating
   // if ('sessions' in doc || 'notratings' in doc) {
