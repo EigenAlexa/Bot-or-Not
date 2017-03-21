@@ -53,14 +53,14 @@ export default class WaitPage extends React.Component {
           //this.forceUpdate();
           this.resetting = false; 
         }
-        Meteor.call('users.exitConvo', Meteor.userId(), exitCb.bind(this));
+        Meteor.call('users.exitConvo', exitCb.bind(this));
       this.resetting = true;
     }
     render() {
         const { openRooms, connected, loading, user } = this.props;
         if(!loading && !user){
           AccountsAnonymous.login((e) => {
-            Meteor.call('users.updateAnonymousUsername', Meteor.userId());
+            Meteor.call('users.updateAnonymousUsername');
           });  
         } else if(!loading && !!user && !this.resetting){
           if (!user.in_convo) {
