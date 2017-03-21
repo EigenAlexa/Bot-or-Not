@@ -124,7 +124,7 @@ export default class Chat extends React.Component {
         return (<div className="loading-btn"> <h3>Loading, hang tight !</h3></div>);
     }
     handleNextChat(event){
-      Meteor.call('users.exitConvo', Meteor.userId());
+      Meteor.call('users.exitConvo');
       updateCookiesOnExit();
     }
     handleRateButton(event) {
