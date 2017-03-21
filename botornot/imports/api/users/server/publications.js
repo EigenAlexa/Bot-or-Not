@@ -25,7 +25,7 @@ Meteor.publishComposite('currentUsers', (convoId) => {
       find(convo) {
         users = convo.users.map((user) => (user.id));
         return Meteor.users.find({_id: {$in: users}}, {
-          fields: {username: 1, in_convo: 1, curConvo:1, convoClosed: 1, isReady: 1, lastOtherUser: 1}                
+          fields: {username: 1, in_convo: 1, curConvo:1, convoClosed: 1, isReady: 1, lastOtherUser: 1, level:1}                
         });
       }
     }]
@@ -38,7 +38,7 @@ Meteor.publish('currentUser', (userId) => {
     return [];
   }
   user = Meteor.users.find({_id: userId}, 
-      {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1, convoClosed: 1, lastRating: 1, lastOtherUser: 1, rated: 1, firstTime: 1, anon:1}});
+      {fields: {username: 1, in_convo: 1, curConvo: 1, left: 1, convoClosed: 1, lastRating: 1, lastOtherUser: 1, rated: 1, firstTime: 1, anon:1, xp: 1, xp_max: 1, level: 1}});
   session = Meteor.server.sessions[Object.keys(Meteor.server.sessions).filter((key) => {
     return Meteor.server.sessions[key].userId == userId;  
   })[0]];
@@ -58,6 +58,9 @@ Meteor.publish('userProfile', (username) => {
       profPic: 1,
       badges: 1,
       anon: 1,
+      xp: 1,
+      xp_max: 1,
+      level: 1
   }});
 });
 
