@@ -1,7 +1,7 @@
 import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, ProgressBar, Modal } from 'react-bootstrap';
 import { updateCookiesOnExit } from '/imports/startup/client/config.js';
 
 
@@ -36,9 +36,16 @@ export default class ClosedPage extends React.Component {
         );
   }
   renderThanksForRating() {
-    return ( <div>
+    const xp = 46;
+    const xp_max = 50;
+
+    return ( <div className="ratingDiv">
               <p>The other user was </p>
-              {this.props.user.lastOtherUser == 'bot' ? <p>BOT</p> : <p>NOT</p>}
+              { !this.props.user.loading ?
+                this.props.user.lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
+                : ""}
+              <p> You gained +100xp for guessing correctly! </p>
+              <ProgressBar active bsStyle="info xpBar" now={(xp/xp_max)*100} label={"XP "+ xp +"/" + xp_max} />
               {this.renderNextChatButton()}
               </div>
         );
