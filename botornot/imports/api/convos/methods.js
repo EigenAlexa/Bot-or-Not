@@ -40,7 +40,6 @@ Meteor.methods({
       }
     },
     'convos.updateChat'(text, convoId, userId) {
-        
       result = validate(text, convoId, true);
       if(result.valid){
         const msgId = Messages.insert({
@@ -262,20 +261,3 @@ function levelUp(userId, remainingXP){
   });
 }
 
-export const makeNewRoom = () => {
-    // makes a new convo and returns the roomId
-    //
-    return 0;
-}
-
-
-export const addToRoom = (sessionId, roomId) => {
-    // adds a session to the room with the id
-    // if room.cursessions >= 2 after add, then set closed = true 
-    // subscribes the current user to the room object
-}
-
-export const readyTochat = (roomId) => {
-    // returns a boolean of whether the room has 2 sessions and is 
-    // ready to go 
-}
