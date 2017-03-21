@@ -6,9 +6,6 @@ import { Prompts } from '/imports/api/prompts/prompts.js';
 import { validate } from '/imports/api/messages/validation.js';
 
 Meteor.methods({
-    'convos.openrooms'() {
-        return getOpenRooms();
-    }, 
     'convos.newRoom'() {
       if(!this.isSimulation){
         msgId = Messages.insert({
