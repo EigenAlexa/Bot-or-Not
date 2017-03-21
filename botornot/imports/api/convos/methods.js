@@ -151,17 +151,10 @@ Meteor.methods({
         probInc = 0;
       else
         probInc = 0.01;
-      if(rating == 'not') {
-        if(correct)
-          lastOtherUser = rating;
-        else
-          lastOtherUser = 'bot';
-      } else if (rating == 'bot'){
-        if(correct)
-          lastOtherUser = rating;
-        else
-          lastOtherUser = 'not';
-      }
+      if(correct)
+          lastOtherUser = convo.hasBot ? 'bot' : 'not';
+      else
+          lastOtherUser = convo.hasBot ? 'not' : 'bot';
       Meteor.users.update({_id: userId}, {
         $inc: {prob: probInc},
         $set: {lastOtherUser: lastOtherUser}
