@@ -18,38 +18,22 @@ export default class ProfileSide extends React.Component {
     super(props);
     this.state = {rank: -1};
   }
-
-  componentWillUpdate(){
-    console.log(this.state.rank)
-    if(!this.props.loading && this.state.rank < 0 && this.props.userExists) {	
-			this.updateRank();
-    }
-  }
-
-	updateRank() {
-			Meteor.call('users.getUserRanking', this.props.user._id, (error, result) => {
-			if (!error){
-				this.setState({'rank': result});
-			} else {
-				console.log("Error!")
-				console.log(error);
-			}
-		});
-	}
-
   getContent() {
       const username = this.props.username;
       const user = this.props.user;
       const userExists = this.props.userExists;
       const ranking = this.state.rank;
       if (!userExists) {
-          return (<p> User {username} doesn't exist </p>);
+          return (<p> Loading user.</p>);
       }
       console.log(user);
+      if(!!user){
+
+      
       const notratings = user.notratings
       const sessions = user.sessions;
       const botratings = sessions - notratings;
-      const rating = user.rating;
+      const rating = !!user.rating ? user.rating : 0;
       const badges = user.badges;
       const isAnon = user.anon;
       return (
@@ -65,6 +49,11 @@ export default class ProfileSide extends React.Component {
               value={sessions}/> 
           </div>
         </div>);
+    }
+    else{
+      return(<div className="profile-side col-sm-3 hidden-xs">
+        </div>);
+    }
   }
 
 
