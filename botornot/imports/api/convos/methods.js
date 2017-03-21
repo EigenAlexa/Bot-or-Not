@@ -40,7 +40,6 @@ Meteor.methods({
       }
     },
     'convos.updateChat'(text, convoId, userId) {
-        
       result = validate(text, convoId, true);
       if(result.valid){
         const msgId = Messages.insert({
@@ -200,16 +199,6 @@ Meteor.methods({
     });
   }
 });
-function getOpenRooms() {
-    // get all convos that have less than two people and aren't closed yet
-    // filter all room.curssions < 2 and closed = false
-    convos = Convos.find({
-
-        closed: false,
-        curSessions : {$lt: 2}
-    }).fetch();
-    return convos;
-}
 
 
 function calculateAndUpdateXp(correct, userId){
@@ -260,22 +249,4 @@ function levelUp(userId, remainingXP){
     $inc: {level: 1},
     $set: {xp: parseInt(remainingXP), xp_max: parseInt(newMaxXP)}
   });
-}
-
-export const makeNewRoom = () => {
-    // makes a new convo and returns the roomId
-    //
-    return 0;
-}
-
-
-export const addToRoom = (sessionId, roomId) => {
-    // adds a session to the room with the id
-    // if room.cursessions >= 2 after add, then set closed = true 
-    // subscribes the current user to the room object
-}
-
-export const readyTochat = (roomId) => {
-    // returns a boolean of whether the room has 2 sessions and is 
-    // ready to go 
 }
