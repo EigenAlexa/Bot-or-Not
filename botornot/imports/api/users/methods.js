@@ -15,6 +15,7 @@ Meteor.methods({
     Meteor.users.update({_id: userId}, {
       $set: {in_convo: false, rated: false, isReady: false}
     });
+    console.log("setting rated to false, on exit user: " + userId);
     user = Meteor.users.findOne({_id: userId});
     convo = Convos.findOne({_id: user.curConvo});
     console.log("exiting convo ", convo._id, " user: ", userId);
@@ -44,6 +45,7 @@ Meteor.methods({
     }
   }, 
   'users.setRated'(userId){
+    console.log("setting rated to false, from notification system, user:  " + userId);
     Meteor.users.update({_id: userId}, {$set: {rated: false}});
   },
   'users.getUserRanking'(userId) {

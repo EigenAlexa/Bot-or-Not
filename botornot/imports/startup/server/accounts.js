@@ -31,8 +31,8 @@ Accounts.onCreateUser(function (options, user) {
         ret = parser.recur().on(time).fullDate();
         console.log(ret);
         return ret;
-      },job: ()=>{}
-      /*job: () => {
+      },
+      job: () => {
         Convos.find({"users.id": userId}).forEach((doc) => {
           Convos.update({_id: doc._id, "users.id": userId}, {
             $set: {"users.$.id": user._id}
@@ -44,7 +44,7 @@ Accounts.onCreateUser(function (options, user) {
           });
         });
         Meteor.users.remove({_id: userId});
-      },*/
+      },
     });
     //Meteor.users.remove({_id: userId}, (error, result) => {
       //console.log("removed");
