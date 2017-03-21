@@ -26,11 +26,13 @@ Accounts.onCreateUser(function (options, user) {
       name: "switching anon to real: " + userId,
       // wait for 1 second before switching everything on the backend
       schedule: (parser) => {
-        let time = new Date(Date.now() + 1000);
-        console.log(time);
-        return parser.recur().on(time).fullDate();
-      },
-      job: () => {
+        let time = new Date(Date.now() + 1500);
+        console.log("scheduling for: " + time);
+        ret = parser.recur().on(time).fullDate();
+        console.log(ret);
+        return ret;
+      },job: ()=>{}
+      /*job: () => {
         Convos.find({"users.id": userId}).forEach((doc) => {
           Convos.update({_id: doc._id, "users.id": userId}, {
             $set: {"users.$.id": user._id}
@@ -42,7 +44,7 @@ Accounts.onCreateUser(function (options, user) {
           });
         });
         Meteor.users.remove({_id: userId});
-      },
+      },*/
     });
     //Meteor.users.remove({_id: userId}, (error, result) => {
       //console.log("removed");
