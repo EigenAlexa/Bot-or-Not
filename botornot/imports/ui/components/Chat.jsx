@@ -112,9 +112,9 @@ export default class Chat extends React.Component {
                     {this.props.room.closed && user.convoClosed ? this.renderClosed() : "" }
                     </div>
                   </div>
-                  <div className="col-sm-12 col-md-3">
-                    <h4 className="word-wrap pro-tip hidden-xs"><b> Pro Tip: </b>{this.snippets[this.state.index] }</h4> 
+                  <div className="col-sm-12 col-md-3 protip-side">
                     <Button bsStyle='primary' size='medium' className={"rate-now " + rateButtonClass} onClick={this.handleRateButton.bind(this)} >Rate Now</Button>
+                    <p className="word-wrap pro-tip hidden-xs"><b> Pro Tip: </b>{this.snippets[this.state.index] }</p> 
                   </div>
                 </div>);
 

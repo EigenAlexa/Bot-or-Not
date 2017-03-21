@@ -28,10 +28,9 @@ export default class LeaderboardPage extends React.Component {
     return (
       <div className="col-xs-12 col-sm-offset-1 col-sm-10">
         <title>Bot or Not</title>
-
         <h2 className="page-header">
           Leaderboard
-        </h2>
+        </h2> 
 
         <div className="">
           {!!this.props.currentUser ? (
