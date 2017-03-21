@@ -24,3 +24,9 @@ _Sample settings file_
             "Debug" : true
 }
 ```
+Make sure that you export HOSTNAME
+**ON MAC**
+```export HOSTNAME=$(hostname)```
+**ON LINUX**
+```export HOSTNAME=$(HOSTNAME)```
+
