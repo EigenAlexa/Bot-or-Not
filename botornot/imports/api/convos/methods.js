@@ -128,19 +128,22 @@ Meteor.methods({
       });
     },
     'convos.updateRatings'(convoId, userId, rating){
+      console.log(userId);
       convo = Convos.findOne({_id: convoId});
-      users = convo.users.filter((user) => {
+      filteredUsers = convo.users.filter((user) => {
         return user.id !== userId;
-      }).map((user) => {
-        return user.id
       });
-      if(!!users){
-        Convos.update({_id: convoId, "users.id": users[0]}, {
+      console.log(filteredUsers[0]);
+      if(!!filteredUsers){
+        console.log(" user: " + filteredUsers[0].id);
+        Convos.update({_id: convoId, "users.id": filteredUsers[0].id}, {
             $set: {"users.$.rated": rating}
         });
-        Meteor.users.update({_id: users[0]}, {
+        console.log(" user: " + filteredUsers[0].id);
+        Meteor.users.update({_id: filteredUsers[0].id}, {
             $set: {lastRating: rating, rated: true}
         });
+        console.log("setting rated to true for: " + filteredUsers[0].id);
       }
       prob = Meteor.users.findOne({_id: userId}).prob;
       correct = Random.fraction() < prob;
