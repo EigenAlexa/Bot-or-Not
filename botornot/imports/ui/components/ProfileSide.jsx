@@ -2,7 +2,7 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
-import { Button, ProgressBar } from 'react-bootstrap';
+import { Button, ProgressBar, Modal} from 'react-bootstrap';
 
 function ProfAttribute(props) {
   return (<div className="col-lg-12 profile-attribute">
@@ -43,8 +43,9 @@ export default class ProfileSide extends React.Component {
       const userExists = this.props.userExists;
       const ranking = this.state.rank;
       if (!userExists) {
-          return (<p> User '{username}' doesn't exist </p>);
+          return (<p> User {username} doesn't exist </p>);
       }
+      console.log(user);
       const notratings = user.notratings
       const sessions = user.sessions;
       const botratings = sessions - notratings;
@@ -52,39 +53,35 @@ export default class ProfileSide extends React.Component {
       const badges = user.badges;
       const isAnon = user.anon;
       return (
-        <div className="profile-side col-sm-3">
+        <div className="profile-side col-sm-3 hidden-xs">
           {this.getHeader(isAnon)}
           <div className="row">
-					<ProgressBar active bsStyle="danger" now={10} label={"XP: 10/100"} />
-            <ProfAttribute 
-              title={"Sessions"}
-              value={sessions}/>
-            <ProfAttribute 
-              title={"Ranking"}
-              value={ranking}/>
-          
             <ProfAttribute 
               title={"Score"}
               value={rating.toFixed(2)}/>
+
+            <ProfAttribute 
+              title={"Sessions"}
+              value={sessions}/> 
           </div>
         </div>);
   }
+
 
 	getHeader(isAnon) {
     // Return the headers of the profile
     if (!isAnon) {
       return (	
         <div className="profile-top">
-          <div className="profile-username">{username}</div>
          {this.getHumanity()}
         </div>
       );
     } else {
       return (	
         <div className="profile-top">
-          You're not signed in! If you don't sign in or sign up, you'll lose your progress! 
           <div className="signupCall">
-            <Button bsStyle='primary' size='medium' className="sign-up" onClick={this.handleSignUpButton.bind(this)} >Sign Up Now</Button>
+          <p className="sign-up-text">Sign up to save your progress!</p>
+            <Button bsStyle='primary' size='medium' className="sign-up" onClick={this.handleSignUpButton.bind(this)} >Sign Up</Button>
           </div>
          {this.getHumanity()}
         </div>
@@ -92,30 +89,47 @@ export default class ProfileSide extends React.Component {
     }
 	}
   handleSignUpButton() {
-   console.log('Sign it up');
+    FlowRouter.redirect('/sign-up');
   }
   getHumanity(){
     const user = this.props.user;
-    const username = this.props.username;
+    if(!user)
+      return <div> </div>;
+
+    const anon = this.props.user.anon;
+    const username = anon ? "ANONYMOUS" : this.props.username;
     const notratings = user.notratings
     const sessions = user.sessions;
     const botratings = sessions - notratings;
+    const level = 1;
+    const shortuser = username.length > 7 ? 
+                    username.substring(0, username.length - 3) + "..." : 
+                    username;
+    const xp = 46;
+    const xp_max = 50;
     const prefix = this.props.isSelfProfile ? "you're" : ( <span>
       <span className='userColor'> {username} </span> is </span>);
     return (       
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
-          <div className="profile-attribute-title">Humanity </div>
+          <div className="profile-username">{anon ? "ANONYMOUS" : shortuser} </div>
+          <div className="profile-level">
+<span className="label label-lg label-warning">Level {level}</span>
+ </div>
           <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
           </div>  
-          {sessions >0 ?   
-        <div className="col-xs-12 col-sm-12 profile-attribute">
-        <p> Players think {prefix} {botratings > notratings ? "a bot.": "human."} </p>
-          <ProgressBar>
-                <ProgressBar active bsStyle="danger botBar" now={(botratings/sessions)*100} key={2} label={"BOT: "+ botratings} />
-                <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
-            </ProgressBar>
-        </div> : <div></div>}
+          <div className="col-xs-12 col-sm-12 profile-attribute">
+            {sessions >0 ?   
+              <div>
+                <p> Players think {prefix} {botratings > notratings ? "a bot.": "human."} </p>
+                <ProgressBar>
+                      <ProgressBar active bsStyle="danger botBar" now={(botratings/sessions)*100} key={2} label={"BOT: "+ botratings} />
+                      <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
+                  </ProgressBar>
+              </div>
+              : <div></div>}
+          <ProgressBar active bsStyle="info xpBar" now={(xp/xp_max)*100} label={"XP "+ xp +"/" + xp_max} />
+          </div> 
       </div>);
   }
 	getProfPic() {

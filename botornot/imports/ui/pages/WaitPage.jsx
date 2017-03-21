@@ -58,7 +58,6 @@ export default class WaitPage extends React.Component {
     }
     render() {
         const { openRooms, connected, loading, user } = this.props;
-        //console.error("RESETTTING: " + this.resetting);
         if(!loading && !user){
           AccountsAnonymous.login((e) => {
             Meteor.call('users.updateAnonymousUsername', Meteor.userId());

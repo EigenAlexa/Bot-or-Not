@@ -72,22 +72,32 @@ export default class ProfilePage extends React.Component {
     const notratings = user.notratings
     const sessions = user.sessions;
     const botratings = sessions - notratings;
+      const xp = 46;
+    const xp_max = 50;
+    const level = 1;
     const prefix = this.props.isSelfProfile ? "you're" : ( <span>
       <span className='userColor'> {username} </span> is </span>);
     return (       
       <div>   
-         <div className="col-xs-12 col-sm-12 profile-attribute">
-          <div className="profile-attribute-title">Humanity </div>
+           <div className="profile-level">
+              <span className="label label-lg label-warning">Level {level}</span>
+           </div>
+         <div className="col-xs-12 col-sm-12 profile-attribute">  
+
           <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
           </div>  
-          {sessions >0 ?   
+
         <div className="col-xs-12 col-sm-12 profile-attribute">
+          {sessions >0 ?   <div>
         <p> Players think {prefix} {botratings > notratings ? "a bot.": "human."} </p>
           <ProgressBar>
                 <ProgressBar active bsStyle="danger botBar" now={(botratings/sessions)*100} key={2} label={"BOT: "+ botratings} />
                 <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
             </ProgressBar>
-        </div> : <div></div>}
+         </div> : <div></div>}
+          {Meteor.userId() == user._id ? (<ProgressBar active bsStyle="info xpBar" now={(xp/xp_max)*100} label={"XP "+ xp +"/" + xp_max} />) 
+            : <div></div>}
+          </div>
       </div>);
   }
 	getProfPic() {

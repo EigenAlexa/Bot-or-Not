@@ -1,17 +1,29 @@
 .profile-side {
     font-family: 'Futura-Normal', arial;
     font-size: 20px;
+    border: 1px solid;
+    border-color: #dddddd;
+    padding-top: 25px;
+    padding-bottom: 15px;
 }
+
+
+.sign-up-text{
+    text-align: center;
+}
+
 .profile-side .botico {
     border-radius: 50%;
-    width: 100%;
+    width: 75%;
     background-color: #000;
+    margin-bottom: 15px;
 }
 
 .profile-side .humanico {
     border-radius: 50%;
-    width: 100%;
+    width: 75%;
     background-color: @fg;
+    margin-bottom: 15px;
 }
 
 .profile-side .profile-attribute {
@@ -27,4 +39,30 @@
 .sign-up {
     width: 100%;
     height: 50px;
+    margin-bottom: 15px;
+    font-size: 19px;
+}
+
+.xpBar {
+    background-color: #9b59b6;
+}
+.xpBar:hover{
+    color:black;
+}
+.profile-side .profile-username { 
+    font-family: 'League Spartan Bold', arial;
+    text-transform: uppercase;
+    color: @fg;
+    font-size: 20px;
+}
+@media (min-width: 1000px) {
+.profile-side .profile-username { 
+    font-size: 25px;
+}
+}
+
+@media (min-width: 1200px) {
+.profile-side .profile-username { 
+    font-size: 30px;
+}
 }
