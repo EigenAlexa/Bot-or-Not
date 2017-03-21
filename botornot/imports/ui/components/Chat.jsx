@@ -58,11 +58,11 @@ export default class Chat extends React.Component {
     }
     */
     componentDidMount(){
-      //window.addEventListener("beforeunload", this.beforeunload);
+      window.addEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload); 
     }
     componentWillUnmount(){
-      //window.removeEventListener("beforeunload", this.beforeunload);
+      window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
       Meteor.clearInterval(this.progressInterval)
       Meteor.clearInterval(this.loadingInterval);
