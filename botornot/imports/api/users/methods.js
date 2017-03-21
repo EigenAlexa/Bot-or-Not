@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Convos } from '/imports/api/convos/convos.js';
 
 Meteor.methods({
-  'users.updateAnonymousUsername'(userId) {
-    Meteor.users.update({_id: userId}, {
+  'users.updateAnonymousUsername'() {
+    Meteor.users.update({_id: this.userId}, {
       $set: {
         username: faker.commerce.productAdjective() + faker.name.firstName(), 
         firstTime: true,
@@ -11,20 +11,16 @@ Meteor.methods({
       }
     });
   },
-  'users.exitConvo'(userId) {
-    Meteor.users.update({_id: userId}, {
+  'users.exitConvo'() {
+    Meteor.users.update({_id: this.userId}, {
       $set: {in_convo: false, rated: false, isReady: false}
     });
-    console.log("setting rated to false, on exit user: " + userId);
-    user = Meteor.users.findOne({_id: userId});
+    user = Meteor.users.findOne({_id: this.userId});
     convo = Convos.findOne({_id: user.curConvo});
-    console.log("exiting convo ", convo._id, " user: ", userId);
+    console.log("exiting convo ", convo._id, " user: ", this.userId);
     console.log("convo sessions ", convo.curSessions);
     Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);
-    Meteor.users.update({_id: userId}, {
-      $set: {curConvo: "" }
-    });
   },
   'getBotUsername'(magicphrase){
     if(magicphrase=== Meteor.settings.magicPhrase) {
@@ -44,9 +40,8 @@ Meteor.methods({
       return 'nice try hacker man';
     }
   }, 
-  'users.setRated'(userId){
-    console.log("setting rated to false, from notification system, user:  " + userId);
-    Meteor.users.update({_id: userId}, {$set: {rated: false}});
+  'users.setRated'(){
+    Meteor.users.update({_id: this.userId}, {$set: {rated: false}});
   },
   'users.getUserRanking'(userId) {
     user = Meteor.users.findOne({_id: userId})
