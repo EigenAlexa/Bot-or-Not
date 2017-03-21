@@ -93,21 +93,6 @@ Schema.User = new SimpleSchema({
   		label: "NotRatings",
   		defaultValue: 0
   	},
-    xp: {
-      type: Number,
-      label: "Experience",
-      defaultValue: 0
-    },
-    xp_max: {
-      type: Number,
-      label: "MaxXp",
-      defaultValue: 1
-    },
-    level: {
-      type: Number,
-      label: "Level",
-      defaultValue: 1
-    },
   	online: {
   		type: Boolean,
   		label: "online",
@@ -144,6 +129,21 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     label: 'convoClosed',
     defaultValue: false
+  },
+ xp: {
+    type: Number,
+    label: "Experience",
+    defaultValue: 15
+  },
+  xp_max: {
+    type: Number,
+    label: "MaxXp",
+    defaultValue: 50
+  },
+  level: {
+    type: Number,
+    label: "Level",
+    defaultValue: 1
   },
   profPic: {
     type: String,

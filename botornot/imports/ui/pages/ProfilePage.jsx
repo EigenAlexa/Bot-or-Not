@@ -72,9 +72,11 @@ export default class ProfilePage extends React.Component {
     const notratings = user.notratings
     const sessions = user.sessions;
     const botratings = sessions - notratings;
-      const xp = 46;
-    const xp_max = 50;
-    const level = 1;
+
+    const xp = !!user.xp ? user.xp : 80;
+    const xp_max = !!user.xp_max ? user.xp_max : 50;
+    const level = !!user.level ? user.level : 1;
+
     const prefix = this.props.isSelfProfile ? "you're" : ( <span>
       <span className='userColor'> {username} </span> is </span>);
     return (       
