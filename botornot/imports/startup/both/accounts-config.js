@@ -32,7 +32,7 @@ AccountsTemplates.configure({
     termsUrl: 'terms-of-use',
 
     // Redirects
-    homeRoutePath: '/',
+    homeRoutePath: '/chat',
     redirectTimeout: 4000,
 
     // Texts
