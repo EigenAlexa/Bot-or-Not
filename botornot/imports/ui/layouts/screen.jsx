@@ -21,7 +21,7 @@ export default class Screen extends React.Component {
 
       };
       this.refs.notificationsystem.addNotification(notification);
-      Meteor.call('users.setRated', Meteor.userId());
+      Meteor.call('users.setRated');
       Session.set('playNotification', "false");
     }
 
@@ -40,7 +40,7 @@ export default class Screen extends React.Component {
         },
         onRemove: () => {
           if (this.state.offTopic) {
-            Meteor.call('convos.markOffTopic', Session.get('curConvo'), Meteor.userId());
+            Meteor.call('convos.markOffTopic', Session.get('curConvo'));
           }
         }
 

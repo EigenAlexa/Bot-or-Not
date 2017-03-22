@@ -39,7 +39,8 @@ Meteor.methods({
         return convoId;
       }
     },
-    'convos.updateChat'(text, convoId, userId) {
+    'convos.updateChat'(text, convoId) {
+      userId = this.userId;
       result = validate(text, convoId, true);
       if(result.valid){
         const msgId = Messages.insert({
@@ -70,7 +71,8 @@ Meteor.methods({
         });
       }
     },
-    'convos.addUserToRoom'(userId, convoId) {
+    'convos.addUserToRoom'(convoId) {
+      userId = this.userId;
       if(!!convoId) {
         console.log("adding user: ", userId, "to room ", convoId);
         Meteor.users.update({_id: userId}, {
@@ -115,7 +117,8 @@ Meteor.methods({
         });
       });
     },
-    'convos.markOffTopic'(convoId, userId){
+    'convos.markOffTopic'(convoId){
+      userId = this.userId;
       console.log('marking convo off topic');
       convo = Convos.findOne({_id: convoId});
       console.log('marking convo off topic for user', userId)
@@ -123,7 +126,8 @@ Meteor.methods({
         $set: {"users.$.markedOffTopic": true}
       });
     },
-    'convos.updateRatings'(convoId, userId, rating){
+    'convos.updateRatings'(convoId, rating){
+      userId = this.userId;
       console.log(userId);
       convo = Convos.findOne({_id: convoId});
       filteredUsers = convo.users.filter((user) => {
@@ -178,7 +182,8 @@ Meteor.methods({
       deltaXp = calculateAndUpdateXp(correct, userId);
       return deltaXp;
     },
-  'convos.makeReady'(convoId, userId){
+  'convos.makeReady'(convoId){
+    userId = this.userId;
     Convos.update({_id: convoId, "users.id": userId}, {
       $set: {"users.$.isReady": true}
     });
@@ -188,12 +193,14 @@ Meteor.methods({
       });
     }
   },
-  'convos.incUserEnglishCount'(convoId, userId){
+  'convos.incUserEnglishCount'(convoId){
+      userId = this.userId;
       Convos.update({_id: convoId, "users.id": userId}, {
         $inc: {"users.$.englishCount": 1}
       });
   },
-  'convos.resetUserEnglishCount'(convoId, userId){
+  'convos.resetUserEnglishCount'(convoId){
+    userId = this.userId;
     Convos.update({_id: convoId, "users.id": userId}, {
       $set: {"users.$.englishCount": 0}
     });

@@ -70,7 +70,7 @@ checkEnglish = (text, convoId, server) => {
   english = englishCount > text.split(" ").length / 2;
   if(!english){
     if(!server){
-      Meteor.call('convos.incUserEnglishCount', convoId, Meteor.userId());
+      Meteor.call('convos.incUserEnglishCount', convoId);
     }
     convo = Convos.findOne({_id: convoId});
     ret = true;
@@ -81,7 +81,7 @@ checkEnglish = (text, convoId, server) => {
     });
     return ret
   }else{
-    Meteor.call('convos.resetUserEnglishCount', convoId, Meteor.userId());
+    Meteor.call('convos.resetUserEnglishCount', convoId);
     return true;  
   }
 }
