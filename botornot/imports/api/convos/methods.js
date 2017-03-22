@@ -39,10 +39,14 @@ Meteor.methods({
         return convoId;
       }
     },
+  
     'convos.updateChat'(text, convoId) {
       userId = this.userId;
+      convoObj = Convos.findOne({'_id' : convoId});
+      convoClosed = !!convoObj ? convoObj.closed : true;
+
       result = validate(text, convoId, true);
-      if(result.valid){
+      if(result.valid && !convoClosed){
         const msgId = Messages.insert({
           user: userId,
           message: text,
@@ -71,6 +75,7 @@ Meteor.methods({
         });
       }
     },
+  
     'convos.addUserToRoom'(convoId) {
       userId = this.userId;
       if(!!convoId) {
@@ -88,6 +93,7 @@ Meteor.methods({
         }
       }
     },
+  
     'convos.clearBotTimeout'(convoId) {
       if(!this.isSimulation) {
         if (!!SyncedCron.nextScheduledAtDate(convoId)) {
@@ -95,6 +101,7 @@ Meteor.methods({
         }
       }
     },
+  
     'convos.finishConvoUsers'(convoId) {
       convo = Convos.findOne({_id: convoId});
       convo.users.forEach( (user) => {
@@ -103,12 +110,14 @@ Meteor.methods({
         });
       });
     },
+
     'convos.finishConvo'(convoId){
       Convos.update({_id: convoId}, {
         $set: {closed: true, curSession: 0}
       });
       Meteor.call('convos.clearBotTimeout', convoId);
     },
+
     'convos.finishConvoUserLeft'(convoId){
       convo = Convos.findOne({_id: convoId});
       convo.users.forEach( (user) => {
@@ -117,6 +126,7 @@ Meteor.methods({
         });
       });
     },
+
     'convos.markOffTopic'(convoId){
       userId = this.userId;
       console.log('marking convo off topic');
@@ -126,6 +136,7 @@ Meteor.methods({
         $set: {"users.$.markedOffTopic": true}
       });
     },
+
     'convos.updateRatings'(convoId, rating){
       userId = this.userId;
       console.log(userId);
@@ -182,6 +193,7 @@ Meteor.methods({
       deltaXp = calculateAndUpdateXp(correct, userId);
       return deltaXp;
     },
+
   'convos.makeReady'(convoId){
     userId = this.userId;
     Convos.update({_id: convoId, "users.id": userId}, {
@@ -193,12 +205,14 @@ Meteor.methods({
       });
     }
   },
+
   'convos.incUserEnglishCount'(convoId){
       userId = this.userId;
       Convos.update({_id: convoId, "users.id": userId}, {
         $inc: {"users.$.englishCount": 1}
       });
   },
+
   'convos.resetUserEnglishCount'(convoId){
     userId = this.userId;
     Convos.update({_id: convoId, "users.id": userId}, {
