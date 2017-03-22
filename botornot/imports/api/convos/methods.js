@@ -4,6 +4,7 @@ import { Messages } from '../messages/messages.js';
 import { Random } from 'meteor/random';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { validate } from '/imports/api/messages/validation.js';
+import { startBot } from '/imports/api/utils/bots.js';
 
 Meteor.methods({
     'convos.newRoom'() {
@@ -32,7 +33,7 @@ Meteor.methods({
             return parser.recur().on(time).fullDate();
           },
           job: () => {
-            Meteor.call('startBot', convoId);
+            startBot(convoId);
           },
         });
         console.log(SyncedCron.nextScheduledAtDate(convoId));
