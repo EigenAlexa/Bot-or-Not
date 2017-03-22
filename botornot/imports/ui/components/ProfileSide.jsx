@@ -2,6 +2,7 @@ import React from 'react';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
+import XPBar from '../components/XPBar.jsx';
 import { Button, ProgressBar, Modal} from 'react-bootstrap';
 
 function ProfAttribute(props) {
@@ -117,7 +118,7 @@ export default class ProfileSide extends React.Component {
                   </ProgressBar>
               </div>
               : <div></div>}
-          <ProgressBar active bsStyle="info xpBar" now={(xp/xp_max)*100} label={"XP "+ xp +"/" + xp_max} />
+              <XPBar user={user}/>  
           </div> 
       </div>);
   }

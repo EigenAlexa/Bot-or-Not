@@ -9,7 +9,7 @@ export default LeaderboardContainer = createContainer(() => {
   const query = {
     sort: {rating: -1},
     limit: 25,
-    fields: {username: 1, rating: 1} 
+    fields: {username: 1, rating: 1, level: 1} 
   };
   return {
     users: loading ? [] : Meteor.users.find({}, query).fetch(),

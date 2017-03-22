@@ -45,6 +45,7 @@ export default class LeaderboardPage extends React.Component {
             <tr className="row">
             <td className="col-md-1 leader-elem"></td>
               <td className="col-md-1 leader-elem  leader-header">Username</td>
+              <td className="col-md-1 leader-elem  leader-header">Level</td>
               <td className="col-md-1 leader-elem leader-header">Rating</td>
             </tr>
             </thead>

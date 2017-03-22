@@ -18,6 +18,9 @@ Accounts.onCreateUser(function (options, user) {
                        'rating',
                        'badges',
                        'profPic',
+                       'xp',
+                       'level',
+                       'xp_max'
                        ];
     keepProps.forEach((prop) => {
       user[prop] = anon[prop];
