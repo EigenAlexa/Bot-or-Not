@@ -19,7 +19,7 @@ export default class LeaderboardEntry extends React.Component {
     content = this.getContent();
     console.log(content);
     if (!this.state.ranking) {
-      Meteor.call('users.getUserRanking', content.id, (error, result) => {
+      Meteor.call('users.getUserRanking',  (error, result) => {
         this.setState({'ranking': result});
       });
     }
