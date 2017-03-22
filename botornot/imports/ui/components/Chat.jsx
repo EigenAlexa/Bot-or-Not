@@ -146,7 +146,7 @@ export default class Chat extends React.Component {
       result = validate(text, this.props.room._id);
       if (result.valid) {
         this.setState({inputValidState: null, errorMsgs: null});
-        Meteor.call('convos.updateChat', text, this.props.room._id, Meteor.userId());
+        Meteor.call('convos.updateChat', text, this.props.room._id);
       }else{
         this.setState({inputValidState: "error", errorMsgs: result.errors});
       }
@@ -173,7 +173,7 @@ export default class Chat extends React.Component {
       );
     }
     handleClick(event) { 
-      Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
+      Meteor.call('convos.makeReady', this.props.room._id);
     }
     renderProgressBar(){
       progress = this.props.room.turns / this.props.room.max_turns * 100;
@@ -189,7 +189,7 @@ export default class Chat extends React.Component {
       readyToChat = this.props.room.curSessions == 2;
       if(readyToChat){
         //Meteor.clearInterval(this.progressInterval);  
-        Meteor.call('convos.makeReady', this.props.room._id, Meteor.userId());
+        Meteor.call('convos.makeReady', this.props.room._id);
       }
       isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
       //progress = this.state.progress;
