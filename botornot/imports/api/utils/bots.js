@@ -1,11 +1,11 @@
 import { HTTP } from 'meteor/http';
 import { Convos } from '/imports/api/convos/convos.js';
 
-Meteor.methods({ 'startBot'(roomId) {
-  startBot(roomId);
-}});
+//Meteor.methods({ 'startBot'(roomId) {
+//  startBot(roomId);
+//}});
 
-function startBot(roomId) { 
+startBot = (roomId) => { 
   console.log(roomId, 'roomId');
   convo = Convos.findOne({'_id' : roomId})
   console.log('starting bot', convo);
