@@ -138,7 +138,7 @@ Schema.User = new SimpleSchema({
   xp_max: {
     type: Number,
     label: "MaxXp",
-    defaultValue: 50
+    defaultValue: 301
   },
   level: {
     type: Number,

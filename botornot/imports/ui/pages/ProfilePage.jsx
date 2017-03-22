@@ -3,6 +3,7 @@ import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
 import { ProgressBar } from 'react-bootstrap';
+import  XPBar from '../components/XPBar.jsx';
 
 function ProfAttribute(props) {
   return (<div className="col-xs-12 col-sm-4 profile-attribute">
@@ -97,7 +98,8 @@ export default class ProfilePage extends React.Component {
                 <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
             </ProgressBar>
          </div> : <div></div>}
-          {Meteor.userId() == user._id ? (<ProgressBar active bsStyle="info xpBar" now={(xp/xp_max)*100} label={"XP "+ xp +"/" + xp_max} />) 
+          {Meteor.userId() == user._id ? 
+              <XPBar user={user}/>  
             : <div></div>}
           </div>
       </div>);

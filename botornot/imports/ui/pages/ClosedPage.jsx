@@ -3,6 +3,7 @@ import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { Button, ProgressBar, Modal } from 'react-bootstrap';
 import { updateCookiesOnExit } from '/imports/startup/client/config.js';
+import XPBar from '../components/XPBar.jsx';
 import { Convos } from '/imports/api/convos/convos.js';
 
 export default class ClosedPage extends React.Component {
@@ -36,26 +37,54 @@ export default class ClosedPage extends React.Component {
         );
   }
   renderThanksForRating() {
-    const xp = 46;
-    const xp_max = 50;
+    const xp = this.props.user.xp;
+    const xp_max = this.props.user.xp_max;
+    const xp_update = !!this.state.xp_update ? this.state.xp_update : false;
 
-    return ( <div className="ratingDiv">
-              <p>The other user was </p>
-              { !this.props.user.loading ?
-                this.props.user.lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
-                : ""}
-              <p> You gained +100xp for guessing correctly! </p>
-              <ProgressBar active bsStyle="info xpBar" now={(xp/xp_max)*100} label={"XP "+ xp +"/" + xp_max} />
-              {this.renderNextChatButton()}
-              </div>
-        );
+    if(xp_update){
+      const delta_xp = xp_update.delta_xp;
+      const level_up = xp_update.level_up;
+      const level = this.props.user.level;
+      const correct = xp_update.correct;
+
+      return ( <div className="ratingDiv">
+                <p>The other user was </p>
+                { !this.props.user.loading ?
+                  this.props.user.lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
+                  : ""}
+                { correct ? (<p> You gained +<span className="deltaXP">{delta_xp}</span>xp for guessing <span className="correctGuess"> correctly</span>!</p>) :
+                 (<p> Your guess was <span className="incorrectGuess">wrong</span>! You only gained +<span className="deltaXP">{delta_xp}</span>xp.</p>)}
+                
+                { level_up ? (<div class="levelUp">
+                  <img src="/img/level_up.png" className="congratsImg"/> 
+                  <p >Congratulations! You're now <span className="label label-lg label-warning">Level {level}</span></p>
+                  </div>) : <div></div>}
+
+
+                <XPBar user={this.props.user}/>  
+                {this.renderNextChatButton()}
+                </div>
+          );
+    }
+    else{
+      return ( <div className="ratingDiv">
+                 <span className="feedback fb-bot">Calculating!</span>
+               </div> );
+
+    }
   }
   handleSubmit(event) {
     event.preventDefault();
     const target = event.target;
-    Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name); 
+    this.setState({xp_update: null});
+    Meteor.call('convos.updateRatings', this.props.room._id, Meteor.userId(), target.name,
+      (error, result) => {
+          this.setState({xp_update: result});
+      } // End of call callback.
+    ); 
+
     this.setState({submitted: true, rating: target.name});
-		this.setState({canClose : true});
+    this.setState({canClose : true});
     Tracker.autorun((comp) => {
       user = Meteor.users.findOne({_id: Meteor.userId()});
       console.log(user.curConvo)
@@ -77,7 +106,8 @@ export default class ClosedPage extends React.Component {
         console.log("stopping autorun");
         comp.stop();
       }
-    });
+    }); //End or tracker autorun
+
     //FlowRouter.go('/');
   }
 	renderModal(title,modalChild) {
