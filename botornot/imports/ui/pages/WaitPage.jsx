@@ -32,7 +32,7 @@ export default class WaitPage extends React.Component {
           this.makingNewRoom = true;
           Meteor.call('convos.newRoom', (error, result) => {
             console.log(result, 'newroom id on callback');
-            Meteor.call('convos.addUserToRoom', Meteor.userId(), result, (error, result)=>{this.makingNewRoom = false});
+            Meteor.call('convos.addUserToRoom', result, (error, result)=>{this.makingNewRoom = false});
           });
         } else if (!this.makingNewRoom){
           this.joinRoom();
@@ -42,7 +42,7 @@ export default class WaitPage extends React.Component {
         this.room = this.props.openRooms[0];
         cookies.set('convoroute', this.room.hostID);
         cookies.send();
-        Meteor.call('convos.addUserToRoom', Meteor.userId(), this.room._id);
+        Meteor.call('convos.addUserToRoom', this.room._id);
     }
     resetRoom() {
       console.error("RESETTING ROOM");
