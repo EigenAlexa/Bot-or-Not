@@ -43,8 +43,8 @@ Meteor.methods({
   'users.setRated'(){
     Meteor.users.update({_id: this.userId}, {$set: {rated: false}});
   },
-  'users.getUserRanking'(userId) {
-    user = Meteor.users.findOne({_id: userId})
+  'users.getUserRanking'() {
+    user = Meteor.users.findOne({_id: this.userId})
     rank = Meteor.users.find({rating: {$gt : user.rating}}).count() + 1
     return rank 
   } 
