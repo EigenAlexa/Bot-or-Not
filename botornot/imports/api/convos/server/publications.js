@@ -28,7 +28,8 @@ function getConvos(userId, bot) {
         fields: {
             _id : 1,
             time : 1,
-            'users' : {$elemMatch: {'id' : userId}}
+            'users' : {$elemMatch: {'id' : userId}},
+            'users.rated': 1,
         }
     });
 
