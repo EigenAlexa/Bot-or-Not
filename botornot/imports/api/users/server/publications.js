@@ -32,7 +32,8 @@ Meteor.publishComposite('currentUsers', (convoId) => {
   };
 });
 
-Meteor.publish('currentUser', (userId) => {
+Meteor.publish('currentUser', () => {
+  userId = Meteor.userId();
   if(!userId){
     console.log("no user");
     return [];
