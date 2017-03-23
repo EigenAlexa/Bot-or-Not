@@ -2,9 +2,16 @@ import { Convos } from '../convos.js';
 import { Meteor } from 'meteor/meteor';
 
 Meteor.publish('chat', (roomId) => {
-    return Convos.find({
+    if (!Meteor.userId()) {
+      console.log("user id not defined in chat publication");
+      throw new Meteor.Error('unauthorized');
+    } else {
+      console.log("chat publish user id", Meteor.userId());
+      return Convos.find({
         _id: roomId,
-    });
+        "users.id": Meteor.userId(),
+      });
+    }
 });
 
 function getUserId(userName) {
