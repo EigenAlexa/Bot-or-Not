@@ -12,7 +12,6 @@ profileContainerMeta = ({ params: { params } }) => {
       userHandle = Meteor.subscribe('userProfile', username);
       notConvoHandle = Meteor.subscribe('userNotConvos', username);
       botConvoHandle = Meteor.subscribe('userBotConvos', username);
-      ratingsHandle = Meteor.subscribe('users.ratings');
       userCursor = Meteor.users.find({username: username});
 
       loading = !userHandle.ready();

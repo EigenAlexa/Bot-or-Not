@@ -10,10 +10,6 @@ Meteor.publish('topNUsers', (N) => {
 Meteor.publish("userStatus", function() {
   return Meteor.users.find({ "status.online": true }, { fields: { "status.online" : 1, anon: 1 } });
 });
-Meteor.publish('users.ratings', () => {
-	return UserStatus.connections.find();
-    // return Meteor.users.find({}, { fields :{ rating : 1} });
-});
 
 Meteor.publishComposite('currentUsers', (convoId) => {
   //convo = Convos.findOne({users: {$in: [userId]}});
