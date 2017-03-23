@@ -3,23 +3,33 @@ import { Convos } from '/imports/api/convos/convos.js';
 
 Meteor.methods({
   'users.updateAnonymousUsername'() {
-    Meteor.users.update({_id: this.userId}, {
-      $set: {
-        username: faker.commerce.productAdjective() + faker.name.firstName(), 
-        firstTime: true,
-        anon : true,
+    if (!!this.userId) {
+      user = Meteor.users.findOne({_id: this.userId});
+      if (!!user) {
+        Meteor.users.update({_id: this.userId}, {
+          $set: {
+            username: faker.commerce.productAdjective() + faker.name.firstName(), 
+            firstTime: true,
+            anon : true,
+          }
+        });
       }
-    });
+    }
   },
   'users.exitConvo'() {
-    Meteor.users.update({_id: this.userId}, {
-      $set: {in_convo: false, rated: false, isReady: false}
-    });
-    user = Meteor.users.findOne({_id: this.userId});
-    convo = Convos.findOne({_id: user.curConvo});
-    console.log("exiting convo ", convo._id, " user: ", this.userId);
-    console.log("convo sessions ", convo.curSessions);
-    Meteor.call('convos.finishConvoUserLeft', convo._id);
+    if (!!this.userId) {
+      Meteor.users.update({_id: this.userId}, {
+        $set: {in_convo: false, rated: false, isReady: false}
+      });
+      user = Meteor.users.findOne({_id: this.userId});
+      if (!!user && !!user.curConvo) {
+        convo = Convos.findOne({_id: user.curConvo});
+        if (!!convo && !!convo._id) {
+          console.log("exiting convo ", convo._id, " user: ", this.userId);
+          Meteor.call('convos.finishConvoUserLeft', convo._id);
+        }
+      }
+    }
   },
   'getBotUsername'(magicphrase){
     if(magicphrase=== Meteor.settings.magicPhrase) {
@@ -40,11 +50,17 @@ Meteor.methods({
     }
   }, 
   'users.setRated'(){
-    Meteor.users.update({_id: this.userId}, {$set: {rated: false}});
+    if (!!this.userId) {
+      Meteor.users.update({_id: this.userId}, {$set: {rated: false}});
+    }
   },
-  'users.getUserRanking'() {
-    user = Meteor.users.findOne({_id: this.userId})
-    rank = Meteor.users.find({rating: {$gt : user.rating}}).count() + 1
-    return rank 
+  'users.getUserRanking'(userId) {
+    if (!!userId) {
+      user = Meteor.users.findOne({_id: userId})
+      if (!!user && !!user.rating) {
+        rank = Meteor.users.find({rating: {$gt : user.rating}}).count() + 1
+        return rank 
+      }
+    }
   } 
 });
