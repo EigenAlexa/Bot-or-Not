@@ -19,7 +19,6 @@ Meteor.methods({
     convo = Convos.findOne({_id: user.curConvo});
     console.log("exiting convo ", convo._id, " user: ", this.userId);
     console.log("convo sessions ", convo.curSessions);
-    Meteor.call('convos.finishConvo', convo._id);
     Meteor.call('convos.finishConvoUserLeft', convo._id);
   },
   'getBotUsername'(magicphrase){
