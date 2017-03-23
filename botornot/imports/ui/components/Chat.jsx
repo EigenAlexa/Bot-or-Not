@@ -129,8 +129,7 @@ export default class Chat extends React.Component {
     }
     handleRateButton(event) {
       if (this.props.room.turns >= Meteor.settings.public.ratingTurns) {
-        Meteor.call('convos.finishConvo', this.props.room._id);
-        Meteor.call('convos.finishConvoUsers', this.props.room._id);
+        Meteor.call('convos.finishConvoUserStayed', this.props.room._id);
       } else {
         Session.set('turnsLeft', Meteor.settings.public.ratingTurns - this.props.room.turns);
         Session.set('notifyNumTurns', "true");
