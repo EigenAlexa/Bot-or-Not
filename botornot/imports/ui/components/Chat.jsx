@@ -90,9 +90,10 @@ export default class Chat extends React.Component {
           return this.renderPrepScreen();
         }
         messages = this.props.messages;
+        username = Meteor.users.findOne({'_id' : Meteor.userId()}).username;
+
         Messages = messages.map(msg => {
-          className = msg.user == Meteor.userId() ? "from-me" : "from-them";
-          //user = Meteor.users.findOne({_id: msg.user}).username;
+          className = msg.user == username ? "from-me" : "from-them";
           return(
             <Message 
                 key={msg._id}

@@ -42,13 +42,14 @@ Meteor.methods({
   
     'convos.updateChat'(text, convoId) {
       userId = this.userId;
+      username = Meteor.users.findOne({'_id': userId}).username;
       convoObj = Convos.findOne({'_id' : convoId});
       convoClosed = !!convoObj ? convoObj.closed : true;
 
       result = validate(text, convoId, true);
       if(result.valid && !convoClosed){
         const msgId = Messages.insert({
-          user: userId,
+          user: username,
           message: text,
           time: Date.now(),
           convoId: convoId
