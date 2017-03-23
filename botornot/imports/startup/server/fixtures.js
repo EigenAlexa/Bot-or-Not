@@ -1,4 +1,3 @@
-import { seedCollections } from "meteor/maxjohansen:collection-faker";
 import { Convos } from '/imports/api/convos/convos.js';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { Messages } from '/imports/api/messages/messages.js';
@@ -15,9 +14,6 @@ Meteor.startup(() => {
       });    
     }
 
-  /**  seedCollections(collectionsToSeed, {
-      numItemsPerCollection : 15,
-    }); **/
 
     if (Prompts.find().count() == 0) {
       PromptList.forEach((promp)=> {
