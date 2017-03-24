@@ -185,12 +185,14 @@ Meteor.methods({
             console.log("setting rated to true for: " + filteredUsers[0].id);
           }
           prob = Meteor.users.findOne({_id: userId}).prob;
-          correct = Random.fraction() < prob;
+          correct = Random.fraction() < prob; 
 
-          if(prob >= 0.9)
+          if(prob >= 0.65)
             probInc = 0;
           else
-            probInc = 0.005;
+            probInc = 0.001;
+
+
           if(rating == 'not') {
             if(correct)
               lastOtherUser = rating;
@@ -203,6 +205,7 @@ Meteor.methods({
               lastOtherUser = 'not';
           }
 
+
     // Feature regression;
     // The thought process here is we let the players be deliusional 
     // 95.5 percent of the time.
@@ -213,13 +216,13 @@ Meteor.methods({
     //       else
     //           lastOtherUser = convo.hasBot ? 'not' : 'bot';
     // =======
-          if (!!lastOtherUser && !!correct) {
+          if (!!lastOtherUser) {
             Meteor.users.update({_id: userId}, {
               $inc: {prob: probInc},
               $set: {lastOtherUser: lastOtherUser}
             });
           }
-          
+          console.log("Correct", correct);
           deltaXp = calculateAndUpdateXp(correct, userId);
           return deltaXp;
         }
