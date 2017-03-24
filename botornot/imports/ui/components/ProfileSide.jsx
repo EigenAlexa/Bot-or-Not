@@ -103,10 +103,10 @@ export default class ProfileSide extends React.Component {
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
           <div className="profile-username">{anon ? "ANONYMOUS" : shortuser} </div>
-          <div className="profile-level">
-<span className="label label-lg label-warning">Level {level}</span>
- </div>
-          <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+            <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+            <div className="profile-level">
+              <span className="label label-lg label-warning">Level {level}</span>
+            </div>
           </div>  
           <div className="col-xs-12 col-sm-12 profile-attribute">
             {sessions >0 ?   
