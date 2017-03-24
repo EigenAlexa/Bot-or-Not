@@ -169,7 +169,7 @@ Schema.User = new SimpleSchema({
   prob: {
     type: Number,
     label: 'prob',
-    defaultValue: 0.75,
+    defaultValue: 0.50,
     decimal: true
   },
   rated: {

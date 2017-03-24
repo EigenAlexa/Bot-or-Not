@@ -11,7 +11,8 @@ class HomePage extends React.Component {
 		}
 	}
   renderBG() {
-    return <Media>
+    return <Media
+       volume={0}>
       <div className="media">
         <BotNotTitle />
         <div className="media-player">
@@ -19,6 +20,7 @@ class HomePage extends React.Component {
               className="background-video" 
               autoPlay="true"
 							loop="true"
+              volume={0}
               src={this.state.videoURL}/>
         </div>
 				<div id="video-overlay"></div>
