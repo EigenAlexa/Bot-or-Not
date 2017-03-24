@@ -48,7 +48,8 @@ profileContainerMeta = ({ params: { params } }) => {
       return {
         user: null,
         username: null,
-        signedIn:  false
+        signedIn:  false,
+        userExists : false
       };
     }
   

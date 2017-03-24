@@ -50,7 +50,7 @@ FlowRouter.route('/leaderboards', {
 FlowRouter.route('/chat', {
 	name: 'chat',
 	action() {
-    ReactLayout.render(Screen, {children:<WaitPageContainer />});
+    ReactLayout.render(Screen, {children:<WaitPageContainer />, customFooter: true});
 	},
   triggersExit: (context) => {
     console.log('exited chat');

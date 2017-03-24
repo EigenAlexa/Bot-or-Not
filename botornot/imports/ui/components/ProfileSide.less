@@ -1,11 +1,12 @@
 .profile-side {
-    font-family: 'Cabin', arial;
-    font-size: 18px;
+    font-family: 'Raleway', arial;
+    font-size: 17.5;
     transition: all 0.4s ease-in-out;
     padding-top: 25px;
     padding-bottom: 15px;
     float: left;
     top: 70px;
+    bottom: 0px;
     height: 100%;
     background-color: #222;
     left: 0;
@@ -81,4 +82,25 @@
 
 .progress {
     background-color: rgba(0,0,0,0);
+}
+
+
+@media (min-height: 820px){
+    .profile-side .footer-lower {
+        position: absolute;
+        margin-bottom: 50px;
+    }
+}
+
+
+@media (max-height: 820px){
+    .profile-side .footer-lower {
+        position: relative;
+        
+    }
+}
+
+.profile-side .footer-lower .row {
+    margin-right: auto;
+    margin-left:  auto;
 }
