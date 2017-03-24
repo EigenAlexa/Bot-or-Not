@@ -98,7 +98,7 @@ export default class Screen extends React.Component {
                     <NavBar /> 
                 </header>
                  {this.props.children}
-              <Footer />
+              {!this.props.customFooter ? <Footer /> : ""}
               <NotificationSystem ref='notificationsystem' />
             </div>
         );

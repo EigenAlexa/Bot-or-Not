@@ -4,6 +4,7 @@ import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
 import XPBar from '../components/XPBar.jsx';
 import { Button, ProgressBar, Modal} from 'react-bootstrap';
+import Footer from '/imports/ui/components/Footer.jsx';
 
 function ProfAttribute(props) {
   return (<div className="col-lg-12 profile-attribute">
@@ -49,6 +50,7 @@ export default class ProfileSide extends React.Component {
               title={"Sessions"}
               value={sessions}/> 
           </div>
+          <Footer />
         </div>);
     }
     else{
