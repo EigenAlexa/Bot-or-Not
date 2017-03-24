@@ -103,7 +103,7 @@ export default class Chat extends React.Component {
         user = Meteor.user();
         const showBot = this.props.room.turns > Meteor.settings.public.ratingTurns && !this.props.room.closed;
         const rateButtonClass = showBot ? "" : "btn-disabled";
-        return (<div className="col-sm-9">
+        return (<div className="col-sm-12">
                   <div className="col-sm-12 col-md-9">
                   <div id="modal-div"> </div>
                     <ChatPanel messages={Messages}/>
