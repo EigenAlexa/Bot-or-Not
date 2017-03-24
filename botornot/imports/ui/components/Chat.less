@@ -329,5 +329,54 @@
 }
 
 .chat-frame{
-  margin-left: 344px;
+  transition: all 0.4s ease-in-out;
+}
+.chat-frame .container-fluid{
+  max-width: 1170px;
+}
+
+
+@media (max-width: 1200px){
+  .chat-frame{
+    margin-left: 28.6666667%;
+  }
+
+
+  .profile-side{
+      width: 28.6666667%;
+  }
+}
+
+
+@media (min-width:1200px) {
+  .chat-frame{
+    margin-left: 344px;
+  }
+
+
+  .profile-side{
+      width: 344px;
+  }
+
+}
+
+
+@media (max-width:923px) {
+  .chat-frame{
+    margin-left: 258.44px;
+  }
+
+
+  .profile-side{
+      width: 258.44px;
+  }
+
+}
+
+
+@media (max-width:768px) {
+  .chat-frame{
+    margin-left: 0;
+  }
+
 }

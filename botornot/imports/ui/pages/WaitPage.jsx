@@ -90,12 +90,14 @@ export default class WaitPage extends React.Component {
           <div className="container-with-sidebar">
             <ProfileSideContainer params={{ params: {username: username}}} />
             <div className="chat-frame">
-              <h2 className="page-header">
-                CHAT
-              </h2>
-              <div className ="row">
-                <div>
-                  { !noRooms || inconvo ? this.getContent() : ""}
+              <div className="container-fluid">
+                <h2 className="page-header">
+                  CHAT
+                </h2>
+                <div className ="row">
+                  <div>
+                    { !noRooms || inconvo ? this.getContent() : ""}
+                  </div>
                 </div>
               </div>
             </div>

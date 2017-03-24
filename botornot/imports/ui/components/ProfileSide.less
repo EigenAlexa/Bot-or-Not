@@ -1,22 +1,21 @@
 .profile-side {
     font-family: 'Cabin', arial;
     font-size: 18px;
-    border: 1px solid;
-    border-color: #dddddd;
+    transition: all 0.4s ease-in-out;
     padding-top: 25px;
     padding-bottom: 15px;
     float: left;
     top: 70px;
     height: 100%;
-    border-left: none;
     background-color: #222;
     left: 0;
     color: #FFF;
-    width: 344px;
     padding-left: 30px;
     padding-right: 40px;
     position: relative;
     height: 100%;
+    box-shadow: 2px 0px 20px 0px #888888;
+
 }
 
 
@@ -70,16 +69,16 @@
     font-weight: bold;
     text-transform: uppercase;
     color: @fg;
-    font-size: 30px;
-}
-@media (min-width: 1000px) {
-.profile-side .profile-username { 
     font-size: 25px;
+}
+
+
+@media (min-width: 1100px) {
+.profile-side .profile-username { 
+    font-size: 30px;
 }
 }
 
-@media (min-width: 1200px) {
-.profile-side .profile-username { 
-    font-size: 30px;
-}
+.progress {
+    background-color: rgba(0,0,0,0);
 }

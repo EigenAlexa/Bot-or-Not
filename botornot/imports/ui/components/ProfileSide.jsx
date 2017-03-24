@@ -38,7 +38,7 @@ export default class ProfileSide extends React.Component {
       const badges = user.badges;
       const isAnon = user.anon;
       return (
-        <div className="profile-side col-sm-3 hidden-xs">
+        <div className="profile-side hidden-xs">
           {this.getHeader(isAnon)}
           <div className="row">
             <ProfAttribute 
@@ -52,7 +52,7 @@ export default class ProfileSide extends React.Component {
         </div>);
     }
     else{
-      return(<div className="profile-side col-sm-3 hidden-xs">
+      return(<div className="profile-side hidden-xs">
         </div>);
     }
   }
