@@ -6,7 +6,7 @@ import ProfileSide from '/imports/ui/components/ProfileSide.jsx';
 
 profileContainerMeta = ({ params: { params } }) => {
     username = params.username;
-    console.log(username);
+
 
     if (!!username) {
       userHandle = Meteor.subscribe('userProfile', username);
@@ -22,7 +22,7 @@ profileContainerMeta = ({ params: { params } }) => {
         {'users.rated': 'not'},  
         {limit : 5}).fetch();
 
-      console.log(Convos.find().fetch(), 'finding convos');
+
       botConvos = convosLoading ? [] : Convos.find(
         {'users.rated': 'bot'},
         {limit : 5}).fetch();

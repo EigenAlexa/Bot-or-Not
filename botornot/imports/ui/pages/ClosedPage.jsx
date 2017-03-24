@@ -79,6 +79,10 @@ export default class ClosedPage extends React.Component {
     this.setState({xp_update: null});
     Meteor.call('convos.updateRatings', this.props.room._id, target.name,
       (error, result) => {
+          if(!!error)
+            console.log(error);
+          
+          console.log(result);
           this.setState({xp_update: result});
       } // End of call callback.
     ); 
