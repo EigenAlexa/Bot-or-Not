@@ -4,7 +4,7 @@ import React from 'react';
 var ContactPage = React.createClass({
   render: function() {
     return (
-      <div>
+      <div className="container">
         <title>Bot or Not</title>
         {/* deleted end section */}
         {/* Section Background */}

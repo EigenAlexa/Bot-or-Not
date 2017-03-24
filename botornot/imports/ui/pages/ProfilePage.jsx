@@ -46,6 +46,7 @@ export default class ProfilePage extends React.Component {
       const rating = user.rating;
       const badges = user.badges;
       return (
+        <div className="container">
         <div className="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 profile">
           <div className="profile-top">
             <div className="profile-username">{username}</div>
@@ -65,6 +66,7 @@ export default class ProfilePage extends React.Component {
               value={rating.toFixed(2)}/>
           </div>
           {this.props.convosLoading ?  <p>Loading conversations. </p> : this.getConvos()}
+        </div>
         </div>);
   }
   getHumanity(){

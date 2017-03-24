@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import NavBar from '/imports/ui/components/NavBar.jsx';
 import Footer from '/imports/ui/components/Footer.jsx';
+import { ProfileSideContainer } from '/imports/ui/containers/ProfileContainer.jsx';
 import NotificationSystem from 'react-notification-system';
 import Favicon from 'react-favicon';
 
@@ -96,9 +97,7 @@ export default class Screen extends React.Component {
                     <Favicon url={["/icon.ico"]} />
                     <NavBar /> 
                 </header>
-                  <div className="container">
                  {this.props.children}
-                 </div>
               <Footer />
               <NotificationSystem ref='notificationsystem' />
             </div>

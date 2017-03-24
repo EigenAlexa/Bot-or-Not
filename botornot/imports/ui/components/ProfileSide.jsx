@@ -150,11 +150,7 @@ export default class ProfileSide extends React.Component {
         loading,
     } = this.props;
 
-    return (
-        <div> 
-          {this.props.userExists && this.props.loading ? this.getLoading() : this.getContent()}
-        </div>
-    );
+    return this.props.userExists && this.props.loading ? this.getLoading() : this.getContent();
   }
 }
 
