@@ -330,9 +330,13 @@
 
 .chat-frame{
   transition: all 0.4s ease-in-out;
+  margin-top: 70px;
+  height: calc(100% ~"-" 70px);
 }
 .chat-frame .container-fluid{
   max-width: 1170px;
+  margin-top: 70px;
+
 }
 
 
@@ -374,9 +378,15 @@
 }
 
 
-@media (max-width:768px) {
+@media (max-width:767px) {
   .chat-frame{
     margin-left: 0;
   }
 
+}
+
+@media (min-width: 768px){
+  .chat-frame{
+    box-shadow: inset 1px 12px 20px -9px #888888;
+  }
 }
