@@ -60,7 +60,7 @@ class NavBar extends React.Component {
   // }
   render() {
     routeName = FlowRouter.current().route.name;
-    console.log(routeName);
+
     let navbar_class = "navstyle-";
     let home_screen_align = ""
     if(this.props.isHome) {
@@ -112,8 +112,6 @@ const NavBarContainer = createContainer(() => {
   const isHome = routeName === 'home' || (routeName === 'logout' && lastRoute === 'home');
   const userLoggedIn = !Meteor.loggingIn() && Meteor.user();
   const notAnon = Meteor.user() && !Meteor.user().anon;
-  console.log(Meteor.user() && Meteor.user().anon);
-  console.log(Meteor.user());
 	return {
 		loadingUserCount,
 		usersOnline,

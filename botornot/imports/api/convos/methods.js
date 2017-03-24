@@ -218,10 +218,10 @@ Meteor.methods({
               $inc: {prob: probInc},
               $set: {lastOtherUser: lastOtherUser}
             });
-
-            deltaXp = calculateAndUpdateXp(correct, userId);
-            return deltaXp;
           }
+          
+          deltaXp = calculateAndUpdateXp(correct, userId);
+          return deltaXp;
         }
       }
     },

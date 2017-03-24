@@ -27,7 +27,7 @@ export default class ProfileSide extends React.Component {
       if (!userExists) {
           return (<p> Loading user.</p>);
       }
-      console.log(user);
+
       if(!!user){
 
       
