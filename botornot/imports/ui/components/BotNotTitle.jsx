@@ -37,14 +37,14 @@ class BotNotTitle extends React.Component {
 	// }
 
   render() {
-		if (Math.floor(this.props.media.currentTime / 5) % 2 == 0) {
+		if (Math.floor(this.props.media.currentTime / 3) % 2 == 0) {
 		  title = this.renderBot() 
 		} else {
 			title =  this.renderNot();
 		}
     return ( <div className="centerText">
       {title}
-      <div className="home-abt">Blurring the line between <span className="bot">Chatbot</span> and <span className="not">Human</span></div>
+      <div className="home-abt">Blurring the line between <span className="bot">A.I.</span> and <span className="not">Humans</span></div>
       <a className="btn custom-btn home-btn" href='/chat'>
         Start Chatting</a>
       </div>);

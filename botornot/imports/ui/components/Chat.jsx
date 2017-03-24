@@ -195,12 +195,16 @@ export default class Chat extends React.Component {
       
       return (
         <div className="loading-btn word-wrap">
-         <h3>Looking for chat room.</h3>
         
         <div className="progress-for-loader">
-          <img className="loading-anim" src="/img/loading.gif"/>
+          <div className="sk-folding-cube">
+            <div className="sk-cube1 sk-cube"></div>
+            <div className="sk-cube2 sk-cube"></div>
+            <div className="sk-cube4 sk-cube"></div>
+            <div className="sk-cube3 sk-cube"></div>
+          </div>
         </div>
-        </div>);
+      </div>);
     }
           /*<ProgressBar  now={progress} active striped bsStyle="info"/>*/ 
    /* renderPrompt(){
