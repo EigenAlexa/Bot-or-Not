@@ -26,6 +26,7 @@ export default class LeaderboardPage extends React.Component {
       number={index +1 } />  
     ));
     return (
+      <div className="container">
       <div className="col-xs-12 col-sm-offset-1 col-sm-10">
         <title>Bot or Not</title>
         <h2 className="page-header">
@@ -55,6 +56,7 @@ export default class LeaderboardPage extends React.Component {
             </table>
           </div>
         </div>
+      </div>
       </div>
     );
   }
