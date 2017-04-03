@@ -18,6 +18,7 @@ import WaitPageContainer from '/imports/ui/containers/WaitPageContainer.jsx';
 import { ProfilePageContainer } from '/imports/ui/containers/ProfileContainer.jsx';
 import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx';
 import BugReport from '/imports/ui/components/BugReport.jsx';
+import FourOhFourPage from '/imports/ui/pages/404Page.jsx';
 
 
 FlowRouter.wait();
@@ -94,7 +95,11 @@ FlowRouter.route("/closed", {
 FlowRouter.triggers.exit(context => {
   Session.set('lastRoute', context.route.name);
 });
-  
+FlowRouter.notFound = {
+  action: () => {
+		ReactLayout.render(Screen, {children:<FourOhFourPage/>});
+  }
+};  
 
 // UserAccounts Routes
 AccountsTemplates.configure({
