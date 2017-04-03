@@ -8,7 +8,8 @@ Accounts.onCreateUser(function (options, user) {
     // if facebook user, get their profile picture
     //
   userId = Meteor.userId();
-  console.log(userId);
+  console.log('meteor userid acc create user', userId);
+  console.log('user param acc create user', user._id);
   anon = Meteor.users.findOne({_id: userId});
   if (!!userId && userId != user._id && !!anon && anon.anon )  {
     //doc._id = userId;
@@ -32,7 +33,7 @@ Accounts.onCreateUser(function (options, user) {
         let time = new Date(Date.now() + 1500);
         console.log("scheduling for: " + time);
         ret = parser.recur().on(time).fullDate();
-        console.log(ret);
+        console.log('return on time', ret);
         return ret;
       },
       job: () => {
