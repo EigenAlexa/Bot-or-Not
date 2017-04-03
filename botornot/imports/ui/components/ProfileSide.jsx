@@ -99,8 +99,15 @@ export default class ProfileSide extends React.Component {
     const xp = !!user.xp ? user.xp : 15;
     const xp_max = !!user.xp_max ? user.xp_max : 50;
     const level = !!user.level ? user.level : 1;
-    const prefix = this.props.isSelfProfile ? "you're" : ( <span>
-      <span className='userColor'> {username} </span> is </span>);
+
+    const prefix = this.props.isSelfProfile ? "you" : ( <span className='userColor'> {username} </span> );
+    const isBot = botratings > notratings;
+    const equalRatings = botratings == notratings;
+    const userType = isBot ? "a bot": "human";
+    const frequency = "typically"; // TODO add freq
+
+    const playerDesc = equalRatings ? <p> Players rate {prefix} bot and not equally </p> : <p>Players {frequency} rate {prefix} as {userType}.</p>;
+
     return (       
       <div>   
          <div className="col-xs-12 col-sm-12 profile-attribute">
@@ -113,13 +120,13 @@ export default class ProfileSide extends React.Component {
           <div className="col-xs-12 col-sm-12 profile-attribute">
             {sessions >0 ?   
               <div>
-                <p> Players think {prefix} {botratings > notratings ? "a bot.": "human."} </p>
+              {playerDesc} 
                 <ProgressBar>
                       <ProgressBar active bsStyle="danger botBar" now={(botratings/sessions)*100} key={2} label={"BOT: "+ botratings} />
                       <ProgressBar active  bsStyle="success notBar" now={(notratings/sessions)*100} key={1} label={"NOT: " + notratings} />
                   </ProgressBar>
               </div>
-              : <div></div>}
+              :""} 
               <XPBar user={user}/>  
           </div> 
       </div>);
