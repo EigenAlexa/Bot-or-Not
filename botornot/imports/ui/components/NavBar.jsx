@@ -22,9 +22,6 @@ class NavBar extends React.Component {
       const username = this.user().username;
       navLinks.push(['/profile/' + username, 'Profile']);
       navLinks.push(['/logout', 'Logout']);
-    } else if (this.props.userLoggedIn && !this.props.notAnon) {
-      navLinks.push(['/sign-in-anon', 'Sign In']);
-      navLinks.push(['/sign-up', 'Sign Up']);
     } else {
       navLinks.push(['/sign-in', 'Sign In']);
       navLinks.push(['/sign-up', 'Sign Up']);
