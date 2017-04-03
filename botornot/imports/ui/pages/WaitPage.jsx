@@ -12,10 +12,12 @@ export default class WaitPage extends React.Component {
       //this.makeOrJoinRoom = _.debounce(this.makeOrJoinRoom, 5000);
       this.resetRoom = _.debounce(this.resetRoom, 3000);
     }
+
     componentWillMount() {
       this.makingNewRoom = false;
       this.resetting = false;
     }
+
     getContent() {
         const roomId = this.room._id;
         const userId = Meteor.userId();
@@ -38,12 +40,15 @@ export default class WaitPage extends React.Component {
           this.joinRoom();
         } 
     }
+
     joinRoom() {
-        this.room = this.props.openRooms[0];
-        cookies.set('convoroute', this.room.hostID);
-        cookies.send();
-        Meteor.call('convos.addUserToRoom', this.room._id);
+      this.room = this.props.openRooms[0];
+      cookies.set('convoroute', this.room.hostID);
+      cookies.send();
+      console.log('add user', Meteor.userId(), 'to room', this.room._id);
+      Meteor.call('convos.addUserToRoom', this.room._id);
     }
+
     resetRoom() {
       console.error("RESETTING ROOM");
         exitCb = (error, result) => {
@@ -56,6 +61,7 @@ export default class WaitPage extends React.Component {
         Meteor.call('users.exitConvo', exitCb.bind(this));
       this.resetting = true;
     }
+
     render() {
         const { openRooms, connected, loading, user } = this.props;
         if(!loading && !user){
@@ -76,16 +82,12 @@ export default class WaitPage extends React.Component {
             }
           } 
           inconvo = user.in_convo;
-        //} else if (this.resetting && this.props.openRooms.length < 2) {
-        //  Meteor.clearTimeout(this.resetTimeout);
-        //  noRooms = true;
-        //  inconvo = false;
         } else{
           noRooms = true;
           inconvo = false;
         }
         const username = !!Meteor.user() ? Meteor.user().username : null;
-
+        console.log('noRooms', !noRooms || inconvo, noRooms, inconvo);
         return (
           <div className="container-with-sidebar">
             <ProfileSideContainer params={{ params: {username: username}}} />
@@ -105,6 +107,7 @@ export default class WaitPage extends React.Component {
         );
     }
 }
+
 WaitPage.propTypes = {
     openRooms: React.PropTypes.array,
     connected : React.PropTypes.bool,

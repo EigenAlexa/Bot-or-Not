@@ -33,7 +33,7 @@ function getConvos(userId, bot) {
         }
     });
 
-    console.log(cursor.fetch());
+    console.log('cursor.fetch()',cursor.fetch());
     return cursor;
 }
 
@@ -55,7 +55,6 @@ Meteor.publish('userBotConvos', (userName) => {
 
 // returns details about the open rooms
 Meteor.publish('openrooms', () => {
-    console.log(process.env.HOSTNAME);
     return Convos.find({
         curSessions : {$lt : 2},
         closed : false,

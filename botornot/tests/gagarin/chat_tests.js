@@ -20,11 +20,14 @@ describe('chat connection suite', () => {
       
   });
   it('should connect two logged in users when they route to chat', () => {
+    console.log('signUpOnPage test1');
     return utils.signUpOnPage(client1, 'tester1', 'tester')
       .then(() => {
+        console.log('signUpOnPage test1');
         return utils.signUpOnPage(client2, 'tester2', 'tester');  
       })
       .then(() => {
+        console.log('connectUsersToChat');
         return utils.connectUsersToChat(client1, client2, 30000);
       })
   });

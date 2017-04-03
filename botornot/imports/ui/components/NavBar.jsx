@@ -74,7 +74,6 @@ class NavBar extends React.Component {
     }
 
     const displayActiveUsers= this.props.usersOnline >= 10;
-		console.log(this.props.usersOnline, displayActiveUsers, 'usersOnline.com');
     return (
     <div className={navbar_class}>
       <nav className="navbar navbar-default navbar-fixed-top">

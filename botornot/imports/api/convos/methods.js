@@ -25,18 +25,20 @@ Meteor.methods({
         });
         Messages.update({_id: msgId}, {$set: {convoId: convoId}});
         timeout = !!Meteor.settings.timeout ? Meteor.settings.timeout : 5;
+        // setup cron job to start a bot
         SyncedCron.add({
           name: convoId,
           schedule: (parser) => {
             let time = new Date(Date.now() + timeout * 1000);
-            console.log(time);
+            console.log('timenow',time);
             return parser.recur().on(time).fullDate();
           },
           job: () => {
             startBot(convoId);
           },
         });
-        console.log(SyncedCron.nextScheduledAtDate(convoId));
+        
+        console.log('SyncedCron', SyncedCron.nextScheduledAtDate(convoId));
         return convoId;
       }
     },
@@ -91,20 +93,41 @@ Meteor.methods({
         if (!!convo && convo.curSessions < 2) { 
           // check that the convo doesn't already have the user 
           // and the conversation has less than 2 people in it
-
-          console.log("adding user: ", userId, "to room ", convoId);
+          let rn = Random.id();
+          // console.log("adding user: ", userId, "to room ", convoId);
+          console.log(rn, 'convo pre adding for user', userId, ':'convo);
           Meteor.users.update({_id: userId}, {
             $set: {in_convo: true, curConvo: convoId, rated: false}
           });
-          Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
+          numUpdated = Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
             $push: {users: {id: userId, rated: 'none', isReady: false, englishCount: 0, markedOffTopic: false}},
             $inc: {curSessions: 1}
           });
+          console.log('updated',numUpdated, 'docs in convo update');
           convo = Convos.findOne({_id: convoId});
           if (!!convo && convo.curSessions > 1) {
             Meteor.call('convos.clearBotTimeout', convoId);
           }
+          console.log('convo post adding', userId, ':', convo);
+          if ( !userAddedToConvo(Meteor.users.findOne({_id : userId}), convo) ) {
+            throw new Meteor.Error('user', userId, ' was not successfully added to convo');
+          }
+        } else if (!convo) {
+          console.log('convo is undefined. Checking if convoId is valid');
+          checkConvo = Convos.findOne({_id : convoId});
+          if (!!checkConvo) {
+            console.log('convoId is valid, but user', userId, 'has already been added to room');
+            console.log(checkConvo);
+          }
+          else {
+            console.log('could not find convo with convoID', convoId);
+          }
+        } else {
+          console.log('curSessions is erroneously > 2', convo);
         }
+      }
+      else {
+        console.log('add user to room failed; convoId:', convoId, '; userId:', userId);
       }
     },
   
@@ -289,6 +312,7 @@ function calculateAndUpdateXp(correct, userId){
   const deltaXP = Math.ceil(Math.max(Math.floor(baseXPIncr + randBonus),22)*multiplier);
 
   const newXP = Math.round(curXP+ deltaXP);
+  console.log('user', 'num_convs', 'baseXPIncr', 'randBonux');
   console.log(cur_user);
   console.log(num_convs);
   console.log(baseXPIncr);
@@ -323,3 +347,20 @@ function levelUp(userId, remainingXP){
   });
 }
 
+function userAddedToConvo(userObj, convoObj) {
+  /* Checks whether a user has been added to the convo */
+  let users = convoObj.users;
+  let userId = userObj._id;
+  if (userObj.curConvo != convoObj._id) {
+    console.log('curConvo of user', userId, 'doesn\'t match the convoObj');
+    console.log('expected:', convoObj._id, '; actual:', userObj.curConvo);
+    return false;
+  }
+  for (let i = 0; i < users.length; i ++) {
+    let curUser = users[i];
+    if (curUser.id == userId) {
+      return true;
+    }
+  }
+  return false;
+}
