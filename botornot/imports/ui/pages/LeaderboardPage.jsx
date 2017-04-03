@@ -37,7 +37,7 @@ export default class LeaderboardPage extends React.Component {
           {!!this.props.currentUser ? (
           <div className="leader-info">
             <h1 className="leader-username">Username: <a href={"/profile/" + this.props.currentUser.username}>{this.props.currentUser.username}</a></h1>
-            <h2 className="leader-username">Rank: #{this.state.rank}</h2>
+            {!!this.state.rank ? <h2 className="leader-username">Rank: #{this.state.rank}</h2> : "" }
           </div>)
           : "" }
           <div className="leaderboardentries">
