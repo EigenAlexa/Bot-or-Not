@@ -22,7 +22,7 @@ export default class ProfilePage extends React.Component {
   componentWillUpdate(){
     console.log(this.state.rank)
     if(!this.props.loading && this.state.rank < 0) {
-        Meteor.call('users.getUserRanking', (error, result) => {
+        Meteor.call('users.getUserRanking', this.props.user._id, (error, result) => {
         if (!error){
           this.setState({'rank': result});
         } else {

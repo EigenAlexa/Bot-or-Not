@@ -9,7 +9,7 @@ export default class LeaderboardPage extends React.Component {
   }
   componentDidMount() {
     if(Meteor.userId()){
-      Meteor.call('users.getUserRanking', (error, result) => {
+      Meteor.call('users.getUserRanking', Meteor.userId(), (error, result) => {
         if (!error){
           this.setState({'rank': result});
         } else {
