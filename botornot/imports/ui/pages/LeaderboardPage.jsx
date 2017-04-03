@@ -8,8 +8,8 @@ export default class LeaderboardPage extends React.Component {
     this.state = {rank: 0}
   }
   componentDidMount() {
-    if(Meteor.userId()){
-      Meteor.call('users.getUserRanking', Meteor.userId(), (error, result) => {
+    if(Meteor.user()){
+      Meteor.call('users.getUserRanking', Meteor.user().username, (error, result) => {
         if (!error){
           this.setState({'rank': result});
         } else {
@@ -21,7 +21,7 @@ export default class LeaderboardPage extends React.Component {
   render() {
     LeaderboardEntries = this.props.users.map((user, index) => ( 
       <LeaderboardEntry 
-      key={user._id} 
+      key={user.username} 
       user={user}
       number={index +1 } />  
     ));

@@ -54,9 +54,9 @@ Meteor.methods({
       Meteor.users.update({_id: this.userId}, {$set: {rated: false}});
     }
   },
-  'users.getUserRanking'(userId) {
-    if (!!userId) {
-      user = Meteor.users.findOne({_id: userId})
+  'users.getUserRanking'(username) {
+    if (!!username) {
+      user = Meteor.users.findOne({username: username})
       if (!!user && !!user.rating) {
         rank = Meteor.users.find({rating: {$gt : user.rating}}).count() + 1
         return rank 
