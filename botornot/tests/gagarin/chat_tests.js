@@ -1,4 +1,5 @@
 var utils = require('./utils');
+var _ = require('underscore');
 
 describe('chat connection suite', () => {
   server = meteor();
@@ -217,4 +218,33 @@ describe('chat interface anonymous', () => {
   client6 = browser(server3);
 
   runChatInterfaceTests(server3, client5, client6);
+});
+
+describe('many users', () => {
+  'use strict';
+  let server = meteor();
+  let numClients = 3;
+  let clients = _.range(numClients).map((number) => { return browser(server) });
+  let client = browser(server);
+
+  it('should connect to each other', () => {
+    return utils.waitForFlowRoute(client, '/chat')
+      .then(() => {
+        return utils.promiseFor( (count) => { return count < numClients }, (count) => {
+          return utils.waitForFlowRoute(clients[count], '/chat')
+          .then(() => {
+            return ++count;
+          });
+        }, 0);
+      })
+      .waitForDOM('.message-panel', 25000)
+      .then(() => {
+        return utils.promiseFor( (count) => { return count < numClients }, (count) => {
+          return clients[count].waitForDOM('.message-panel', 20000)
+          .then(() => {
+            return ++count;
+          });
+        }, 0);
+      });
+  });
 });
