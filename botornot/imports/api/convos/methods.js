@@ -44,7 +44,7 @@ Meteor.methods({
     },
   
     'convos.updateChat'(text, convoId) {
-      userId = this.userId;
+      let userId = Meteor.userId();
       if (!userId) {
         throw new Meteor.Error('unauthorized');
       } else {
@@ -86,16 +86,16 @@ Meteor.methods({
     },
   
     'convos.addUserToRoom'(convoId) {
-      userId = this.userId;
+      let userId = Meteor.userId();
       if(!!convoId && !!userId) { // check that userId and convoId exist
 
         convo = Convos.findOne({_id: convoId, "users.id": {$ne: userId}});
         if (!!convo && convo.curSessions < 2) { 
           // check that the convo doesn't already have the user 
           // and the conversation has less than 2 people in it
-          let rn = Random.id();
+          let rn = Random.id(); // add random number to check and see whehter userId switches for some reason
           // console.log("adding user: ", userId, "to room ", convoId);
-          console.log(rn, 'convo pre adding for user', userId, ':'convo);
+          console.log(rn, 'convo pre adding for user', userId, ':', convo);
           Meteor.users.update({_id: userId}, {
             $set: {in_convo: true, curConvo: convoId, rated: false}
           });
@@ -103,12 +103,12 @@ Meteor.methods({
             $push: {users: {id: userId, rated: 'none', isReady: false, englishCount: 0, markedOffTopic: false}},
             $inc: {curSessions: 1}
           });
-          console.log('updated',numUpdated, 'docs in convo update');
+          console.log(rn, 'updated',numUpdated, 'docs in convo update');
           convo = Convos.findOne({_id: convoId});
           if (!!convo && convo.curSessions > 1) {
             Meteor.call('convos.clearBotTimeout', convoId);
           }
-          console.log('convo post adding', userId, ':', convo);
+          console.log(rn, 'convo post adding', userId, ':', convo);
           if ( !userAddedToConvo(Meteor.users.findOne({_id : userId}), convo) ) {
             throw new Meteor.Error('user', userId, ' was not successfully added to convo');
           }
@@ -140,8 +140,8 @@ Meteor.methods({
     },
   
     'convos.finishConvoUserStayed'(convoId) {
-      if (!!convoId && !!this.userId) {
-        convo = Convos.findOne({_id: convoId, "users.id": this.userId});
+      if (!!convoId && !!Meteor.userId()) {
+        convo = Convos.findOne({_id: convoId, "users.id": Meteor.userId()});
         
         //check that convo exists, user is in that convo and the convo has enough turns
         if (!!convo && convo.turns >= Meteor.settings.public.ratingTurns) {
@@ -160,8 +160,8 @@ Meteor.methods({
     },
 
     'convos.finishConvoUserLeft'(convoId){
-      if (!!convoId && !!this.userId) {
-        convo = Convos.findOne({_id: convoId, "users.id": this.userId});
+      if (!!convoId && !!Meteor.userId()) {
+        convo = Convos.findOne({_id: convoId, "users.id": Meteor.userId()});
         
         //check that convo exists and the user is in that convo
         if (!!convo) { 
@@ -179,15 +179,15 @@ Meteor.methods({
     },
 
     'convos.markOffTopic'(convoId){
-      if (!!convoId && !!this.userId) {
-        Convos.update({_id: convoId, "users.id": this.userId}, {
+      if (!!convoId && !!Meteor.userId()) {
+        Convos.update({_id: convoId, "users.id": Meteor.userId()}, {
           $set: {"users.$.markedOffTopic": true}
         });
       }
     },
 
     'convos.updateRatings'(convoId, rating){
-      userId = this.userId;
+      let userId = Meteor.userId();
       if (!!convoId && !!rating && !!userId) {
         convo = Convos.findOne({_id: convoId, "users.id": userId});
         
@@ -253,7 +253,7 @@ Meteor.methods({
     },
 
   'convos.makeReady'(convoId){
-    userId = this.userId;
+    let userId = Meteor.userId();
     if (!!convoId && !!userId) {
       Convos.update({_id: convoId, "users.id": userId}, {
         $set: {"users.$.isReady": true}
@@ -267,7 +267,7 @@ Meteor.methods({
   },
 
   'convos.incUserEnglishCount'(convoId){
-      userId = this.userId;
+      let userId = Meteor.userId();
       if (!!convoId && !!userId) {
         Convos.update({_id: convoId, "users.id": userId}, {
           $inc: {"users.$.englishCount": 1}
@@ -276,7 +276,7 @@ Meteor.methods({
   },
 
   'convos.resetUserEnglishCount'(convoId){
-    userId = this.userId;
+    let userId = Meteor.userId();
     if (!!convoId && !!userId) {
       Convos.update({_id: convoId, "users.id": userId}, {
         $set: {"users.$.englishCount": 0}
