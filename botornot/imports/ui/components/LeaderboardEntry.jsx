@@ -14,14 +14,17 @@ export default class LeaderboardEntry extends React.Component {
       level: this.props.user.level
     }
   }
-  render() {
-    content = this.getContent();
-    console.log(content);
+  componentWillMount() {
     if (!this.state.ranking) {
-      Meteor.call('users.getUserRanking', content.username,  (error, result) => {
+      Meteor.call('users.getUserRanking', this.props.user.username,  (error, result) => {
         this.setState({'ranking': result});
       });
     }
+  }
+  render() {
+    content = this.getContent();
+    console.log(content);
+    
     return (
         <tr className="row">
           <td className="col-md-1 leader-elem">{this.state.ranking ? this.state.ranking : ""}</td>
