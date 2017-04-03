@@ -48,6 +48,13 @@ AccountsTemplates.configure({
           forgotPwd: "Recover Your Password"
       },
     },
+    onSubmitHook: (error, state) => {
+      if(!error) {
+        if(state == "signIn") {
+          console.log("successfully logged in");
+        }
+      }
+    }
 });
 
 AccountsTemplates.configure({

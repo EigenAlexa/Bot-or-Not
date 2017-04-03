@@ -74,19 +74,6 @@ FlowRouter.route("/logout", {
     });
   }
 });
-FlowRouter.route("/sign-in-anon", {
-  name: "sign-in-anon",
-  action() {
-    if(Meteor.user().anon) {
-      Meteor.logout(() => {
-        FlowRouter.go("/sign-in");
-      });
-    }
-    else {
-      FlowRouter.redirect('/');
-    }
-  }
-});
 FlowRouter.route("/sign-up-anon", {
   name: "sign-up-anon",
   action() {

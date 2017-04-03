@@ -259,9 +259,10 @@ AccountsTemplates.configureRoute = function(route, options) {
               redirect = true;
             }
           } else if (Meteor.userId() && Meteor.user() && !Meteor.user().anon) {
-            console.log("redirecting");
+            console.log("redirecting user logged in");
             redirect = true;
           }
+          console.log("redirecting: ", redirect);
           if (redirect) {
             AccountsTemplates.postSubmitRedirect(route);
           } else {
