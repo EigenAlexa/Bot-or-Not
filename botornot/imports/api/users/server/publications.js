@@ -35,6 +35,8 @@ Meteor.publishComposite('currentUsers', (convoId) => {
 Meteor.publish('currentUser', () => {
   userId = Meteor.userId();
   if(!userId){
+    console.log(this.userId);
+    console.log(userId);
     console.log("Meteor.subscribe('currentUser') -- no userId found for user");
     return [];
   }

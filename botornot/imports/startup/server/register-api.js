@@ -14,6 +14,7 @@ import '/imports/api/ratings/linker.js';
 // now methods
 import '/imports/api/convos/methods.js';
 import '/imports/api/users/methods.js';
+import '/imports/api/users/server/methods.js';
 // finally publications
 import '/imports/api/convos/server/publications.js';
 import '/imports/api/users/server/publications.js';

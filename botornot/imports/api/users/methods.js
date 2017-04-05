@@ -21,6 +21,7 @@ Meteor.methods({
       Meteor.users.update({_id: this.userId}, {
         $set: {in_convo: false, rated: false, isReady: false}
       });
+      Meteor.call('users.removeUserFromQueue');
       user = Meteor.users.findOne({_id: this.userId});
       if (!!user && !!user.curConvo) {
         convo = Convos.findOne({_id: user.curConvo});

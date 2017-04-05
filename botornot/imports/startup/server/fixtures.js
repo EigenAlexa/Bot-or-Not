@@ -27,4 +27,3 @@ Meteor.startup(() => {
 
 
 });
-Debug.log(Convos.find().fetch());
