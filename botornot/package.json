@@ -28,6 +28,7 @@
     "react-notification-system": "^0.2.11",
     "react-overlays": "^0.6.11",
     "react-router": "^3.0.2",
+    "react-textfit": "^0.1.9",
     "typo-js": "^1.0.3",
     "velocity-animate": "^1.4.2",
     "velocity-react": "^1.2.1"
