@@ -65,26 +65,6 @@ ul.nav.navbar-nav.navbar-right{
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
     background-color: #404040;
 }
-@media (min-width: 766px) {
-	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
-		background: #fff;
-	}
-}
-@media (max-width: 767px) {
-	.collapse.in {
-		margin-top: 50px;
-		overflow-y: visible;
-	}
-	.navbar-default .navbar-collapse{
-		border: none;
-	}
-	.nav.navbar-nav.navbar-right{
-		overflow-y: visible;
-	}
-	.collapsing {
-		margin-top: 50px;
-	}
-}
 .form-control:focus {
     border-color: @fg;
     outline: 0;
@@ -126,7 +106,7 @@ ul.nav.navbar-nav.navbar-right{
 }
 @media (max-width: 767px) {
 	.navstyle-home .navbar-default {
-		background-color: rgba(0, 0, 0, 0.28);
+		// background-color: rgba(0, 0, 0, 0.28);
 	}
 }
 /*=================================================
@@ -181,4 +161,36 @@ ul.nav.navbar-nav.navbar-right{
 }
 .navstyle-home .active-user-div {
 	color: @bg-2;
+}
+
+@media (min-width: 766px) {
+	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+		background: #fff;
+	}
+}
+@media (max-width: 767px) {
+	.collapse.in {
+		margin-top: 50px;
+		overflow-y: visible;
+	}
+	.navbar-default .navbar-collapse{
+		border: none;
+	}
+	.nav.navbar-nav.navbar-right{
+		overflow-y: visible;
+	}
+	.collapsing {
+		margin-top: 50px;
+	}
+    .navstyle-home .navbar-default .navbar-brand {
+        text-transform: uppercase;
+        color: @bg-2;
+		margin-top: 20px;
+		margin-left: 10px;
+		font-weight: 100;
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+    }
 }
