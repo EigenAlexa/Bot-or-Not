@@ -10,7 +10,21 @@ class HomePage extends React.Component {
 			videoURL: 'botnotvid.mp4'
 		}
 	}
-  renderBG() {
+  renderStill() {
+    return (
+      <div className="media">
+        <BotNotTitle />
+        <div className="media-player">
+          <img className='background-video' src="img/bot1.png"/>
+        </div>
+				<div id="video-overlay"></div>
+        <div className="playPause media-controls">
+          <BotNotTitle isVideo={false}/>
+        </div>
+      </div>
+    );
+  }
+  renderVideo() {
     return <Media
        volume={0}>
       <div className="media">
@@ -31,7 +45,12 @@ class HomePage extends React.Component {
     </Media>
   }
   render() {
-		return this.renderBG();
+    let width = window.innerWidth;
+    if (width > 450) {
+      return this.renderVideo();
+    } else {
+      return this.renderStill();
+    }
 	}
 }
 
