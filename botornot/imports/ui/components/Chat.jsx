@@ -86,9 +86,6 @@ export default class Chat extends React.Component {
         this.props.room.users.forEach((user) => {
           isReady = isReady && user.isReady;
         });
-        if (this.props.room.curSessions < 2 || !isReady && !this.props.room.closed){
-          return this.renderPrepScreen();
-        }
         messages = this.props.messages;
         Messages = messages.map(msg => {
           className = msg.user == Meteor.userId() ? "from-me" : "from-them";
@@ -184,28 +181,7 @@ export default class Chat extends React.Component {
       user = Meteor.users.findOne({_id:Meteor.userId()});
       return( <ClosedPageContainer params={{roomId: user.curConvo, userLeft: user.left}} /> );
     }
-    renderPrepScreen(){
-      readyToChat = this.props.room.curSessions == 2;
-      if(readyToChat){
-        //Meteor.clearInterval(this.progressInterval);  
-        Meteor.call('convos.makeReady', this.props.room._id);
-      }
-      isLoading = Convos.findOne({_id: this.props.room._id}).users.filter((user) => {return user.id == Meteor.userId()})[0].isReady;
-      //progress = this.state.progress;
-      
-      return (
-        <div className="loading-btn word-wrap">
-        
-        <div className="progress-for-loader">
-          <div className="sk-folding-cube">
-            <div className="sk-cube1 sk-cube"></div>
-            <div className="sk-cube2 sk-cube"></div>
-            <div className="sk-cube4 sk-cube"></div>
-            <div className="sk-cube3 sk-cube"></div>
-          </div>
-        </div>
-      </div>);
-    }
+    
           /*<ProgressBar  now={progress} active striped bsStyle="info"/>*/ 
    /* renderPrompt(){
       return (<p>{this.props.room.promptText}</p>);

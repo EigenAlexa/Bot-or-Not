@@ -11,6 +11,7 @@
     "imports": "^1.0.0",
     "meteor-node-stubs": "~0.2.0",
     "meteor-react-autoform": "^0.3.0",
+    "ordered-hashmap": "^1.0.0",
     "react": "^15.4.2",
     "react-addons-create-fragment": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
