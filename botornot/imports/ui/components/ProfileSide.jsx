@@ -1,4 +1,5 @@
 import React from 'react';
+import { Textfit } from 'react-textfit';
 import {_} from 'meteor/underscore';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 import { ConvoItem } from '../components/ConvoItem.jsx';
@@ -93,9 +94,9 @@ export default class ProfileSide extends React.Component {
     const notratings = user.notratings
     const sessions = user.sessions;
     const botratings = sessions - notratings;
-    const shortuser = username.length > 7 ? 
-                    username.substring(0, username.length - 3) + "..." : 
-                    username;
+    // const shortuser = username.length > 7 ? 
+    //                 username.substring(0, username.length - 3) + "..." : 
+    //                 username;
     const xp = !!user.xp ? user.xp : 15;
     const xp_max = !!user.xp_max ? user.xp_max : 50;
     const level = !!user.level ? user.level : 1;
@@ -110,12 +111,16 @@ export default class ProfileSide extends React.Component {
 
     return (       
       <div>   
-         <div className="col-xs-12 col-sm-12 profile-attribute">
-          <div className="profile-username">{anon ? "ANONYMOUS" : shortuser} </div>
-            <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
-            <div className="profile-level">
-              <span className="label label-lg label-warning">Level {level}</span>
-            </div>
+        <div className="col-xs-12 col-sm-12 profile-attribute">
+          <Textfit mode='single' className='profile-username'>
+            {anon ? "ANONYMOUS" : username} 
+          </Textfit>
+
+          <img className={botratings > notratings ? "botico" : "humanico" } src={botratings > notratings ? "/img/botico.png" : "/img/humanico.png"}/>
+
+          <div className="profile-level">
+            <span className="label label-lg label-warning">Level {level}</span>
+          </div>
           </div>  
           <div className="col-xs-12 col-sm-12 profile-attribute">
             {sessions >0 ?   
