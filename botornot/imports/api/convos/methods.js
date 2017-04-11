@@ -28,9 +28,6 @@ Meteor.methods({
 						});
 						console.log(rn, 'updated',numUpdated, 'docs in convo update');
 						convo = Convos.findOne({_id: convoId});
-						if (!!convo && convo.curSessions > 1) {
-							Meteor.call('convos.clearBotTimeout', convoId);
-						}
 						console.log(rn, 'convo post adding', userId, ':', convo);
 						if ( !userAddedToConvo(Meteor.users.findOne({_id : userId}), convo) ) {
 							throw new Meteor.Error('user', userId, ' was not successfully added to convo');
@@ -100,14 +97,6 @@ Meteor.methods({
     },
   
    
-    'convos.clearBotTimeout'(convoId) {
-      if(!this.isSimulation) {
-        if (!!SyncedCron.nextScheduledAtDate(convoId)) {
-          SyncedCron.remove(convoId);
-        }
-      }
-    },
-  
     'convos.finishConvoUserStayed'(convoId) {
       if (!!convoId && !!Meteor.userId()) {
         convo = Convos.findOne({_id: convoId, "users.id": Meteor.userId()});
@@ -117,7 +106,6 @@ Meteor.methods({
           Convos.update({_id: convoId}, {
             $set: {closed: true, curSession: 0}
           });
-          Meteor.call('convos.clearBotTimeout', convoId);
           convo.users.forEach( (user) => {
             Meteor.users.update({_id: user.id}, {
               $set: {left: false, convoClosed: true}
@@ -137,7 +125,6 @@ Meteor.methods({
           Convos.update({_id: convoId}, {
             $set: {closed: true, curSession: 0}
           });
-          Meteor.call('convos.clearBotTimeout', convoId);
           convo.users.forEach( (user) => {
             Meteor.users.update({_id: user.id}, {
               $set: {convoClosed: true, left: true}
