@@ -25,14 +25,12 @@ export default class Chat extends React.Component {
         focusInput : false,
         firstChatRender: true,
        };
-      //this.updateProgressBar = this.updateProgressBar.bind(this);
       this.handleOffTopicButton = this.handleOffTopicButton.bind(this);
-      //this.progressInterval = Meteor.setInterval(this.updateProgressBar, 100);
 
-      // This is hacky and makes the  pro tips out of order.
       this.updateLoadingInterval = this.updateLoadingInterval.bind(this);
       this.loadingInterval = Meteor.setInterval(this.updateLoadingInterval, (!!Meteor.settings.public.tipSpeed ? Meteor.settings.public.tipSpeed : 2000));
     }
+    
     updateLoadingInterval() {
       if(this.state.index < this.snippets.length - 1){
         this.setState({index: this.state.index + 1});
@@ -41,32 +39,19 @@ export default class Chat extends React.Component {
         this.setState({'index': 0});
       }
     }
-    /*updateProgressBar() {
-      var n = this.state.time_pass;
-      var max = !!Meteor.settings.timeout ? Meteor.settings.timeout : 20;
-      var incr = 100/(max*1000);
-
-      var new_time = (n+incr);
-      var progress = 0;
-      if( new_time > .99 ){
-        progress = 99 - 2/(0.5*(new_time - 0.99)/incr);
-      }
-      else
-        progress = new_time*100;
-      this.setState({'time_pass': new_time});
-      this.setState({'progress': progress });
-    }
-    */
+    
     componentDidMount(){
       window.addEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload); 
     }
+    
     componentWillUnmount(){
       window.removeEventListener("beforeunload", this.beforeunload);
       window.addEventListener("unload", this.unload);
       Meteor.clearInterval(this.progressInterval)
       Meteor.clearInterval(this.loadingInterval);
     }
+    
     componentDidUpdate(prevProps, prevState){
       if (this.state.focusInput ) {
         ReactDOM.findDOMNode(this.refs.textInput).focus();
@@ -75,9 +60,11 @@ export default class Chat extends React.Component {
         });
       }
     }
+    
     beforeunload(event){
       event.returnValue="Are you sure you want to leave";
     }
+    
     getContent() {
 	      if (! this.props.roomExists) {
             return (<div> <p>404d, Please refresh</p> </div>);
@@ -117,13 +104,16 @@ export default class Chat extends React.Component {
 
                     // <Button bsStyle='primary' size='medium' onClick={this.handleOffTopicButton.bind(this)}>Off Topic</Button>
     }
+    
     getLoadingPage() {
         return (<div className="loading-btn"> <h3>Loading, hang tight !</h3></div>);
     }
+    
     handleNextChat(event){
       Meteor.call('users.exitConvo');
       updateCookiesOnExit();
     }
+    
     handleRateButton(event) {
       if (this.props.room.turns >= Meteor.settings.public.ratingTurns) {
         Meteor.call('convos.finishConvoUserStayed', this.props.room._id);
@@ -132,10 +122,12 @@ export default class Chat extends React.Component {
         Session.set('notifyNumTurns', "true");
       }
     }
+    
     handleOffTopicButton(event) {
       Session.set('curConvo', this.props.room._id);
       Session.set('notifyOffTopic', 'true'); 
     }
+    
     handleEnter(event) {
       event.preventDefault();
       const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
@@ -148,12 +140,14 @@ export default class Chat extends React.Component {
       }
       ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
+    
     handleKeystroke(event) {
       if (event.charCode == 13){
         event.persist();
         this.handleEnter.bind(this)(event);
       }
     }
+    
     renderChatInput(){
       if (this.state.firstChatRender) {
         this.setState({
@@ -168,24 +162,19 @@ export default class Chat extends React.Component {
         </FormGroup>
       );
     }
-    handleClick(event) { 
-      Meteor.call('convos.makeReady', this.props.room._id);
-    }
+    
     renderProgressBar(){
       progress = this.props.room.turns / this.props.room.max_turns * 100;
       return (
         <ProgressBar active now={progress} label={`${progress}%`}/>
       );
     }
+    
     renderClosed(){
       user = Meteor.users.findOne({_id:Meteor.userId()});
       return( <ClosedPageContainer params={{roomId: user.curConvo, userLeft: user.left}} /> );
     }
     
-          /*<ProgressBar  now={progress} active striped bsStyle="info"/>*/ 
-   /* renderPrompt(){
-      return (<p>{this.props.room.promptText}</p>);
-    }*/
     render() {
         const { room, messages, loading, roomExists, connected }  = this.props;
         return loading ? this.getLoadingPage() : this.getContent();
