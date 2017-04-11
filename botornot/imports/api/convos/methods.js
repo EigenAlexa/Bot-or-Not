@@ -226,16 +226,6 @@ Meteor.methods({
     }
   }
 });
-function getOpenRooms() {
-    // get all convos that have less than two people and aren't closed yet
-    // filter all room.curssions < 2 and closed = false
-    convos = Convos.find({
-
-        closed: false,
-        curSessions : {$lt: 2}
-    }).fetch();
-    return convos;
-}
 
 
 function calculateAndUpdateXp(correct, userId){

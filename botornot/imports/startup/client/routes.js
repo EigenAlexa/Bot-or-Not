@@ -5,7 +5,6 @@ import { mount } from 'react-mounter';
 import { Session } from 'meteor/session';
 
 
-import { getARoom } from '/imports/startup/client/methods.js';
 import { updateCookiesOnExit } from '/imports/startup/client/config.js';
 
 // Containers, Pages, and Components
