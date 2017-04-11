@@ -39,7 +39,7 @@ class HomePage extends React.Component {
         </div>
 				<div id="video-overlay"></div>
         <div className="playPause media-controls">
-          <BotNotTitle />
+          <BotNotTitle isVideo={true}/>
         </div>
       </div>
     </Media>
