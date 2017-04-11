@@ -52,16 +52,3 @@ Meteor.publish('userBotConvos', (userName) => {
     // return all conversations relevant to that userid
     return getConvos(userId, 'bot');
 });
-
-// returns details about the open rooms
-Meteor.publish('openrooms', () => {
-    return Convos.find({
-        curSessions : {$lt : 2},
-        closed : false,
-        hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME,
-    }, { fields :{
-        curSessions: 1,
-        closed : 1,
-        hostID: 1,
-    }});
-});
