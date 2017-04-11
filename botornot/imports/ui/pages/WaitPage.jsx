@@ -77,7 +77,7 @@ export default class WaitPage extends React.Component {
     }
 
     render() {
-        const { openRooms, connected, loading, user } = this.props;
+        const { connected, loading, user } = this.props;
         let child = this.renderPrepScreen;
         if(!loading && !user){
           AccountsAnonymous.login((e) => {
@@ -124,7 +124,6 @@ export default class WaitPage extends React.Component {
 }
 
 WaitPage.propTypes = {
-    openRooms: React.PropTypes.array,
     connected : React.PropTypes.bool,
     loading: React.PropTypes.bool,
     user: React.PropTypes.object
