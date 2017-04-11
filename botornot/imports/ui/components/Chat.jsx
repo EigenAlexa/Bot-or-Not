@@ -9,6 +9,7 @@ import ClosedPageContainer from '/imports/ui/containers/ClosedPageContainer.jsx'
 import Snippets from '/imports/ui/static/LoadingSnippets.jsx';
 import ChatPanel from '/imports/ui/components/ChatPanel.jsx';
 import { updateCookiesOnExit } from '/imports/startup/client/config.js';
+import { validate } from '/imports/api/messages/validation.js';
 
 export default class Chat extends React.Component {
     constructor(props) {
