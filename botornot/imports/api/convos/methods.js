@@ -140,7 +140,7 @@ Meteor.methods({
           Meteor.call('convos.clearBotTimeout', convoId);
           convo.users.forEach( (user) => {
             Meteor.users.update({_id: user.id}, {
-              $set: {convoClosed: true, left: true, in_convo: false}
+              $set: {convoClosed: true, left: true}
             });
           });
         }

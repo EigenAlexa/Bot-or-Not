@@ -2,17 +2,20 @@ import { userPool } from '/imports/startup/server/queueing.jsx';
 
 Meteor.methods({
   'users.addUserToQueue': () => {
-    if (!!this.userId) {
-      user = Meteor.users.findOne({_id: this.userId});
+    let userId = Meteor.userId();
+    if (!!userId) {
+      user = Meteor.users.findOne({_id: userId});
       if ( !!user && !user.in_convo ) {
-        userPool.add(this.userId);
+        console.log("Trying to add user", userId, "to pool");
+        userPool.add(userId);
       }
     }
   },
 
   'users.removeUserFromQueue': () => {
-    if(!!this.userId) {
-      userPool.remove(this.userId);
+    let userId = Meteor.userId();
+    if(!!userId) {
+      userPool.remove(userId);
     }
   },
 

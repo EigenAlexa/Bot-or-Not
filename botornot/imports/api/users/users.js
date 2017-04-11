@@ -1,3 +1,4 @@
+import { userPool } from '/imports/startup/server/queueing.jsx';
 const Schema = {};
 
 Schema.User = new SimpleSchema({
@@ -210,6 +211,7 @@ Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
   let update = false;
   let sessionsUpdate = fieldNames.indexOf('sessions') > 1;
   let notratingsUpdate = fieldNames.indexOf('notratings') > -1;
+  let inconvoUpdate = fieldNames.indexOf('in_convo') > -1;
   if (sessionsUpdate || notratingsUpdate){
     update = true;
     if (doc.sessions == 0){
@@ -246,6 +248,14 @@ Meteor.users.after.update( (userId, doc, fieldNames, modifier, options) => {
         update = true
         doc.badges.push(badge);
       }
+    }
+  }
+
+  if (inconvoUpdate) {
+    if(!doc.in_convo) {
+      console.log("removing ", doc._id);
+      console.log(modifier);
+      userPool.remove(doc._id); 
     }
   }
 
