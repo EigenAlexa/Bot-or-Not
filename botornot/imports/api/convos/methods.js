@@ -221,20 +221,6 @@ Meteor.methods({
       }
     },
 
-  'convos.makeReady'(convoId){
-    let userId = Meteor.userId();
-    if (!!convoId && !!userId) {
-      Convos.update({_id: convoId, "users.id": userId}, {
-        $set: {"users.$.isReady": true}
-      });
-      if(Meteor.users.findOne({_id: userId}).firstTime){
-        Meteor.users.update({_id: userId}, {
-          $set: {firstTime: false} 
-        });
-      }
-    }
-  },
-
   'convos.incUserEnglishCount'(convoId){
       let userId = Meteor.userId();
       if (!!convoId && !!userId) {
