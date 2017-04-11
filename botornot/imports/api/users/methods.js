@@ -32,6 +32,16 @@ Meteor.methods({
       }
     }
   },
+  'users.nextChatAfterRate'() {
+    let userId = Meteor.userId();
+    if (!!userId) {
+      console.log("User", userId, "leaving after rating");
+      Meteor.users.update({_id: userId}, {
+        $set: {in_convo: false, rated: false, isReady: false}
+      });
+      Meteor.call('users.removeUserFromQueue');
+    }
+  },
   'getBotUsername'(magicphrase){
     if(magicphrase=== Meteor.settings.magicPhrase) {
       console.log('getting username');

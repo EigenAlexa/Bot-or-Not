@@ -8,7 +8,7 @@ import { Convos } from '/imports/api/convos/convos.js';
 startBot = (roomId) => { 
   console.log('roomId',roomId);
   convo = Convos.findOne({'_id' : roomId})
-  console.log('starting bot in convo', convo);
+  console.log('starting bot in convo', roomId);
   bot_convos = Convos.find({_id: {$ne: roomId},
                             hasBot: true,
                             closed: false,

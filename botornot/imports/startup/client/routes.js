@@ -54,7 +54,6 @@ FlowRouter.route('/chat', {
     ReactLayout.render(Screen, {children:<WaitPageContainer />, customFooter: true});
 	},
   triggersExit: (context) => {
-    console.log('exited chat');
     Meteor.call('users.exitConvo');
     updateCookiesOnExit();
   }

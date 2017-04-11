@@ -32,7 +32,7 @@ describe('chat connection suite', () => {
         return utils.connectUsersToChat(client1, client2, 30000);
       })
   });
-  it('should set firstTime to false for both users', () => {
+  /*it('should set firstTime to false for both users', () => {
     return client1.wait(2000, "until user is found", () => {
         return Meteor.users.findOne({username: "tester1"});
       })
@@ -47,7 +47,7 @@ describe('chat connection suite', () => {
       .then(() => {
         return utils.leaveChat(client1, client2);
       });
-  });
+  });*/
   it('should be fast the second time they connect', () => {
     return utils.connectUsersToChat(client1, client2, 25000)
       .then(() => {

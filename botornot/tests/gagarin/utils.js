@@ -15,7 +15,6 @@ waitForFlowRoute = (client, path) => {
     
     var controller = FlowRouter.current();
     var pathOK = (window.location.pathname + window.location.search + window.location.hash === path);
-
     if (controller && pathOK ) {
       return true;
     } else {
