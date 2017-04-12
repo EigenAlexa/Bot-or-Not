@@ -188,7 +188,7 @@ Meteor.methods({
             });
           }
           console.log("Correct", correct);
-          deltaXp = calculateAndUpdateXp(correct, userId);
+          deltaXp = calculateAndUpdateXp(correct, userId, convoId);
           return deltaXp;
         }
       }
@@ -214,7 +214,7 @@ Meteor.methods({
 });
 
 
-function calculateAndUpdateXp(correct, userId){
+function calculateAndUpdateXp(correct, userId, convoId){
     //Do XP Stuff.
   const cur_user = Meteor.users.findOne({_id: userId});
   const curLevel = cur_user.level;
@@ -227,7 +227,9 @@ function calculateAndUpdateXp(correct, userId){
 
   const multiplier = correct ? 1 : 0.05; 
   const randBonus = 0.4*(Math.random() - 0.75)*baseXPIncr;
-  const deltaXP = Math.ceil(Math.max(Math.floor(baseXPIncr + randBonus),22)*multiplier);
+  convo = Convos.findOne({_id: convoId}); 
+  const lengthBonus = 0.05 * convo.turns * baseXPIncr;
+  const deltaXP = Math.ceil(Math.max(Math.floor(baseXPIncr + randBonus + lengthBonus),22)*multiplier);
 
   const newXP = Math.round(curXP+ deltaXP);
   console.log('user', 'num_convs', 'baseXPIncr', 'randBonux');
