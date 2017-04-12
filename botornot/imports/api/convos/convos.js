@@ -33,6 +33,12 @@ UserSchema = new SimpleSchema({
     label: "bot",
     defaultValue: false,
     optional: true
+  },
+  lastOtherUser: {
+    type: String,
+    label: "lastOtherUser",
+    defaultValue: "",
+    optional: true
   }
 });
 
@@ -139,15 +145,17 @@ function finalizeRatings(convo) {
 
   if(ratedUsers.length == convo.users.length){
     ratedUsers.forEach((user) => {
-      if(user.rated === 'not')
-        Meteor.users.update({_id: user.id}, {
-          $inc: {sessions: 1, notratings: 1}
-        });
-      else
-        // Update thew other user.
-        Meteor.users.update({_id: user.id}, {
-          $inc: {sessions: 1}
-        });
+      if (user.lastOtherUser === 'not') {
+        if(user.rated === 'not')
+          Meteor.users.update({_id: user.id}, {
+            $inc: {sessions: 1, notratings: 1}
+          });
+        else
+          // Update thew other user.
+          Meteor.users.update({_id: user.id}, {
+            $inc: {sessions: 1}
+          });
+      }
     });
   }
 }

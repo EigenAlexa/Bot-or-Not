@@ -140,21 +140,6 @@ Meteor.methods({
         convo = Convos.findOne({_id: convoId, "users.id": userId});
         
         if (!!convo) {
-          filteredUsers = convo.users.filter((user) => {
-            return user.id !== userId;
-          });
-
-          if(!!filteredUsers){
-            console.log(" user: " + filteredUsers[0].id);
-            Convos.update({_id: convoId, "users.id": filteredUsers[0].id}, {
-                $set: {"users.$.rated": rating}
-            });
-            console.log(" user: " + filteredUsers[0].id);
-            Meteor.users.update({_id: filteredUsers[0].id}, {
-                $set: {lastRating: rating, rated: true}
-            });
-            console.log("setting rated to true for: " + filteredUsers[0].id);
-          }
           prob = Meteor.users.findOne({_id: userId}).prob;
           correct = Random.fraction() < prob; 
 
@@ -176,7 +161,7 @@ Meteor.methods({
               lastOtherUser = 'not';
           }
 
-
+          console.log("lastOtherUser methods", lastOtherUser);
     // Feature regression;
     // The thought process here is we let the players be deliusional 
     // 95.5 percent of the time.
@@ -190,8 +175,25 @@ Meteor.methods({
           if (!!lastOtherUser) {
             Meteor.users.update({_id: userId}, {
               $inc: {prob: probInc},
-              $set: {lastOtherUser: lastOtherUser}
             });
+          }
+          
+          filteredUsers = convo.users.filter((user) => {
+            return user.id !== userId;
+          });
+          Convos.update({_id: convo._id, "users.id": userId}, {
+            $set: {"users.$.lastOtherUser": lastOtherUser }
+          });
+          if(!!filteredUsers){
+            console.log(" user: " + filteredUsers[0].id);
+            Convos.update({_id: convoId, "users.id": filteredUsers[0].id}, {
+                $set: {"users.$.rated": rating}
+            });
+            console.log(" user: " + filteredUsers[0].id);
+            Meteor.users.update({_id: filteredUsers[0].id}, {
+                $set: {lastRating: rating, rated: true}
+            });
+            console.log("setting rated to true for: " + filteredUsers[0].id);
           }
           console.log("Correct", correct);
           deltaXp = calculateAndUpdateXp(correct, userId, convoId);

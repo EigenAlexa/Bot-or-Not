@@ -47,13 +47,20 @@ export default class ClosedPage extends React.Component {
       const level = this.props.user.level;
       const other_level = xp_update.other_level;
       const correct = xp_update.correct;
+      filteredUsers = this.props.room.users.filter((user) => {return user.id === this.props.user._id});
+      if (!!filteredUsers && !!filteredUsers[0]) {
+        lastOtherUser = filteredUsers[0].lastOtherUser;
+      } else {
+        this.props.user.loading = true;
+      }
+      console.log("lastOtherUser", lastOtherUser);
 
       return ( <div className="ratingDiv">
                 <p>The other user was { !this.props.user.loading ? (
                     <span> a <span className="label label-lg label-warning">Level {other_level}</span> </span>)
                   : " "} </p>
                 { !this.props.user.loading ?
-                  this.props.user.lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
+                  lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
                   : ""}
                 { correct ? (<p> You gained +<span className="deltaXP">{delta_xp}</span>xp for guessing <span className="correctGuess"> correctly</span>!</p>) :
                  (<p> Your guess was <span className="incorrectGuess">wrong</span>! You only gained +<span className="deltaXP">{delta_xp}</span>xp.</p>)}
@@ -92,10 +99,14 @@ export default class ClosedPage extends React.Component {
 
     this.setState({submitted: true, rating: target.name});
     this.setState({canClose : true});
+    let userId = Meteor.userId();
     Tracker.autorun((comp) => {
-      user = Meteor.users.findOne({_id: Meteor.userId()});
-      console.log(user.curConvo)
+      user = Meteor.users.findOne({_id: userId});
+      console.log("autorun userid", userId);
       convo = Convos.findOne({_id: user.curConvo });
+      thisUserFromConvo = convo.users.filter((user) => {
+        return user === user._id;
+      });
       users = convo.users.filter((otherUser) => {
         return otherUser.id !== user._id;
       }).map((otherUser) => {
@@ -105,7 +116,9 @@ export default class ClosedPage extends React.Component {
         other = Meteor.users.findOne({_id: users[0]});
       }
       console.log("user.rated", user.rated);
-      if(user.rated){
+      console.log("user.lastOtherUser", user.lastOtherUser);
+      console.log("user", userId);
+      if(user.rated && thisUserFromConvo.lastOtherUser === 'not'){
         Session.set('playNotification', "true");
         Session.set('rating', user.lastRating);
         comp.stop();

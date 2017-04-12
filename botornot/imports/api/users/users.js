@@ -161,12 +161,6 @@ Schema.User = new SimpleSchema({
     label: 'lastRating',
     defaultValue: ""
   },
-  lastOtherUser: {
-    type: String,
-    label: 'lastUserRating',
-    defaultValue: "",
-    optional: true
-  },
   prob: {
     type: Number,
     label: 'prob',
