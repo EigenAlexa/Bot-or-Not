@@ -15,6 +15,6 @@
     },
     "public": {
         "ratingTurns": 4,
-        "tipSpeed": 2000
+        "tipSpeed": 4000
     }
 }
