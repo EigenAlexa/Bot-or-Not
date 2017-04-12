@@ -32,9 +32,10 @@ class UserPool {
         this.pool.set(userId, {timeout: Meteor.setTimeout(() => {
           console.log("starting bot");
           convoId = this.makeNewRoom();
-          this.addUserToRoom(convoId, userId);
-          startBot(convoId);
-          this.pool.remove(userId);
+          result = startBot(convoId, userId);
+          if ( result ) {
+            this.pool.remove(userId);
+          }
         }, botTimeout)});
       }
     } 
@@ -63,7 +64,6 @@ class UserPool {
       msgs: [msgId],
       hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME,
     });
-
     Messages.update( {_id: msgId}, {$set: {convoId: convoId}} );
 
     return convoId;
