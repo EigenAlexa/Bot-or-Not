@@ -21,9 +21,7 @@ Meteor.startup(() => {
 
     if (Prompts.find().count() == 0) {
       PromptList.forEach((promp)=> {
-        Prompts.insert({'text': promp});
+        Prompts.upsert({'text': promp}, {'text': promp});
       });
     }
-
-
 });
