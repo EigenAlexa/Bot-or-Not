@@ -52,6 +52,9 @@ export default class ClosedPage extends React.Component {
                 { !this.props.user.loading ?
                   this.props.user.lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
                   : ""}
+                <p>The other user was 
+                { !this.props.user.loading ? <span className="label label-lg label-warning">Level {this.props.otherUserLevel}</span>
+                  : ""} </p>
                 { correct ? (<p> You gained +<span className="deltaXP">{delta_xp}</span>xp for guessing <span className="correctGuess"> correctly</span>!</p>) :
                  (<p> Your guess was <span className="incorrectGuess">wrong</span>! You only gained +<span className="deltaXP">{delta_xp}</span>xp.</p>)}
                 
@@ -196,4 +199,5 @@ ClosedPage.propTypes = {
     loading: React.PropTypes.bool,
     userLeft: React.PropTypes.bool,
     user: React.PropTypes.object,
+    otherUserLevel: React.PropTypes.number,
 }
