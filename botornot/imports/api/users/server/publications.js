@@ -1,4 +1,5 @@
 import { Convos } from '/imports/api/convos/convos.js';
+import { exitConvo } from '/imports/api/users/methods.js';
 
 Meteor.publish('topNUsers', (N) => {
   return Meteor.users.find({}, {
@@ -45,8 +46,9 @@ Meteor.publish('currentUser', () => {
   session = Meteor.server.sessions[Object.keys(Meteor.server.sessions).filter((key) => {
     return Meteor.server.sessions[key].userId == userId;  
   })[0]];
+  console.log("currentUser pub, session", session);
   session.socket.on('close', Meteor.bindEnvironment(() => {
-    Meteor.call('users.exitConvo');
+    exitConvo(userId);
   }));
   return user;
 });
