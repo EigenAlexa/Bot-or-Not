@@ -8,6 +8,7 @@
     "botPassword" : "supthen",
     "maxTurns" : 10,
     "hostPort": "3000",
+    "percentPrompted": 0.5,
     "kadira": { 
       "appId": "SagxruT5Cu4WrC4fk", 
       "appSecret": "e13c47ae-3826-403b-8222-2d16521ea70c" 

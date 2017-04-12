@@ -3,6 +3,7 @@ var OrderedHashMap = require('ordered-hashmap');
 import { Messages } from '/imports/api/messages/messages.js';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Prompts } from '/imports/api/prompts/prompts.js';
+import { Random } from 'meteor/random';
 
 const botTimeout = !!Meteor.settings.timeout ? Meteor.settings.timeout * 1000 : 5000;
 
@@ -50,21 +51,30 @@ class UserPool {
   
   makeNewRoom() {
     
-    msgId = Messages.insert({
-      user: "null",
-      message: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
-      time: Date.now(),
-      convoId: "null"
-    });
 
     convoId = Convos.insert({
       closed: false,
       curSessions: 0,
       time: Date.now(),
-      msgs: [msgId],
+      msgs: [],
       hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME,
     });
-    Messages.update( {_id: msgId}, {$set: {convoId: convoId}} );
+   
+    threshold = !!Meteor.settings.percentPrompted ? Meteor.settings.percentPrompted : 0.5;
+    shouldAddPrompt = Random.fraction() < threshold;
+
+    if (shouldAddPrompt) {
+      msgId = Messages.insert({
+        user: "null",
+        message: Prompts.aggregate([ { $sample: {size: 1} } ])[0].text,
+        time: Date.now(),
+        convoId: "null"
+      });
+      Messages.update( {_id: msgId}, {$set: {convoId: convoId}} );
+      Convos.update({_id: convoId}, {
+        $push: {msgs: msgId}
+      });
+    }
 
     return convoId;
 
