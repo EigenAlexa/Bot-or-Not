@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Convos } from '/imports/api/convos/convos.js';
+import { finishConvoUserLeft } from '/imports/api/convos/methods.js';
 
 Meteor.methods({
   'users.updateAnonymousUsername'() {
@@ -17,29 +18,13 @@ Meteor.methods({
     }
   },
   'users.exitConvo'() {
-    if (!!this.userId) {
-      Meteor.users.update({_id: this.userId}, {
-        $set: {in_convo: false, rated: false, isReady: false}
-      });
-      Meteor.call('users.removeUserFromQueue');
-      user = Meteor.users.findOne({_id: this.userId});
-      if (!!user && !!user.curConvo) {
-        convo = Convos.findOne({_id: user.curConvo});
-        if (!!convo && !!convo._id) {
-          console.log("exiting convo ", convo._id, " user: ", this.userId);
-          Meteor.call('convos.finishConvoUserLeft', convo._id);
-        }
-      }
-    }
+    let userId = Meteor.userId();
+    exitConvo(userId); 
   },
   'users.nextChatAfterRate'() {
     let userId = Meteor.userId();
     if (!!userId) {
-      console.log("User", userId, "leaving after rating");
-      Meteor.users.update({_id: userId}, {
-        $set: {in_convo: false, rated: false, isReady: false}
-      });
-      Meteor.call('users.removeUserFromQueue');
+      nextChatAfterRate(userId);
     }
   },
   'getBotUsername'(magicphrase){
@@ -75,3 +60,38 @@ Meteor.methods({
     }
   } 
 });
+
+  
+exitConvo = (userId) => {
+  if (!!userId) {
+    Meteor.users.update({_id: userId}, {
+      $set: {in_convo: false, rated: false, isReady: false}
+    });
+    Meteor.call('users.removeUserFromQueue');
+    user = Meteor.users.findOne({_id: userId});
+    if (!!user && !!user.curConvo) {
+      convo = Convos.findOne({_id: user.curConvo});
+      if (!!convo && !!convo._id) {
+        console.log("exiting convo ", convo._id, " user: ", userId);
+        finishConvoUserLeft(convo._id, userId);
+      }
+    }
+  }
+}
+
+nextChatAfterRate = (userId) => {
+  Meteor.users.update({_id: userId}, {
+    $set: {rated: false, isReady: false}
+  });
+  Meteor.call('users.removeUserFromQueue');
+  user = Meteor.users.findOne({_id: userId});
+  if (!!user && !!user.curConvo) {
+    convo = Convos.findOne({_id: user.curConvo});
+    if (!!convo && !!convo._id) {
+      console.log("exiting convo ", convo._id, " user: ", userId);
+      Meteor.call('convos.finishConvoUserLeft', convo._id);
+    }
+  }
+}
+
+export { exitConvo };

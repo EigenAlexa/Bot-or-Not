@@ -1,32 +1,40 @@
 import { HTTP } from 'meteor/http';
 import { Convos } from '/imports/api/convos/convos.js';
-
+import { exitConvo } from '/imports/api/users/methods.js';
 //Meteor.methods({ 'startBot'(roomId) {
 //  startBot(roomId);
 //}});
 
-startBot = (roomId) => { 
+startBot = (roomId, userId) => { 
   console.log('roomId',roomId);
   convo = Convos.findOne({'_id' : roomId})
   console.log('starting bot in convo', roomId);
   bot_convos = Convos.find({_id: {$ne: roomId},
                             hasBot: true,
-                            closed: false,
-                            hostID: !!Meteor.settings.hostID ? Meteor.settings.hostID : process.env.HOSTNAME})
+                            closed: false})
                           .fetch();
     // check to make sure that convos has more htan one user
   // mainly for debugging 
-  if (convo.users.length == 0) {
-    throw new Error('Convo has no users, not starting bot');
-  } else if (!!bot_convos && bot_convos.length >= 1) {
+  console.log("Bot_convos", bot_convos);
+  if (!!bot_convos && bot_convos.length >= 1) {
     bot_convo = bot_convos[0];
+    console.log('bot_convo', bot_convo);
     //kick bot from other bot convo
-    Meteor.call('convos.finishConvoUserLeft', bot_convo._id);
-    Meteor.call('convos.finishConvo', bot_convo._id);
+    bot_convo.users.forEach((user) => {
+      if (user.bot)
+        exitConvo(user.id);
+    });
+    convo.users.forEach((user) => {
+      if (user.bot)
+        exitConvo(user.id);
+    });
+    //Meteor.call('convos.finishConvoUserLeft', bot_convo._id);
+    //Meteor.call('convos.finishConvo', bot_convo._id);
     //finish this convo as well
-    Meteor.call('convos.finishConvoUserLeft', convo._id);
-    Meteor.call('convos.finishConvo', convo._id);
-    return;
+    //Meteor.call('convos.finishConvoUserLeft', convo._id);
+    //Meteor.call('convos.finishConvo', convo._id);
+
+    return false;
   } else if (!!convo && convo['curSessions'] < 2) {
     let bot_url;
 
@@ -60,11 +68,13 @@ startBot = (roomId) => {
           'server_url' : server_url, 
           'room_id' : roomId, 
           'magic_phrase' : Meteor.settings.magicPhrase,
-          'max_turns' : maxTurns
+          'max_turns' : maxTurns,
+          'other_user' : userId
         }
       }).data;
       // flag the room as containing a bot
       Convos.update({'_id' : roomId}, {$set: {'hasBot' : true}});
+      return true;
     } catch(error) {
       // TODO add handling that would send us an email or something
       console.log('error: ', error);

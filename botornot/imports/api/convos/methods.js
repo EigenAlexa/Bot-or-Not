@@ -23,7 +23,7 @@ Meteor.methods({
 							$set: {in_convo: true, curConvo: convoId, rated: false}
 						});
 						numUpdated = Convos.update({_id: convoId, "users.id": {$ne: userId}}, {
-							$push: {users: {id: userId, rated: 'none', isReady: false, englishCount: 0, markedOffTopic: false}},
+							$push: {users: {id: userId, rated: 'none', isReady: false, englishCount: 0, markedOffTopic: false, bot: true}},
 							$inc: {curSessions: 1}
 						});
 						console.log(rn, 'updated',numUpdated, 'docs in convo update');
@@ -52,7 +52,7 @@ Meteor.methods({
 			} else {
 				console.log("magic phrase failed");
 			}
-    },    
+    },
   
     'convos.updateChat'(text, convoId) {
       let userId = Meteor.userId();
@@ -117,21 +117,7 @@ Meteor.methods({
     },
 
     'convos.finishConvoUserLeft'(convoId){
-      if (!!convoId && !!Meteor.userId()) {
-        convo = Convos.findOne({_id: convoId, "users.id": Meteor.userId()});
-        
-        //check that convo exists and the user is in that convo
-        if (!!convo) { 
-          Convos.update({_id: convoId}, {
-            $set: {closed: true, curSession: 0}
-          });
-          convo.users.forEach( (user) => {
-            Meteor.users.update({_id: user.id}, {
-              $set: {convoClosed: true, left: true}
-            });
-          });
-        }
-      }
+      finishConvoUserLeft(convoId, Meteor.userId());      
     },
 
     'convos.markOffTopic'(convoId){
@@ -296,3 +282,24 @@ function userAddedToConvo(userObj, convoObj) {
   }
   return false;
 }
+
+finishConvoUserLeft = (convoId, userId) => {
+  if (!!convoId && !!userId) {
+    convo = Convos.findOne({_id: convoId, "users.id": userId});
+    
+    //check that convo exists and the user is in that convo
+    if (!!convo) { 
+      Convos.update({_id: convoId}, {
+        $set: {closed: true, curSession: 0}
+      });
+      convo.users.forEach( (user) => {
+        Meteor.users.update({_id: user.id}, {
+          $set: {convoClosed: true, left: true}
+        });
+      });
+    }
+  }
+
+}
+
+export { finishConvoUserLeft };

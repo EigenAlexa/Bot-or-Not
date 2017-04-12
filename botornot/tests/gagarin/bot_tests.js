@@ -7,7 +7,7 @@ describe('bots', () => {
 
   it('should connect to a user after the timeout length', () => {
     return utils.waitForFlowRoute(client1, '/chat')  
-      .waitForDOM(".message-panel", 45000) //TODO get value from meteor settings
+      .waitForDOM(".message-panel", 80000) //TODO get value from meteor settings
       .then(() => {
         return utils.waitForFlowRoute(client1, '/');
       })
@@ -26,7 +26,7 @@ describe('bots', () => {
   });
   it('should kick bots from rooms if there are two users connected to bots', () => {
     return utils.waitForFlowRoute(client1, '/chat')
-      .waitForDOM(".message-panel", 45000)
+      .waitForDOM(".message-panel", 95000)
       .then(() => {
         return utils.waitForFlowRoute(client2, '/chat');
       })

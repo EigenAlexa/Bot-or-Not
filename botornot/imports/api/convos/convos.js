@@ -27,6 +27,12 @@ UserSchema = new SimpleSchema({
     type: Boolean, 
     label: "markedOffTopic",
     defaultValue: false
+  },
+  bot: {
+    type: Boolean,
+    label: "bot",
+    defaultValue: false,
+    optional: true
   }
 });
 

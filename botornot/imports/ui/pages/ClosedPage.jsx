@@ -128,7 +128,7 @@ export default class ClosedPage extends React.Component {
 	}
 
   handleNextSubmit(event) {
-    Meteor.call('users.nextChatAfterRate');
+    Meteor.call('users.exitConvo');
     updateCookiesOnExit();
   }
   renderNotUserLeft() {
