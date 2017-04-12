@@ -5,6 +5,12 @@ import { Random } from 'meteor/random';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { validate } from '/imports/api/messages/validation.js';
 
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 Meteor.methods({
     
 		'convos.addUserToRoom'(convoId, magicphrase) {
@@ -218,17 +224,27 @@ function calculateAndUpdateXp(correct, userId, convoId){
     //Do XP Stuff.
   const cur_user = Meteor.users.findOne({_id: userId});
   const curLevel = cur_user.level;
+  const other_level = getRandomIntInclusive(Math.max(1, curLevel-2), curLevel+3)
+
   const curXP = cur_user.xp;
   const maxXP = cur_user.xp_max;
 
+  // This is a hand tuned equation for the number of conversations
+  // needed to level up at curLevel
   const num_convs = 2*Math.pow(curLevel, 1.1) + 0.5*Math.pow(curLevel,0.5) -0.9;
 
+  // You should roughly have num_convs to level up, therefore each time 
+  // a user converses they'll get the appropriate proportion.
   const baseXPIncr = maxXP/num_convs;
 
-  const multiplier = correct ? 1 : 0.05; 
+  // We multiply whatever the increase in XP is by near 0 if the user was
+  // incorrect in rating. Furthermore we increase/decrease the multiplier based
+  // on the other users level.
+  const multiplier = (correct ? 1 : 0.05)*((other_level - curLevel)/10.0 + 1.0); 
   const randBonus = 0.4*(Math.random() - 0.75)*baseXPIncr;
   convo = Convos.findOne({_id: convoId}); 
   const lengthBonus = 0.05 * convo.turns * baseXPIncr;
+  // You can't get less XP than 22.
   const deltaXP = Math.ceil(Math.max(Math.floor(baseXPIncr + randBonus + lengthBonus),22)*multiplier);
 
   const newXP = Math.round(curXP+ deltaXP);
@@ -250,7 +266,8 @@ function calculateAndUpdateXp(correct, userId, convoId){
   let update = {
     delta_xp: deltaXP,
     level_up: newXP > maxXP,
-    correct: correct
+    correct: correct,
+    other_level: other_level
   };
   return update;
 }

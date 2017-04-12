@@ -45,16 +45,16 @@ export default class ClosedPage extends React.Component {
       const delta_xp = xp_update.delta_xp;
       const level_up = xp_update.level_up;
       const level = this.props.user.level;
+      const other_level = xp_update.other_level;
       const correct = xp_update.correct;
 
       return ( <div className="ratingDiv">
-                <p>The other user was </p>
+                <p>The other user was { !this.props.user.loading ? (
+                    <span> a <span className="label label-lg label-warning">Level {other_level}</span> </span>)
+                  : " "} </p>
                 { !this.props.user.loading ?
                   this.props.user.lastOtherUser == 'bot' ? <span className="feedback fb-bot">BOT</span> : <span className="feedback fb-not">NOT</span>
                   : ""}
-                <p>The other user was 
-                { !this.props.user.loading ? <span className="label label-lg label-warning">Level {this.props.otherUserLevel}</span>
-                  : ""} </p>
                 { correct ? (<p> You gained +<span className="deltaXP">{delta_xp}</span>xp for guessing <span className="correctGuess"> correctly</span>!</p>) :
                  (<p> Your guess was <span className="incorrectGuess">wrong</span>! You only gained +<span className="deltaXP">{delta_xp}</span>xp.</p>)}
                 
