@@ -19,9 +19,7 @@ Meteor.startup(() => {
       numItemsPerCollection : 15,
     }); **/
 
-    if (Prompts.find().count() == 0) {
-      PromptList.forEach((promp)=> {
-        Prompts.upsert({'text': promp}, {'text': promp});
-      });
-    }
+    PromptList.forEach((promp)=> {
+      Prompts.upsert({'text': promp}, { $setOnInsert : {'text': promp}});
+    });
 });
