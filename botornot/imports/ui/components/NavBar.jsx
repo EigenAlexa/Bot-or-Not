@@ -6,8 +6,13 @@ import ReactDOM from 'react-dom';
 class NavBar extends React.Component {
   constructor(params) {
     super(params);
-    this.state = {width: 0, height:0};
+    this.state = {
+      width: 0, 
+      height:0,
+      backgroundClass : ""
+    };
     this.updateDimensions = this.updateDimensions.bind(this); 
+    this.handleScroll = this.handleScroll.bind(this);
   }
   user() {
     return Meteor.user();
@@ -23,7 +28,7 @@ class NavBar extends React.Component {
       navLinks.push(['/profile/' + username, 'Profile']);
       navLinks.push(['/logout', 'Logout']);
     } else {
-      navLinks.push(['/sign-in', 'Sign In']);
+      navLinks.push(['/sign-in', 'Login']);
       navLinks.push(['/sign-up', 'Sign Up']);
     }
     NavLinks = navLinks.map((item) => {
@@ -39,9 +44,23 @@ class NavBar extends React.Component {
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
+    window.removeEventListener("scroll", this.handleScroll);
   }
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
+    window.addEventListener("scroll", this.handleScroll);
+  }
+  handleScroll(event) {
+    let scrollTop = event.srcElement.body.scrollTop; 
+    if (scrollTop > 80) { // todo figure out top 
+      this.setState({
+        backgroundClass : 'home-background-scroll '
+      });
+    } else {
+      this.setState({
+        backgroundClass : ''
+      });
+    }
   }
   getActiveUsers() {
 		users = UserConnections.find().count()
@@ -58,17 +77,19 @@ class NavBar extends React.Component {
     if(this.props.isHome) {
       navbar_class += "home";
       home_screen_align="navbar-right";
+      background_class = this.state.backgroundClass;
     }
     else {
       navbar_class += "default";
       home_screen_align="navbar-right";
+      background_class = "";
       // home_screen_align="nav-align";
     }
 
     const displayActiveUsers= this.props.usersOnline >= Meteor.settings.public.usersOnline;
     return (
     <div className={navbar_class}>
-      <nav className="navbar navbar-default navbar-fixed-top">
+      <nav className={background_class + "navbar navbar-default navbar-fixed-top"}>
         <div className="container-fluid">
             {/* Brand and toggle get grouped for better mobile display */}
             <div className="navbar-default">

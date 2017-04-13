@@ -28,7 +28,6 @@ class HomePage extends React.Component {
     return <Media
        volume={0}>
       <div className="media">
-        <BotNotTitle />
         <div className="media-player">
           <Player 
               className="background-video" 
@@ -43,13 +42,25 @@ class HomePage extends React.Component {
       </div>
     </Media>
   }
+  renderInfoGraphics() {
+    return <div className="infographics">
+         Infographics 
+    </div>;
+  }
   render() {
     let width = window.innerWidth;
+    let background;
     if (width > 450) {
-      return this.renderVideo();
+      background= this.renderVideo();
     } else {
-      return this.renderStill();
+      background =  this.renderStill();
     }
+    return ( 
+      <div>
+        {background}
+        {this.renderInfoGraphics()} 
+      </div>
+    );
 	}
 }
 
