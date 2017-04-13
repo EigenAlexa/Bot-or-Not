@@ -24,15 +24,18 @@ export default class LeaderboardEntry extends React.Component {
   render() {
     content = this.getContent();
     console.log(content);
-    
-    return (
-        <tr className="row">
-          <td className="col-md-1 leader-elem">{this.state.ranking ? this.state.ranking : ""}</td>
-          <td className="col-md-1 leader-elem"><a href={"/profile/" + content.username}>{content.username}</a></td>
-          <td className="col-md-1 leader-elem leader-rating">{content.level}</td>
-          <td className="col-md-1 leader-elem leader-rating">{content.rating.toFixed(2)}</td>
-        </tr>
-    );
+    if (content.rating != 0){    
+      return (
+          <tr className="row">
+            <td className="col-md-1 leader-elem">{this.state.ranking ? this.state.ranking : ""}</td>
+            <td className="col-md-1 leader-elem"><a href={"/profile/" + content.username}>{content.username}</a></td>
+            <td className="col-md-1 leader-elem leader-rating">{content.level}</td>
+            <td className="col-md-1 leader-elem leader-rating">{content.rating.toFixed(2)}</td>
+          </tr>
+      );
+    } else {
+      return (null);
+    }
 
   }
 }
