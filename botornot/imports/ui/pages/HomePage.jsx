@@ -34,7 +34,6 @@ class HomePage extends React.Component {
               className="background-video" 
               autoPlay="true"
 							loop="true"
-              volume={0}
               src={this.state.videoURL}/>
         </div>
 				<div id="video-overlay"></div>
