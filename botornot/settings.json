@@ -4,7 +4,7 @@
     "Debug" : true,
     "botServerUrl" : "http://10.0.1.75:5000",
     "serverUrl" : "beta.botornot.ml",
-    "timeout": 15,
+    "timeout": 7,
     "magicPhrase" : "hilaryyas",
     "botPassword" : "supthen",
     "maxTurns" : 10,
