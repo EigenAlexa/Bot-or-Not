@@ -29,11 +29,15 @@ validate = (text, convoId, server) => {
   }
 
 checkSwear = (text, convoId, server) => {
-    matches = text.toLowerCase().match(profanity);
-    if (!matches || matches.length == 0){
-      return true;
-    }
-    return false;  
+    let valid = true;
+		text.toLowerCase().split(/\s*[,| |.|;|\:|\?|\-|\!|]\s*/).forEach( (word)=> {
+			profanity.forEach((swear) => {
+				if (word.startsWith(swear) && word.endsWith(swear)){
+					valid = false;
+				}
+			});
+		});
+    return valid;
   }
 
 checkLinks = (text, convoId, server) => {
