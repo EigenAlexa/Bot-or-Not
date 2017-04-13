@@ -148,17 +148,23 @@ Meteor.methods({
           else
             probInc = 0.001;
 
+          otherUser = Meteor.users.findOne({_id: {$in: convo.users.map((user) => {return user.id}), $ne: userId}});
 
-          if(rating == 'not') {
-            if(correct)
-              lastOtherUser = rating;
-            else
-              lastOtherUser = 'bot';
-          } else if (rating == 'bot'){
-            if(correct)
-              lastOtherUser = rating;
-            else
-              lastOtherUser = 'not';
+          if (otherUser.admin) {
+            lastOtherUser = 'bot';
+          } else {          
+
+            if(rating == 'not') {
+              if(correct)
+                lastOtherUser = rating;
+              else
+                lastOtherUser = 'bot';
+            } else if (rating == 'bot'){
+              if(correct)
+                lastOtherUser = rating;
+              else
+                lastOtherUser = 'not';
+            }
           }
 
           console.log("lastOtherUser methods", lastOtherUser);
