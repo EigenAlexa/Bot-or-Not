@@ -137,7 +137,6 @@ AccountsTemplates.postSubmitRedirect = function(route) {
     }
   } else {
     var nextPath = AccountsTemplates.routes[route] && AccountsTemplates.routes[route].redirect;
-    console.log("nextPath", nextPath);
     if (nextPath) {
       if (_.isFunction(nextPath)) {
         nextPath();

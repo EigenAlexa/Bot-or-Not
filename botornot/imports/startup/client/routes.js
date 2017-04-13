@@ -83,8 +83,6 @@ FlowRouter.route("/sign-up-anon", {
 FlowRouter.route("/closed", {
   name: "closed",
   action(params, queryParams){
-    console.log("Chat closed");
-    console.log(params, queryParams);
     ReactLayout.render(Screen, {children: <ClosedPageContainer params={{roomId: queryParams.convoId, userLeft: queryParams.userLeft}}/> }); 
   }
 
@@ -116,6 +114,5 @@ AccountsTemplates.configureRoute("verifyEmail");
 function sessionUpdate(s) {
     // Updates the current session tracker to include the users location
 	Session.set("location", s);
-	console.log(Session["keys"]["location"]);
 	Meteor.call("updateSessionDict", Session);
 }
