@@ -86,9 +86,6 @@ ul.nav.navbar-nav.navbar-right{
     color: @fg;
 }
 
-.navstyle-home .navbar-default .navbar-brand span {
-    color: @logo-fg;
-}
 .navstyle-home .navbar-default .navbar-brand {
     text-transform: uppercase;
     color: @bg-2;
@@ -126,8 +123,12 @@ ul.nav.navbar-nav.navbar-right{
     background-color: @bg-2;
 }
 
-.navstyle-default .navbar-default .navbar-brand span {
+.navbar-default .navbar-brand span {
     color: @logo-fg;
+    transition: color 1s;
+}
+.navbar-default .navbar-brand span:hover {
+    color: #5d5d5d;
 }
 .navstyle-default .navbar-default .navbar-brand {
     text-transform: uppercase;
@@ -157,10 +158,10 @@ ul.nav.navbar-nav.navbar-right{
 }
 .active-user-div {
     padding-left: 250px;
-    padding-top: 20px;
+    padding-top: 23px;
+	color: @bg-2;
 }
 .navstyle-home .active-user-div {
-	color: @bg-2;
 }
 
 @media (min-width: 766px) {
