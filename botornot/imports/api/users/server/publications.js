@@ -46,7 +46,6 @@ Meteor.publish('currentUser', () => {
   session = Meteor.server.sessions[Object.keys(Meteor.server.sessions).filter((key) => {
     return Meteor.server.sessions[key].userId == userId;  
   })[0]];
-  console.log("currentUser pub, session", session);
   session.socket.on('close', Meteor.bindEnvironment(() => {
     exitConvo(userId);
   }));
