@@ -44,7 +44,22 @@ class HomePage extends React.Component {
   }
   renderInfoGraphics() {
     return <div className="infographics">
-         Infographics 
+      <div className="infographics-one">
+        <div className="infographics-header">
+           PURPOSE
+        </div>
+        <div className="inforgraphics-body">
+          We are building a 
+        </div>
+      </div>
+      <div className="infographics-two">
+        <div className="infographics-header">
+           PURPOSE
+        </div>
+        <div className="inforgraphics-body">
+          We are building a 
+        </div>
+      </div>
     </div>;
   }
   render() {
