@@ -1,6 +1,7 @@
 import NavBar from '/imports/ui/components/NavBar.jsx'
 import Screen from '/imports/ui/layouts/screen.jsx';
 import React from 'react';
+import { profanityRegex } from '/imports/ui/static/validationRegex.js';
 
 AccountsTemplates.configure({
     // Behavior
@@ -77,6 +78,10 @@ AccountsTemplates.addFields([
       required: true,
       minLength: 5,
       maxLength: 12,
+      func: (username) => {
+        return username.toLowerCase().search(profanityRegex) != -1;
+      },
+      errStr: "Please don't use profanity in your usernames"
   },
   pwd
 ]);

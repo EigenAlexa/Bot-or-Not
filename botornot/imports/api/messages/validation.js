@@ -104,4 +104,4 @@ checkRepeated = (text, convoId, server) => {
 
 }
 
-export { validate }
+export { validate, checkSwear }
