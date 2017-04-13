@@ -50,9 +50,9 @@ AccountsTemplates.configure({
     },
     onSubmitHook: (error, state) => {
       if(!error) {
-        if(state == "signIn") {
-          console.log("successfully logged in");
-        }
+        // if(state == "signIn") {
+        //   console.log("successfully logged in");
+        // }
       }
     }
 });
