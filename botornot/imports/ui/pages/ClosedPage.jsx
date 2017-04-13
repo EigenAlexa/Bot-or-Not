@@ -53,7 +53,6 @@ export default class ClosedPage extends React.Component {
       } else {
         this.props.user.loading = true;
       }
-      console.log("lastOtherUser", lastOtherUser);
 
       return ( <div className="ratingDiv">
                 <p>The other user was { !this.props.user.loading ? (
@@ -89,10 +88,7 @@ export default class ClosedPage extends React.Component {
     this.setState({xp_update: null});
     Meteor.call('convos.updateRatings', this.props.room._id, target.name,
       (error, result) => {
-          if(!!error)
-            console.log(error);
           
-          console.log(result);
           this.setState({xp_update: result});
       } // End of call callback.
     ); 
@@ -102,7 +98,6 @@ export default class ClosedPage extends React.Component {
     let userId = Meteor.userId();
     Tracker.autorun((comp) => {
       user = Meteor.users.findOne({_id: userId});
-      console.log("autorun userid", userId);
       convo = Convos.findOne({_id: user.curConvo });
       thisUserFromConvo = convo.users.filter((user) => {
         return user === user._id;
@@ -115,15 +110,11 @@ export default class ClosedPage extends React.Component {
       if (!!users && !!users[0]) {
         other = Meteor.users.findOne({_id: users[0]});
       }
-      console.log("user.rated", user.rated);
-      console.log("user.lastOtherUser", user.lastOtherUser);
-      console.log("user", userId);
       if(user.rated && thisUserFromConvo.lastOtherUser === 'not'){
         Session.set('playNotification', "true");
         Session.set('rating', user.lastRating);
         comp.stop();
       } else if (!!other && other.curConvo !== user.curConvo){
-        console.log("stopping autorun");
         comp.stop();
       }
     }); //End or tracker autorun

@@ -52,7 +52,6 @@ export default class WaitPage extends React.Component {
             this.joinQueue();
           } 
           else {
-            console.log("trying to go to chat page");
             child = this.getContent;
           } 
           inconvo = user.in_convo;

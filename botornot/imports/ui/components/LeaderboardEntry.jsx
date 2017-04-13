@@ -6,7 +6,6 @@ export default class LeaderboardEntry extends React.Component {
     this.state = { 'ranking': false};
   }
   getContent() {
-    console.log(this.props.user);
     return {
       username: this.props.user.username, 
       rating: this.props.user.rating,
@@ -23,7 +22,6 @@ export default class LeaderboardEntry extends React.Component {
   }
   render() {
     content = this.getContent();
-    console.log(content);
     if (content.rating != 0){    
       return (
           <tr className="row">
