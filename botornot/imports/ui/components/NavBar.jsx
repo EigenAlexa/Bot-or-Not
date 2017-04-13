@@ -70,7 +70,7 @@ class NavBar extends React.Component {
       // home_screen_align="nav-align";
     }
 
-    const displayActiveUsers= this.props.usersOnline >= 10;
+    const displayActiveUsers= this.props.usersOnline >= Meteor.settings.public.usersOnline;
     return (
     <div className={navbar_class}>
       <nav className="navbar navbar-default navbar-fixed-top">
