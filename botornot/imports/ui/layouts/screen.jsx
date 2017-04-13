@@ -94,8 +94,7 @@ export default class Screen extends React.Component {
         return (
             <div>
                 <header>
-                    <Favicon url={["/icon.ico"]} />
-                    <NavBar /> 
+                  <NavBar /> 
                 </header>
                  {this.props.children}
               {!this.props.customFooter ? <Footer /> : ""}
