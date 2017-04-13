@@ -45,6 +45,7 @@ module.exports = {
       MONGO_URL: "mongodb://10.0.1.4:27017,10.0.1.25:27017,10.0.1.133:27017/meteor?replicaSet=rs0&readPreference=primaryPreferred&w=1",
       PORT: HOST_PORT,
       SERVER_PORT: HOST_PORT,
+      NODE_ENV : "production", 
 //      CLUSTER_DISCOVERY_URL: "mongodb://172.17.0.2/meteor",
 //      CLUSTER_WORKERS_COUNT: "auto",
 //      CLUSTER_SERVICE: "web",
