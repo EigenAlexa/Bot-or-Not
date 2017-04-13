@@ -10,45 +10,83 @@ const botTimeout = !!Meteor.settings.timeout ? Meteor.settings.timeout * 1000 : 
 class UserPool {
   constructor() {
     this.pool = new OrderedHashMap();    
+    this.adminPool = new OrderedHashMap();
+  }
+
+  connectTwoUsers(userId, pool1, pool2) {
+    //Connects two users from pool1 and pool2
+    //pool1 is pool of userId
+    //pool2 is where to get second user from
+    
+    console.log("connecting two users");
+    pool1.set(userId, {timeout: null});
+    user1 = pool2.keyAt(0);
+    Meteor.clearTimeout(pool2.get(user1).timeout);
+    user2 = userId;
+
+    convoId = this.makeNewRoom();
+    this.addUserToRoom(convoId, user1);
+    this.addUserToRoom(convoId, user2);
+    //this.addUsersToRoom(convoId, user1, user2);
+    pool2.remove(user1);
+    pool1.remove(user2);
+
   }
 
   add(userId) {
-    if (this.pool.indexOf(userId) == -1) {
-      console.log("adding user", userId, "to pool");
-      if( this.pool.count() >= 1 ) {
-        console.log("connecting two users");
-        this.pool.set(userId, {timeout: null});
-        user1 = this.pool.keyAt(0);
-        Meteor.clearTimeout(this.pool.get(user1).timeout);
-        user2 = userId;
-
-        convoId = this.makeNewRoom();
-        this.addUserToRoom(convoId, user1);
-        this.addUserToRoom(convoId, user2);
-        //this.addUsersToRoom(convoId, user1, user2);
-        this.pool.remove(user1);
-        this.pool.remove(user2);
-      } else {
-				console.log("pool count: ", this.pool.count());
-        this.pool.set(userId, {timeout: Meteor.setTimeout(() => {
-          console.log("starting bot");
-          convoId = this.makeNewRoom();
-          result = startBot(convoId, userId);
-          if ( result ) {
-            this.pool.remove(userId);
-          }
-        }, botTimeout)});
+    user = Meteor.users.findOne({_id: userId});
+    if (user.admin) {
+      if (this.adminPool.indexOf(userId) === -1) {
+        if ( this.pool.count() >= 1 ) {
+          this.connectTwoUsers(userId, this.adminPool, this.pool);
+        } else {
+          this.adminPool.set(userId, {timeout: null});
+        }
+      }
+    } else {
+      if (this.pool.indexOf(userId) == -1) {
+        console.log("adding user", userId, "to pool");
+        if (this.adminPool.count() >= 1 ) {
+          this.connectTwoUsers(userId, this.pool, this.adminPool);
+        } else if( this.pool.count() >= 1 ) {
+          this.connectTwoUsers(userId, this.pool, this.pool);
+        } else {
+          console.log("pool count: ", this.pool.count());
+          this.pool.set(userId, {timeout: Meteor.setTimeout(() => {
+            console.log("starting bot");
+            convoId = this.makeNewRoom();
+            result = startBot(convoId, userId);
+            if ( result ) {
+              this.pool.remove(userId);
+            }
+          }, botTimeout)});
+        }
       }
     } 
   }
 
   remove(userId) {
-    if (this.pool.indexOf(userId) !== -1 ) {
-      Meteor.clearTimeout(this.pool.get(userId).timeout);
-      return this.pool.remove(userId);
+    if (user.admin) {
+      this.removeUserFromPool(userId, this.adminPool);
+    } else {
+      this.removeUserFromPool(userId, this.pool);
     }
   }
-  
+
+  removeUserFromPool(userId, pool) {
+    if (pool.indexOf(userId) !== -1 ) {
+      this.clearTimeout(userId, pool);
+      return pool.remove(userId);
+    }
+  }
+ 
+  clearTimeout(userId, pool) {
+    let timeout = pool.get(userId).timeout;
+    if (!!timeout) {
+      Meteor.clearTimeout(timeout);    
+    }
+  }
+   
   makeNewRoom() {
     
 

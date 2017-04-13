@@ -192,6 +192,12 @@ Schema.User = new SimpleSchema({
 		label: 'anon',
 		defaultValue: false,
 	},
+  admin: {
+    type: Boolean,
+    label: 'admin',
+    defaultValue: false,
+    optional: true
+  }
 });
 
 Meteor.users.attachSchema(Schema.User);
