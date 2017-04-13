@@ -45,16 +45,11 @@ class NavBar extends React.Component {
   }
   getActiveUsers() {
 		users = UserConnections.find().count()
-    console.log('active users', users)
     return users;
   }
   renderActiveUsers() {
     return  <div className='active-user-div'>Users Online: <span>{this.props.usersOnline}</span></div> ;
   }
-  // onBlurEvent() {
-  //   console.log('onBlur');
-  //    ReactDOM.findDOMNode(this.refs.collapseDiv).collapse('hide');
-  // }
   render() {
     routeName = FlowRouter.current().route.name;
 

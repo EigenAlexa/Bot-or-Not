@@ -12,8 +12,6 @@ export default class LeaderboardPage extends React.Component {
       Meteor.call('users.getUserRanking', Meteor.user().username, (error, result) => {
         if (!error){
           this.setState({'rank': result});
-        } else {
-          console.log(error);
         }
       });
     }

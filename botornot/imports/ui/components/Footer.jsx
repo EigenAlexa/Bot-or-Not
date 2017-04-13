@@ -13,7 +13,6 @@ class Footer extends React.Component {
   }
 
 	renderModal(title,modalChild) {
-    console.log(Session.get('showBugModal'), typeof Session.get('showBugModal'));
     return (
       <Modal show={true} backdrop='static' className="bugModal" >
         <Modal.Header> 

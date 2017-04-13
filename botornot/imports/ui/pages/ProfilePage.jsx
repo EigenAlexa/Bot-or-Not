@@ -20,15 +20,11 @@ export default class ProfilePage extends React.Component {
     this.state = {rank: -1};
   }
   componentWillUpdate(){
-    console.log(this.state.rank)
     if(!this.props.loading && this.state.rank < 0) {
         Meteor.call('users.getUserRanking', this.props.user.username, (error, result) => {
         if (!error){
           this.setState({'rank': result});
-        } else {
-          console.log("Error!")
-          console.log(error);
-        }
+        }      
       });
     }
   }
@@ -118,8 +114,6 @@ export default class ProfilePage extends React.Component {
 		return <img src={profPic} className='profile-img'/>;
 	}
   getConvos() {
-      console.log('not convos',this.props.notConvos);
-      console.log('bot convos',this.props.botConvos);
       HumanConvos = this.props.notConvos.map(convo => (
           <ConvoItem 
             convo={convo}
