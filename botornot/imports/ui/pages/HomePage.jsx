@@ -7,7 +7,7 @@ class HomePage extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			videoURL: 'botnotvid.mp4'
+			videoURL: 'static/botnotvid.mp4'
 		}
 	}
   renderStill() {

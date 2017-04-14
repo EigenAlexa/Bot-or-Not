@@ -64,7 +64,7 @@ export default class ClosedPage extends React.Component {
                 { correct ? (<p> You gained +<span className="deltaXP">{delta_xp}</span>xp for guessing <span className="correctGuess"> correctly</span>!</p>) :
                  (<p> Your guess was <span className="incorrectGuess">wrong</span>! You only gained +<span className="deltaXP">{delta_xp}</span>xp.</p>)}
                 
-                { level_up ? (<div class="levelUp">
+                { level_up ? (<div className="levelUp">
                   <img src="/img/level_up.png" className="congratsImg"/> 
                   <p >Congratulations! You're now <span className="label label-lg label-warning">Level {level}</span></p>
                   </div>) : <div></div>}
