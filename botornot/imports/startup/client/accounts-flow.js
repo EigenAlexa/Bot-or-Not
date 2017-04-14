@@ -129,11 +129,7 @@ AccountsTemplates.postSubmitRedirect = function(route) {
     AccountsTemplates.avoidRedirect = false;
     if (AccountsTemplates.redirectToPrevPath) {
       let prevPath = AccountsTemplates.getPrevPath();
-      if (prevPath == '/chat') {
-        FlowRouter.go('/');
-      } else {
-        FlowRouter.go(prevPath);
-      }
+      FlowRouter.go('/');
     }
   } else {
     var nextPath = AccountsTemplates.routes[route] && AccountsTemplates.routes[route].redirect;
@@ -146,11 +142,7 @@ AccountsTemplates.postSubmitRedirect = function(route) {
     } else {
       var previousPath = AccountsTemplates.getPrevPath();
       if (previousPath && FlowRouter.current().path !== previousPath) {
-        if (previousPath == '/chat') {
-          FlowRouter.go('/');
-        } else {
-          FlowRouter.go(previousPath);
-        }
+        FlowRouter.go('/');
       } else {
         var homeRoutePath = AccountsTemplates.options.homeRoutePath;
         if (homeRoutePath) {
