@@ -4,13 +4,14 @@ import { Messages } from '/imports/api/messages/messages.js';
 import { Convos } from '/imports/api/convos/convos.js';
 import { Prompts } from '/imports/api/prompts/prompts.js';
 import { Random } from 'meteor/random';
+import { redisCall } from '/imports/api/utils/redis.js'; 
+
 
 const botTimeout = !!Meteor.settings.timeout ? Meteor.settings.timeout * 1000 : 5000;
 
 class UserPool {
   constructor() {
-    this.pool = new OrderedHashMap();    
-    this.adminPool = new OrderedHashMap();
+    this.redisQueue = new RedisQueue(redisCall);
   }
 
   connectTwoUsers(userId, pool1, pool2) {
@@ -19,73 +20,65 @@ class UserPool {
     //pool2 is where to get second user from
     
     console.log("connecting two users");
-    pool1.set(userId, {timeout: null});
-    user1 = pool2.keyAt(0);
-    Meteor.clearTimeout(pool2.get(user1).timeout);
-    user2 = userId;
-
-    convoId = this.makeNewRoom();
-    this.addUserToRoom(convoId, user1);
-    this.addUserToRoom(convoId, user2);
-    //this.addUsersToRoom(convoId, user1, user2);
-    pool2.remove(user1);
-    pool1.remove(user2);
+    this.redisQueue.getUser(pool2, Meteor.bindEnvironment((user) => {
+      convoId = this.makeNewRoom();
+      this.addUserToRoom(convoId, user);
+      this.addUserToRoom(convoId, userId);
+      //this.addUsersToRoom(convoId, user1, user2);
+      this.redisQueue.remove(userId, pool1);
+    }));
 
   }
 
   add(userId) {
     user = Meteor.users.findOne({_id: userId});
     if (user.admin) {
-      if (this.adminPool.indexOf(userId) === -1) {
-        if ( this.pool.count() >= 1 ) {
-          this.connectTwoUsers(userId, this.adminPool, this.pool);
+      this.redisQueue.count('user', Meteor.bindEnvironment((count) => {
+        if ( count >= 1 ) {
+          this.connectTwoUsers(userId, 'admin', 'user');
         } else {
-          this.adminPool.set(userId, {timeout: null});
+          this.redisQueue.add(userId, 'admin');
         }
-      }
-    } else {
-      if (this.pool.indexOf(userId) == -1) {
-        console.log("adding user", userId, "to pool");
-        if (this.adminPool.count() >= 1 ) {
-          this.connectTwoUsers(userId, this.pool, this.adminPool);
-        } else if( this.pool.count() >= 1 ) {
-          this.connectTwoUsers(userId, this.pool, this.pool);
+      }));
+    } else {  
+      this.redisQueue.count('admin', Meteor.bindEnvironment((count) => {
+        if (count >= 1 ) {
+          this.connectTwoUsers(userId, 'user', 'admin');
         } else {
-          console.log("pool count: ", this.pool.count());
-          this.pool.set(userId, {timeout: Meteor.setTimeout(() => {
-            console.log("starting bot");
-            convoId = this.makeNewRoom();
-            result = startBot(convoId, userId);
-            if ( result ) {
-              this.pool.remove(userId);
+          this.redisQueue.count('user', Meteor.bindEnvironment((count) => {
+            if (count >= 1) {
+              this.redisQueue.inPool(userId, 'user', Meteor.bindEnvironment((inPool) => {
+                if (inPool !== 1) {
+                  this.connectTwoUsers(userId, 'user', 'user');
+                } else {
+                  console.log("already in pool");
+                }
+              }));
+            } else {
+              console.log("adding user", userId, "to pool");
+              this.redisQueue.add(userId, 'user');
+              //TODO figure out bots
             }
-          }, botTimeout)});
-        }
-      }
+          }));
+        } 
+      }));
     } 
   }
 
   remove(userId) {
     if (user.admin) {
-      this.removeUserFromPool(userId, this.adminPool);
+      this.redisQueue.remove(userId, 'admin');
     } else {
-      this.removeUserFromPool(userId, this.pool);
+      this.redisQueue.remove(userId, 'user');
     }
   }
 
-  removeUserFromPool(userId, pool) {
-    if (pool.indexOf(userId) !== -1 ) {
-      this.clearTimeout(userId, pool);
-      return pool.remove(userId);
-    }
-  }
- 
-  clearTimeout(userId, pool) {
-    let timeout = pool.get(userId).timeout;
-    if (!!timeout) {
-      Meteor.clearTimeout(timeout);    
-    }
-  }
+//  clearTimeout(userId, pool) {
+//    let timeout = pool.get(userId).timeout;
+//    if (!!timeout) {
+//     Meteor.clearTimeout(timeout);    
+//    }
+//  }
    
   makeNewRoom() {
     
@@ -159,6 +152,119 @@ class UserPool {
     } 
   }
 }
+
+class RedisQueue {
+  constructor(redisCall) {
+    this.redisCall = redisCall;
+    this.redisCall((r) => {
+      r.del('userSet');
+      r.del('adminSet');
+    });
+  }
+
+  add(userId, pool) {
+    if (pool === 'admin') {
+      this.redisCall((r) => {
+        r.sadd('adminSet', userId, (err, reply) => {
+          if (!!err) {
+            console.error(err); 
+          }
+        });
+      });
+    } else if (pool == 'user') {
+      this.redisCall((r) => {
+        r.sadd('userSet', userId);
+      });
+    }
+  }
+
+  remove(userId, pool) {
+    if (pool === 'admin') {
+      this.redisCall((r) => {
+        r.srem('adminSet', userId);
+      });
+    } else if (pool === 'user') {
+      this.redisCall((r) => {
+        r.srem('userSet', userId);
+      });
+    }
+  }
+
+  inPool(userId, pool, callback) {
+    if (pool === 'admin') {
+      this.redisCall((r) => {
+        r.sismember('adminSet', userId, (err, reply) => {
+          if (!!err) {
+            console.error(err);
+          } else {
+            callback(reply);
+          }
+        });
+      });
+    } else if (pool === 'user') {
+       this.redisCall((r) => {
+        r.sismember('userSet', userId, (err, reply) => {
+          if (!!err) {
+            console.error(err);
+          } else {
+            callback(reply);
+          }
+        });
+      });     
+    }
+  }
+
+  count(pool, callback) {
+    if (pool === 'admin') {
+      this.redisCall((r) => {
+        r.scard('adminSet', (err, reply) => {
+          if (!!err) {
+            console.error(err);
+          } else {
+            callback(reply);
+          }
+        });
+      });
+
+    } else if (pool === 'user') {
+      this.redisCall((r) => {
+        r.scard('userSet', (err, reply) => {
+          if (!!err) {
+            console.error(err);
+          } else {
+            callback(reply);
+          }
+        });
+      });
+    }
+
+  }
+
+  getUser(pool, callback) {
+    if (pool === 'admin') {
+      this.redisCall((r) => {
+        r.spop('adminSet', (err, reply) => {
+          if (err) {
+            console.error(err);
+          } else {
+            callback(reply);
+          }
+        });
+      });
+    } else if (pool === 'user') {
+      this.redisCall((r) => {
+         r.spop('userSet', (err, reply) => {
+          if (err) {
+            console.error(err);
+          } else {
+            callback(reply);
+          }
+        });
+      });
+    }
+  }
+
+} 
 
 var userPool = new UserPool();
 
