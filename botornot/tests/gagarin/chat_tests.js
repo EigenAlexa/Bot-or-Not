@@ -3,8 +3,9 @@ var _ = require('underscore');
 
 describe('chat connection suite', () => {
   server = meteor();
+  server2 = meteor();
   client1 = browser(server); 
-  client2 = browser(server);
+  client2 = browser(server2);
 
   it('should be able to route to /chat', () => {
     return utils.waitForFlowRoute(client1, '/chat')
@@ -198,9 +199,10 @@ runChatInterfaceTests = (server, client1, client2) => {
 };
 
 describe('chat interface logged in', () => {
-  server2 = meteor();
-  client3 = browser(server2);
-  client4 = browser(server2);
+  server3 = meteor();
+  server4 = meteor();
+  client3 = browser(server3);
+  client4 = browser(server4);
 
   before(() => {
     return utils.signUpOnPage(client3, 'tester1', 'tester')
@@ -213,9 +215,10 @@ describe('chat interface logged in', () => {
 });
 
 describe('chat interface anonymous', () => {
-  server3 = meteor();
-  client5 = browser(server3);
-  client6 = browser(server3);
+  server5 = meteor();
+  server6 = meteor();
+  client5 = browser(server5);
+  client6 = browser(server6);
 
   runChatInterfaceTests(server3, client5, client6);
 });
