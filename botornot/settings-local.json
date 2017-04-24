@@ -19,5 +19,8 @@
         "ratingTurns": 4,
         "tipSpeed" : 4000, 
         "usersOnline" : 1 
+    },
+    "gagarin": {
+      "mongoUrl": "localhost:3001"
     }
 }

@@ -2,8 +2,9 @@ utils = require('./utils.js');
 
 describe('bots', () => {
   var server = meteor();
+  var server2 = meteor();
   var client1 = browser(server);
-  var client2 = browser(server);
+  var client2 = browser(server2);
 
   it('should connect to a user after the timeout length', () => {
     return utils.waitForFlowRoute(client1, '/chat')  

@@ -4,6 +4,7 @@
     "Debug" : true,
     "botServerUrl" : "http://10.0.1.75:5000",
     "redisHost":"botornotredis.tklj1e.clustercfg.usw1.cache.amazonaws.com",
+    "redisPort":"6379",
     "serverUrl" : "beta.botornot.ml",
     "timeout": 7,
     "magicPhrase" : "hilaryyas",
